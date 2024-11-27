@@ -1,0 +1,27 @@
+### Send OTP
+POST http://localhost:4000/otps/send
+Content-Type: application/json
+
+{
+    "email": "raulrangel1230@gmail.com",
+    "purpose": "email_verification"
+}
+
+### Verify OTP
+POST http://localhost:4000/otps/verify
+Content-Type: application/json
+
+{
+    "email": "raulrangel1230@gmail.com",
+    "otp": "366969",
+    "purpose": "email_verification"
+}
+
+### Delete OTP (for specific purpose)
+DELETE http://localhost:4000/otps/delete
+Content-Type: application/json
+
+{
+    "email": "raulrangel1230@gmail.com",
+    "purpose": "email_verification"
+}
