@@ -15,13 +15,12 @@ Content-Type: application/json
 }
 
 ### Edit user
-PATCH http://localhost:4000/users/1
+PATCH http://localhost:4000/users/f9366a38-69eb-4b3e-9064-b0d2b2258afb
 Content-Type: application/json
 
 {
     "email": "raulrangel1230@gmail.com",
-    "username": "Raul Rangel",
-    "password": "Alejandra18"
+    "username": "Raul Rangel"
 }
 
 ### auth user
@@ -34,5 +33,5 @@ Content-Type: application/json
 }
 
 ### Delete task
-DELETE  http://localhost:4000/users/2
+DELETE  http://localhost:4000/users/f85ff874-cb18-43a0-9f27-92f9ef4283db
 Content-Type: application/json

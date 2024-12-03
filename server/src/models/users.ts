@@ -15,18 +15,26 @@ export const getUserByEmailModel = async (email: string) => {
   return result
 }
 
-export const createUserModel = async (userId: string, email: string, username: string, password: string) => {
+export const createUserModel = async (id: string, email: string, username: string, first_name: string, last_name: string, password: string, create_at: string) => {
   const result = await db.execute({
-    sql: `INSERT INTO users (id, email, username, password) VALUES (:id, :email, :username, :password)`,
-    args: { id: userId, email, username, password },
+    sql: `INSERT INTO users (id, email, username, first_name, last_name, password, create_at) VALUES (:id, :email, :username, :first_name, :last_name, :password, :create_at)`,
+    args: { id, email, username, first_name, last_name, password, create_at },
   })
   return result
 }
 
-export const updateUserModel = async (email: string, username: string, hashedPassword: string, id: string) => {
+export const updateUserModel = async (username: string, first_name: string, last_name: string, bio: string, status: string, update_at: string, id: string) => {
   const result = await db.execute({
-    sql: `UPDATE users SET email = :email, username = :username, password = :password WHERE id = :id`,
-    args: { email, username, password: hashedPassword, id },
+    sql: `UPDATE users SET username = :username, first_name = :first_name, last_name = :last_name, bio = :bio, status = :status, update_at = :update_at WHERE id = :id`,
+    args: { username, first_name, last_name, bio, status, update_at, id },
+  })
+  return result
+}
+
+export const updateUserPasswordModel = async (password: string, id: string) => {
+  const result = await db.execute({
+    sql: `UPDATE users SET password = :password WHERE id = :id`,
+    args: { password, id },
   })
   return result
 }

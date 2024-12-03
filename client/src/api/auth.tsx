@@ -12,6 +12,15 @@ export const login = async (email: string, password: string): Promise<void> => {
   }
 }
 
+export const verifyPassword = async (password: string): Promise<void> => {
+  try {
+    await axios.post(`${BASE_URL}/verifypassword`, { password }, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
+  } catch (error) {
+    console.log(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
 export const logout = async (): Promise<void> => {
   try {
     await axios.post(

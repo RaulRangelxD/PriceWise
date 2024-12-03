@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { loginUserModel } from '../models/auth.js'
 import { defaultResponse } from '../utils/defaultRes.js'
 import { Request, Response } from 'express'
+import { getUserByEmailModel } from '../models/users.js'
 
 const JWT_SECRET = 'your-secret-key'
 const JWT_EXPIRATION = '1h'
@@ -45,6 +46,48 @@ export const loginUser = async (req: Request, res: Response) => {
   } catch (e) {
     console.log('Error login user: ', e)
     return defaultResponse({ res, status: 500, message: 'Internal server error', data: null })
+  }
+}
+
+export const verifyPassword = async (req: Request, res: Response) => {
+  const token = req.cookies.auth
+  const { password } = req.body
+
+  if (!token) {
+    defaultResponse({ res, status: 401, message: 'Authentication token missing' })
+    return
+  }
+
+  const decodedToken = jwt.decode(token) as { email: string } | null
+
+  if (!decodedToken || !decodedToken.email) {
+    defaultResponse({ res, status: 401, message: 'Invalid authentication token' })
+    return
+  }
+
+  const email = decodedToken.email
+
+  try {
+    const result = await getUserByEmailModel(email)
+    const user = result.rows[0]
+    if (!user.password || typeof user.password !== 'string') {
+      return defaultResponse({ res, status: 500, message: 'Invalid password format', data: null })
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      return defaultResponse({ res, status: 401, message: 'Incorrect credentials', data: null })
+    }
+
+    return defaultResponse({
+      res,
+      status: 200,
+      message: 'Password correct',
+      data: { id: user.id, email: user.email },
+    })
+  } catch (e) {
+    console.log('Error retrieving user by email from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving user' })
   }
 }
 

@@ -1,4 +1,4 @@
-import { Button } from '../atoms/buttons/Button'
+import { DefaultButton } from '../atoms/buttons/Button'
 
 interface IconButtonProps {
   onClick: () => void
@@ -8,7 +8,7 @@ interface IconButtonProps {
 }
 
 export const IconButton = ({ onClick, color = 'btn-primary', className, Icon }: IconButtonProps) => (
-  <Button onClick={onClick} color={color} className={className}>
+  <DefaultButton onClick={onClick} color={color} className={className}>
     {Icon}
-  </Button>
+  </DefaultButton>
 )

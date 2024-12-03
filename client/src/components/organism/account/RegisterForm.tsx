@@ -1,10 +1,11 @@
 'use client'
 
-import { Button } from '@/components/atoms/buttons/Button'
+import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { InputForm } from '@/components/atoms/inputs/InputForm'
-import { LinkButton } from '../atoms/buttons/LinkButton'
-import { registerUser } from '@/api/users'
+import { LinkButton } from '@/components/atoms/buttons/LinkButton'
+import { postUser } from '@/api/users'
 import { useState } from 'react'
+import { useToastify } from '@/context/ToastifyProvider'
 
 interface RegisterFormProps {
   toggleForm: () => void
@@ -12,19 +13,37 @@ interface RegisterFormProps {
 
 export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
   const [username, setUsername] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
 
   const [errorUsername, setErrorUsername] = useState('')
+  const [errorFirstName, setErrorFirstName] = useState('')
+  const [errorLastName, setErrorLastName] = useState('')
   const [errorEmail, setErrorEmail] = useState('')
   const [errorPassword, setErrorpassword] = useState('')
   const [errorPassword2, setErrorpassword2] = useState('')
   const [error, setError] = useState('')
 
+  const { notifySuccess, notifyError } = useToastify()
+
   const validateUsername = (username: string) => {
     const isValid = /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(username)
     setErrorUsername(isValid ? '' : 'Invalid username format')
+    return isValid
+  }
+
+  const validateFirstName = (firstName: string) => {
+    const isValid = /^[a-z ,.'-]+$/i.test(firstName)
+    setErrorFirstName(isValid ? '' : 'Invalid first name format')
+    return isValid
+  }
+
+  const validateLastName = (lastName: string) => {
+    const isValid = /^[a-z ,.'-]+$/i.test(lastName)
+    setErrorLastName(isValid ? '' : 'Invalid last name format')
     return isValid
   }
 
@@ -44,10 +63,11 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
   }
 
   const validatePassword2 = (password2: string) => {
-    const isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/gm.test(password)
+    let isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/gm.test(password)
     setErrorpassword2(isValid ? '' : 'Invalid password format')
     if (password !== password2) {
       setErrorpassword2('Password dont equal')
+      isValid = false
     }
     return isValid
   }
@@ -56,22 +76,29 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
     e.preventDefault()
 
     if (!validateUsername(username)) return
+    if (!validateFirstName(firstName)) return
+    if (!validateLastName(lastName)) return
     if (!validateEmail(email)) return
     if (!validatePassword(password)) return
     if (!validatePassword2(password2)) return
 
     try {
-      await registerUser(username, email, password)
+      await postUser(username, email, firstName, lastName, password)
+      notifySuccess('User registered succesfull', { autoClose: 2500 })
+
       setError('')
 
       setUsername('')
+      setFirstName('')
+      setLastName('')
       setEmail('')
       setPassword('')
       setPassword2('')
       toggleForm()
     } catch (e) {
-      console.log('Error authenticating user', e)
-      setError('Error authenticating user')
+      console.log('Error register user', e)
+      setError('Error register user')
+      notifyError('Error register user', { autoClose: 2500 })
     }
   }
 
@@ -80,6 +107,12 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
       <form onSubmit={(e) => handleSubmit(e)} className='w-full flex flex-col space-y-4 px-4 py-8'>
         <InputForm placeholder='Username' value={username} onChange={setUsername} onBlur={validateUsername} />
         {errorUsername && <p className='text-red-500 mt-2'>{errorUsername}</p>}
+
+        <InputForm placeholder='First Name' value={firstName} onChange={setFirstName} onBlur={validateFirstName} />
+        {errorFirstName && <p className='text-red-500 mt-2'>{errorFirstName}</p>}
+
+        <InputForm placeholder='Last Name' value={lastName} onChange={setLastName} onBlur={validateLastName} />
+        {errorLastName && <p className='text-red-500 mt-2'>{errorLastName}</p>}
 
         <InputForm placeholder='Email' value={email} onChange={setEmail} onBlur={validateEmail} />
         {errorEmail && <p className='text-red-500 mt-2'>{errorEmail}</p>}
@@ -93,12 +126,12 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
         {error && <p className='text-red-500'>{error}</p>}
 
         <div className='flex flex-row space-x-2'>
-          <Button color='btn-primary' type='submit' className='grow'>
+          <DefaultButton color='btn-primary' type='submit' className='grow'>
             Register
-          </Button>
-          <Button color='btn-secondary' onClick={toggleForm}>
+          </DefaultButton>
+          <DefaultButton color='btn-secondary' onClick={toggleForm}>
             To Login
-          </Button>
+          </DefaultButton>
           <LinkButton href='/'>Home</LinkButton>
         </div>
       </form>

@@ -83,7 +83,6 @@ export const verifyOTP = async (req: Request, res: Response) => {
 
     if (purpose === 'email_verification') {
       const result = await updateUserVerifiedModel(userId)
-      console.log(result)
     }
 
     defaultResponse({ res, status: 200, message: 'OTP verified successfully' })

@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@/components/atoms/buttons/Button'
+import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { InputForm } from '@/components/atoms/inputs/InputForm'
-import { LinkButton } from '../atoms/buttons/LinkButton'
+import { LinkButton } from '@/components/atoms/buttons/LinkButton'
 import { authCheck, login } from '@/api/auth'
-import { useAuth } from '@/context/AuthContext'
+import { useAuth } from '@/context/AuthProvider'
 import { useState } from 'react'
 
 interface LoginFormProps {
@@ -31,6 +31,7 @@ export const LoginForm = ({ toggleForm }: LoginFormProps) => {
 
     try {
       await login(email, password)
+
       authCheck()
       authTrue()
       setError('')
@@ -52,12 +53,12 @@ export const LoginForm = ({ toggleForm }: LoginFormProps) => {
         {error && <p className='text-red-500'>{error}</p>}
 
         <div className='flex flex-row space-x-2'>
-          <Button color='btn-primary' type='submit' className='grow'>
+          <DefaultButton color='btn-primary' type='submit' className='grow'>
             Login
-          </Button>
-          <Button color='btn-secondary' onClick={toggleForm}>
+          </DefaultButton>
+          <DefaultButton color='btn-secondary' onClick={toggleForm}>
             To register
-          </Button>
+          </DefaultButton>
           <LinkButton href='/'>Home</LinkButton>
         </div>
       </form>

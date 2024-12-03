@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { getAllUsersModel, getUserByIdModel, getUserByEmailModel, createUserModel, updateUserModel, deleteUserModel } from '../models/users.js'
+import { getAllUsersModel, getUserByIdModel, getUserByEmailModel, createUserModel, updateUserModel, updateUserPasswordModel, deleteUserModel } from '../models/users.js'
 import { defaultResponse } from '../utils/defaultRes.js'
 import { Request, Response } from 'express'
 
@@ -53,9 +53,9 @@ export const getUserByEmail = async (req: Request, res: Response) => {
 }
 
 export const postUser = async (req: Request, res: Response) => {
-  const { email, username, password } = req.body
+  const { email, username, firstName, lastName, password } = req.body
 
-  if (!email || !username || !password) {
+  if (!email || !username || !firstName || !lastName || !password) {
     defaultResponse({ res, status: 400, message: 'Missing required fields' })
     return
   }
@@ -64,8 +64,10 @@ export const postUser = async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(password, 10)
 
+  const createAt = new Date().toISOString().split('T')[0]
+
   try {
-    await createUserModel(userId, email, username, hashedPassword)
+    await createUserModel(userId, email, username, firstName, lastName, hashedPassword, createAt)
     defaultResponse({ res, status: 201, message: 'User created successfully' })
   } catch (e) {
     console.log('Error creating user in database', e)
@@ -75,21 +77,41 @@ export const postUser = async (req: Request, res: Response) => {
 
 export const patchUser = async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params
-  const { email, username, password } = req.body
+  const { username, firstName, lastName, bio = '', status = '' } = req.body
 
-  if (!email || !username || !password) {
+  if (!username || !firstName || !lastName) {
     defaultResponse({ res, status: 400, message: 'Missing required fields' })
     return
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10)
+  const updateAt = new Date().toISOString().split('T')[0]
 
   try {
-    await updateUserModel(email, username, hashedPassword, id)
+    await updateUserModel(username, firstName, lastName, bio, status, updateAt, id)
     defaultResponse({ res, status: 200, message: 'User updated successfully' })
   } catch (e) {
     console.log('Error updating user in database', e)
     defaultResponse({ res, status: 500, message: 'Error updating user' })
+  }
+}
+
+export const patchPassword = async (req: Request<{ id: string }>, res: Response) => {
+  const { id } = req.params
+  const { newPassword } = req.body
+
+  if (!newPassword) {
+    defaultResponse({ res, status: 400, message: 'Missing required fields' })
+    return
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10)
+
+  try {
+    await updateUserPasswordModel(hashedPassword, id)
+    defaultResponse({ res, status: 200, message: 'Password updated successfully' })
+  } catch (e) {
+    console.log('Error updating Password in database', e)
+    defaultResponse({ res, status: 500, message: 'Error updating Password' })
   }
 }
 

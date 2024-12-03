@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-100 dark:bg-neutral-950 text-neutral-950 dark:text-neutral-100 transition duration-500;
+  @apply bg-default-light dark:bg-default-dark text-default-dark dark:text-default-light transition duration-500;
 }
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-4 text-neutral-950 dark:text-neutral-100 bg-primary-light hover:bg-primary font-semibold rounded-md transition duration-500;
+    @apply text-default-dark dark:text-default-light bg-primary-light border-2 border-primary-light hover:border-primary hover:bg-primary font-semibold rounded-md transition duration-500;
   }
   .btn-secondary {
-    @apply py-2 px-4 bg-transparent text-primary-light border-2 border-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
+    @apply bg-transparent text-primary-light border-2 border-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
   }
   .btn-third {
-    @apply py-2 px-4 bg-transparent text-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
+    @apply bg-transparent text-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
   }
   .input-form {
-    @apply w-full text-neutral-950 dark:text-neutral-100 placeholder:text-neutral-950 dark:placeholder:text-neutral-100 bg-transparent p-2 border-b-2 focus:outline-none focus:ring-0 border-neutral-950 dark:border-neutral-100 transition duration-500;
+    @apply w-full text-default-dark dark:text-default-light placeholder:text-default-dark dark:placeholder:text-default-light bg-transparent p-2 border-b-2 focus:outline-none focus:ring-0 border-default-dark dark:border-default-light transition duration-500;
   }
 }

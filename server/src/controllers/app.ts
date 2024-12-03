@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import * as v from '../global/var.js'
-import routes from '../routes/index.js'
+import { authRouter, otpsRouter, usersRouter } from '../routes/index.js'
 import { createTables, deleteTables } from '../config/database.js'
 
 dotenv.config()
@@ -35,13 +35,13 @@ class Server {
     this.#server.get('/', (req, res) => {
       res.send('Hello World!')
     })
-    this.#server.use('/auth', routes.authRoutes)
-    this.#server.use('/users', routes.usersRoutes)
-    this.#server.use('/otps', routes.otpRoutes)
+    this.#server.use('/auth', authRouter)
+    this.#server.use('/users', usersRouter)
+    this.#server.use('/otps', otpsRouter)
   }
 
   initializeDatabase() {
-    // deleteTables(); // Uncomment if needed
+    // deleteTables()
     createTables()
   }
 

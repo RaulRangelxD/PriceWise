@@ -1,7 +1,11 @@
-export default function Loading() {
+interface LoadingProps {
+  msg: string
+}
+
+export default function Loading({ msg }: LoadingProps) {
   return (
     <div className='flex-1 flex items-center justify-center'>
-      <div className='text-xl font-semibold'>Loading</div>
+      <div className='text-xl font-semibold'>{msg}</div>
       <div className='p-2' role='status'>
         <svg aria-hidden='true' className='inline w-8 h-8 text-gray-200 animate-spin dark:text-white-600 fill-blue-600' viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path
@@ -16,5 +20,5 @@ export default function Loading() {
         <span className='sr-only'>Loading...</span>
       </div>
     </div>
-  );
+  )
 }

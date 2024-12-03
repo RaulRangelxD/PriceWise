@@ -3,18 +3,18 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { AuthContext } from '@/context/AuthProvider'
 import { ThemeProvider } from '@/context/ThemeProvider'
-import { Navbar } from '@/components/organism/Nabvar'
-import { Footer } from '@/components/organism/Footer'
 import Loading from '@/app/Loading'
 import { authCheck } from '@/api/auth'
+import { LoginNavbar } from '@/components/organism/account/LoginNabvar'
+import { ToastProvider } from '@/context/ToastifyProvider'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { NextUIProvider } from '@nextui-org/system'
-
-interface RootLayoutProps {
+interface AccountLayoutProps {
   children: ReactNode
 }
 
-export const RootLayout = ({ children }: RootLayoutProps) => {
+export const AccountLayout = ({ children }: AccountLayoutProps) => {
   const [auth, setAuth] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -33,22 +33,22 @@ export const RootLayout = ({ children }: RootLayoutProps) => {
   }, [authCheckStatus])
 
   return (
-    <NextUIProvider>
-      <ThemeProvider>
-        <AuthContext.Provider value={{ auth, authTrue, authFalse }}>
+    <ThemeProvider>
+      <AuthContext.Provider value={{ auth, authTrue, authFalse }}>
+        <ToastProvider>
           {loading ? (
             <div className='flex flex-col min-h-screen'>
               <Loading msg='Loading' />
             </div>
           ) : (
-            <div className='flex flex-col min-h-screen'>
-              <Navbar />
+            <div className='relative flex flex-col min-h-screen'>
+              <LoginNavbar />
               <main className='flex-1 flex'>{children}</main>
-              <Footer />
+              <ToastContainer />
             </div>
           )}
-        </AuthContext.Provider>
-      </ThemeProvider>
-    </NextUIProvider>
+        </ToastProvider>
+      </AuthContext.Provider>
+    </ThemeProvider>
   )
 }

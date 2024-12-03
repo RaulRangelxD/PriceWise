@@ -1,5 +1,3 @@
-import authRoutes from './auth.js'
-import otpRoutes from './otp.js'
-import usersRoutes from './users.js'
-
-export default { authRoutes, otpRoutes, usersRoutes }
+export * from './auth.js'
+export * from './otp.js'
+export * from './users.js'

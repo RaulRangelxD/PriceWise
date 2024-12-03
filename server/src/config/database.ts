@@ -12,9 +12,15 @@ export const createTables = async () => {
     await db.execute(`
       CREATE TABLE IF NOT EXISTS users(
       id TEXT PRIMARY KEY,
-      email TEXT,
-      username TEXT,
-      password TEXT,
+      email TEXT UNIQUE NOT NULL,
+      username TEXT NOT NULL,
+      first_name TEXT NOT NULL,
+      last_name TEXT NOT NULL,
+      password TEXT NOT NULL,
+      bio TEXT,
+      status TEXT,
+      create_at DATE,
+      update_at DATE,
       verified BOOLEAN DEFAULT FALSE
       );
     `)
@@ -48,6 +54,7 @@ export const deleteTables = async () => {
   } catch (e) {
     console.log('error deleting otps table', e)
   }
+  console.log('Deleted tables')
 }
 
 export default db

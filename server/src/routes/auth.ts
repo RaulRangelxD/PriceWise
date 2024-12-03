@@ -1,11 +1,10 @@
 import { Router } from 'express'
-import { loginUser, logoutUser, authToken } from '../controllers/auth.js'
+import { loginUser, verifyPassword, logoutUser, authToken } from '../controllers/auth.js'
 
-const router = Router()
+export const authRouter = Router()
 
-router.get('/authtoken', authToken)
+authRouter.get('/authtoken', authToken)
 
-router.post('/login', loginUser)
-router.post('/logout', logoutUser)
-
-export default router
+authRouter.post('/verifypassword', verifyPassword)
+authRouter.post('/login', loginUser)
+authRouter.post('/logout', logoutUser)

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import '@/app/globals.css'
-import { LoginLayout } from '@/components/template/LoginLayout'
+import { AccountLayout } from '@/components/template/AccountLayout'
 
 export const metadata: Metadata = {
   title: 'Perro Login',
@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='es' className='dark'>
       <body className='min-h-screen'>
-        <LoginLayout>{children}</LoginLayout>
+        <AccountLayout>{children}</AccountLayout>
       </body>
     </html>
   )
