@@ -11,5 +11,10 @@
       "src": "/(.*)",
       "dest": "dist/server.js"
     }
-  ]
+  ],
+  "build": {
+    "commands": {
+      "build": "npm run build"
+    }
+  }
 }
