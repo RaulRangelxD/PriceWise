@@ -31,11 +31,9 @@ app.use('/otps', otpsRouter)
 
 createTables()
 
-if (!process.env.VERCEL) {
-  const port = process.env.PORT || 4000
-  app.listen(port, () => {
-    console.log(`Server listening on PORT: http://localhost:${port}`)
-  })
-}
+const port = process.env.PORT || 4000
+app.listen(port, () => {
+  console.log(`Server listening on PORT: http://localhost:${port}`)
+})
 
 export default app
