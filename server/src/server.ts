@@ -10,12 +10,11 @@ dotenv.config()
 
 const app = express()
 
-const origins = ['https://price-wise-client.vercel.app', 'price-wise-server.vercel.app', `http://localhost:${process.env.PORT}`, `http://localhost:3000`]
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(
   cors({
-    origin: origins,
+    origin: [`https://price-wise-client.vercel.app`, `price-wise-server.vercel.app`, `http://localhost:${process.env.PORT}`, `http://localhost:3000`],
     credentials: true,
   })
 )

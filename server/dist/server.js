@@ -3,16 +3,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import * as v from './global/var.js';
 import { authRouter, otpsRouter, usersRouter } from './routes/index.js';
 import { createTables } from './config/database.js';
 dotenv.config();
 const app = express();
-const origins = v.ORIGINS || [`http://localhost:${v.PORT}`, `http://localhost:3000`];
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors({
-    origin: origins,
+    origin: [`https://price-wise-client.vercel.app`, `price-wise-server.vercel.app`, `http://localhost:${process.env.PORT}`, `http://localhost:3000`],
     credentials: true,
 }));
 app.use(cookieParser());
@@ -27,4 +25,3 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Server listening on PORT: http://localhost:${port}`);
 });
-export default app;
