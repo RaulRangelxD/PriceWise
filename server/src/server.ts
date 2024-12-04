@@ -10,7 +10,7 @@ dotenv.config()
 
 const app = express()
 
-const origins = process.env.ORIGINS || [`http://localhost:${process.env.PORT}`, `http://localhost:3000`]
+const origins = ['https://price-wise-client.vercel.app', 'price-wise-server.vercel.app', `http://localhost:${process.env.PORT}`, `http://localhost:3000`]
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(
@@ -34,5 +34,3 @@ const port = process.env.PORT || 4000
 app.listen(port, () => {
   console.log(`Server listening on PORT: http://localhost:${port}`)
 })
-
-export default app
