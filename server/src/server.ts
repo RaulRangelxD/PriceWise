@@ -3,7 +3,6 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import * as v from './global/var.js'
 import { authRouter, otpsRouter, usersRouter } from './routes/index.js'
 import { createTables, deleteTables } from './config/database.js'
 
@@ -11,7 +10,7 @@ dotenv.config()
 
 const app = express()
 
-const origins = v.ORIGINS || [`http://localhost:${v.PORT}`, `http://localhost:3000`]
+const origins = process.env.ORIGINS || [`http://localhost:${process.env.PORT}`, `http://localhost:3000`]
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(
