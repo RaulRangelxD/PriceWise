@@ -8,7 +8,7 @@ import { verifyPassword } from '@/api/auth'
 import { patchPassword } from '@/api/users'
 
 interface ChangePasswordFormProps {
-  userId: number
+  userId: string
   toggleChangePasswordForm: () => void
 }
 

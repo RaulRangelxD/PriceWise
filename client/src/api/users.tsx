@@ -42,7 +42,7 @@ export const postUser = async (username: string, email: string, firstName: strin
   }
 }
 
-export const patchUser = async (username: string, firstName: string, lastName: string, bio: string, status: string, id: number): Promise<void> => {
+export const patchUser = async (username: string, firstName: string, lastName: string, bio: string, status: string, id: string): Promise<void> => {
   try {
     await axios.patch(`${BASE_URL}/update/${id}`, { username, firstName, lastName, bio, status }, { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {
@@ -51,7 +51,7 @@ export const patchUser = async (username: string, firstName: string, lastName: s
   }
 }
 
-export const patchPassword = async (newPassword: string, id: number): Promise<void> => {
+export const patchPassword = async (newPassword: string, id: string): Promise<void> => {
   try {
     await axios.patch(`${BASE_URL}/password/${id}`, { newPassword }, { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {

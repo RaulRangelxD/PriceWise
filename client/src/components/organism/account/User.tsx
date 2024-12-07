@@ -88,7 +88,7 @@ export const User = () => {
                     )}
                   </div>
                 </div>
-                <div className='flex flex-col ms-4'>
+                <div className='flex flex-col ms-4 mt-4 sm:mt-0'>
                   <div className='flex flex-row'>
                     <p className='mx-0 font-bold text-2xl'>
                       {user.first_name}

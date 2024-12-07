@@ -16,7 +16,7 @@ interface EditUserProps {
 }
 
 export const EditUser = ({ getUserInfo, toggleEditForm }: EditUserProps) => {
-  const [id, setId] = useState(0)
+  const [id, setId] = useState<string>('')
   const [username, setUsername] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')

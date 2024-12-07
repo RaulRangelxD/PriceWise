@@ -7,6 +7,9 @@ import { Navbar } from '@/components/organism/Nabvar'
 import { Footer } from '@/components/organism/Footer'
 import Loading from '@/app/Loading'
 import { authCheck } from '@/api/auth'
+import { ToastProvider } from '@/context/ToastifyProvider'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { NextUIProvider } from '@nextui-org/system'
 
@@ -33,22 +36,26 @@ export const RootLayout = ({ children }: RootLayoutProps) => {
   }, [authCheckStatus])
 
   return (
-    <NextUIProvider>
-      <ThemeProvider>
-        <AuthContext.Provider value={{ auth, authTrue, authFalse }}>
-          {loading ? (
-            <div className='flex flex-col min-h-screen'>
-              <Loading msg='Loading' />
-            </div>
-          ) : (
-            <div className='flex flex-col min-h-screen'>
-              <Navbar />
-              <main className='flex-1 flex'>{children}</main>
-              <Footer />
-            </div>
-          )}
-        </AuthContext.Provider>
-      </ThemeProvider>
-    </NextUIProvider>
+    <ToastProvider>
+      <NextUIProvider>
+        <ThemeProvider>
+          <AuthContext.Provider value={{ auth, authTrue, authFalse }}>
+            {loading ? (
+              <div className='flex flex-col min-h-screen'>
+                <Loading msg='Loading' />
+              </div>
+            ) : (
+              <div className='flex flex-col min-h-screen'>
+                <Navbar />
+                <main className='flex-1 flex'>{children}</main>
+                <ToastContainer />
+
+                <Footer />
+              </div>
+            )}
+          </AuthContext.Provider>
+        </ThemeProvider>
+      </NextUIProvider>
+    </ToastProvider>
   )
 }

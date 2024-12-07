@@ -1,0 +1,39 @@
+### Get all companies
+GET http://localhost:4000/companies
+
+### Get company by id
+GET http://localhost:4000/companies/id/1
+
+### Get all companies by userid
+GET http://localhost:4000/companies/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
+
+### Get all companies by userid and pagination
+GET http://localhost:4000/companies/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=1
+
+
+### Create Company
+POST http://localhost:4000/companies
+Content-Type: application/json
+
+{
+    "userId": "4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12",
+    "name": "Ale Company",
+    "rif": "J-123456789",
+    "phone": "+581231234567",
+    "address": "Vezonela"
+}
+
+### Edit user
+PATCH http://localhost:4000/companies/id/1
+Content-Type: application/json
+
+{
+    "name": "Ale Company",
+    "rif": "J-123456789",
+    "phone": "+581231234567",
+    "address": "Venozela"
+}
+
+### Delete task
+DELETE  http://localhost:4000/companies/id/2
+Content-Type: application/json

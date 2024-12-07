@@ -68,7 +68,7 @@ export const postUser = async (req: Request, res: Response) => {
 
   try {
     await createUserModel(userId, email, username, firstName, lastName, hashedPassword, createAt)
-    defaultResponse({ res, status: 201, message: 'User created successfully' })
+    defaultResponse({ res, status: 201, message: 'User create successfully' })
   } catch (e) {
     console.log('Error creating user in database', e)
     defaultResponse({ res, status: 500, message: 'Error creating user' })

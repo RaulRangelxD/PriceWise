@@ -23,10 +23,14 @@ import { InputForm } from '@/components/atoms/inputs/InputForm'
 import { MenuIcon } from '@/components/atoms/icons/Menu'
 import { SearchIcon } from '@/components/atoms/icons/Search'
 
+import { useRouter } from 'next/navigation'
+
 export const Navbar = () => {
   const { auth, authFalse } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const [user, setUser] = useState<UserInfo | null>(null)
+
+  const router = useRouter()
 
   const authStatus = useCallback(async () => {
     if (!auth) {
@@ -60,7 +64,7 @@ export const Navbar = () => {
         <DropdownTrigger className='flex justify-center outline-none'>
           <Button type='button'>
             {user && auth ? (
-              <div className='bg-default-light dark:bg-default-dark text-primary-light p-2 rounded-full text-xl font-semibold items-center justify-center'>
+              <div className='bg-default-light dark:bg-default-dark text-primary-light p-2 rounded-full text-sm font-semibold items-center justify-center'>
                 {user.first_name.charAt(0)}
                 {user.last_name.charAt(0)}
               </div>
@@ -72,11 +76,11 @@ export const Navbar = () => {
           </Button>
         </DropdownTrigger>
         <DropdownMenu
-          className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-default-dark dark:border-default-light bg-neutral-500 bg-opacity-10 backdrop-blur-sm rounded transition duration-500 mt-4'
+          className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 backdrop-blur-sm rounded transition duration-500 mt-4'
           variant='solid'
           aria-label='Static Actions'
         >
-          <DropdownItem className='flex flex-row p-0' key='user'>
+          <DropdownItem className='flex flex-row p-1 hover:bg-neutral-500 hover:bg-opacity-50' key='user' onClick={() => router.push('/account')}>
             {user && auth ? (
               <>
                 <div className='w-full flex flex-col items-center'>

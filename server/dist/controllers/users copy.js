@@ -56,7 +56,7 @@ export const postUser = async (req, res) => {
     const createAt = new Date().toISOString().split('T')[0];
     try {
         await createUserModel(userId, email, username, firstName, lastName, hashedPassword, createAt);
-        defaultResponse({ res, status: 201, message: 'User create successfully' });
+        defaultResponse({ res, status: 201, message: 'User created successfully' });
     }
     catch (e) {
         console.log('Error creating user in database', e);

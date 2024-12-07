@@ -5,7 +5,7 @@ export interface DataToken {
 }
 
 export type UserInfo = {
-  id: number
+  id: string
   email: string
   username: string
   first_name: string
@@ -14,6 +14,17 @@ export type UserInfo = {
   status: string
   password: string
   verified: number
+  create_at: string
+  update_at: string
+}
+
+export type CompanyData = {
+  id: number
+  user_id: string
+  name: string
+  rif: string
+  phone: string
+  address: string
   create_at: string
   update_at: string
 }

@@ -11,10 +11,10 @@ body {
     @apply text-default-dark dark:text-default-light bg-primary-light border-2 border-primary-light hover:border-primary hover:bg-primary font-semibold rounded-md transition duration-500;
   }
   .btn-secondary {
-    @apply bg-transparent text-primary-light border-2 border-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
+    @apply bg-transparent text-primary-light border-2 border-primary-light hover:bg-neutral-500 hover:bg-opacity-50 font-semibold rounded-md transition duration-500;
   }
   .btn-third {
-    @apply bg-transparent text-primary-light hover:bg-neutral-500 hover:bg-opacity-25 font-semibold rounded-md transition duration-500;
+    @apply bg-transparent text-primary-light hover:bg-neutral-500 hover:bg-opacity-50 font-semibold rounded-md transition duration-500;
   }
   .input-form {
     @apply w-full text-default-dark dark:text-default-light placeholder:text-default-dark dark:placeholder:text-default-light bg-transparent p-2 border-b-2 focus:outline-none focus:ring-0 border-default-dark dark:border-default-light transition duration-500;
