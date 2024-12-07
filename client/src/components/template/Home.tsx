@@ -125,7 +125,16 @@ export const Home = () => {
               )
             )
           ) : (
-            'not logged in'
+            <CompaniesTable
+              companyData={falseData}
+              currentPage={currentPage}
+              rowsPerPage={rowsPerPage}
+              setCurrentPage={setCurrentPage}
+              setRowsPerPage={setRowsPerPage}
+              getData={getData}
+              setEditCompanyForm={setEditCompanyForm}
+              placeholder={true}
+            />
           )}
         </div>
       </div>
