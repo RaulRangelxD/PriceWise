@@ -76,6 +76,12 @@ export const verifyPassword = async (req, res) => {
 };
 export const logoutUser = async (req, res) => {
     try {
+        res.cookie('auth', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            expires: new Date(0), // Expired immediately
+        });
         res.clearCookie('auth');
         return defaultResponse({ res, status: 200, message: 'Logout successful', data: null });
     }

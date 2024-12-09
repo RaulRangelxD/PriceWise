@@ -7,43 +7,13 @@ import { useCallback, useEffect, useState } from 'react'
 import Loading from '@/app/Loading'
 
 export const CompaniesTable = () => {
-  const falseData = [
-    {
-      id: 1,
-      user_id: 'x',
-      name: 'Company example 1',
-      rif: 'J-123456789',
-      phone: '1234-1234567',
-      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
-      create_at: '1999-31-12 00:00:00',
-      update_at: '1999-31-12 00:00:00',
-    },
-    {
-      id: 2,
-      user_id: 'x',
-      name: 'Company example 2',
-      rif: 'J-123456789',
-      phone: '1234-1234567',
-      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
-      create_at: '1999-31-12 00:00:00',
-      update_at: '1999-31-12 00:00:00',
-    },
-    {
-      id: 3,
-      user_id: 'x',
-      name: 'Company example 3',
-      rif: 'J-123456789',
-      phone: '1234-1234567',
-      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
-      create_at: '1999-31-12 00:00:00',
-      update_at: '1999-31-12 00:00:00',
-    },
-  ]
   const { userInContext } = useAuth()
   const router = useRouter()
-  const [companyData, setCompanyData] = useState<CompanyData[] | null>(falseData)
+  const [companyData, setCompanyData] = useState<CompanyData[] | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(3)
+  const [placeholder, setPlaceholder] = useState(true)
+
   const [loading, setLoading] = useState(true)
 
   const handlePageChange = (direction: 'next' | 'prev') => {
@@ -56,20 +26,60 @@ export const CompaniesTable = () => {
     setCurrentPage(1)
   }
 
+  const handleOnClick = (id: number) => (!placeholder ? router.push(`/company/${id}`) : console.log('Clicked on placeholder company'))
+
+  const tablePlaceholder = useCallback(() => {
+    setCompanyData([
+      {
+        id: 1,
+        user_id: 'x',
+        name: 'Company example 1',
+        rif: 'J-123456789',
+        phone: '1234-1234567',
+        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        create_at: '1999-31-12 00:00:00',
+        update_at: '1999-31-12 00:00:00',
+      },
+      {
+        id: 2,
+        user_id: 'x',
+        name: 'Company example 2',
+        rif: 'J-123456789',
+        phone: '1234-1234567',
+        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        create_at: '1999-31-12 00:00:00',
+        update_at: '1999-31-12 00:00:00',
+      },
+      {
+        id: 3,
+        user_id: 'x',
+        name: 'Company example 3',
+        rif: 'J-123456789',
+        phone: '1234-1234567',
+        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        create_at: '1999-31-12 00:00:00',
+        update_at: '1999-31-12 00:00:00',
+      },
+    ])
+  }, [])
+
   const getData = useCallback(async () => {
     try {
       if (!userInContext) {
+        tablePlaceholder()
+        setPlaceholder(true)
         setLoading(false)
         return
       }
       const companiesDataResult = await getAllCompaniesByUserIdAndPagination(userInContext.id, rowsPerPage, currentPage - 1)
       if (companiesDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
       setCompanyData(companiesDataResult)
+      setPlaceholder(false)
       setLoading(false)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [userInContext, rowsPerPage, currentPage])
+  }, [userInContext, rowsPerPage, currentPage, tablePlaceholder])
 
   useEffect(() => {
     getData()
@@ -110,9 +120,7 @@ export const CompaniesTable = () => {
             {companyData?.map((company, index) => (
               <tr
                 key={company.id}
-                onClick={() => {
-                  router.push(`/company/${company.id}`)
-                }}
+                onClick={() => handleOnClick(company.id)}
                 className={`${
                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
                 } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}

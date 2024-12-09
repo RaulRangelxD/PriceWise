@@ -67,6 +67,9 @@ export const createTables = async () => {
       name TEXT NOT NULL,
       description TEXT,
       price INT NOT NULL,
+      weight INTEGER NOT NULL,
+      weight_unit TEXT NOT NULL,
+      quantity INTEGER NOT NULL,
       create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );

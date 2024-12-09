@@ -94,6 +94,12 @@ export const verifyPassword = async (req: Request, res: Response) => {
 
 export const logoutUser = async (req: Request, res: Response) => {
   try {
+    res.cookie('auth', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      expires: new Date(0), // Expired immediately
+    })
     res.clearCookie('auth')
     return defaultResponse({ res, status: 200, message: 'Logout successful', data: null })
   } catch (e) {
