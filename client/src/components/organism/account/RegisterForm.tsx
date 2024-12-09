@@ -57,13 +57,13 @@ export const RegisterForm = ({ toggleForm }: RegisterFormProps) => {
   }
 
   const validatePassword = (password: string) => {
-    const isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/gm.test(password)
-    setErrorpassword(isValid ? '' : 'Invalid password format')
+    const isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,20}$/gm.test(password)
+    setErrorpassword(isValid ? '' : 'Invalid password format Example: Password12345678')
     return isValid
   }
 
   const validatePassword2 = (password2: string) => {
-    let isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/gm.test(password)
+    let isValid = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,20}$/gm.test(password)
     setErrorpassword2(isValid ? '' : 'Invalid password format')
     if (password !== password2) {
       setErrorpassword2('Password dont equal')

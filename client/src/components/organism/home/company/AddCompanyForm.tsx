@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 export const AddCompanyForm = () => {
   const [name, setName] = useState<string>('')
   const [rif, setRif] = useState<string>('')
+  const [rifType, setRifType] = useState<string>('J-')
   const [phone, setPhone] = useState<string>('')
   const [address, setAddress] = useState<string>('')
 
@@ -32,7 +33,7 @@ export const AddCompanyForm = () => {
   }
 
   const validateRif = (rif: string) => {
-    const isValid = /^J-([0-9]{1,10})$/.test(rif)
+    const isValid = /([0-9]{1,10})$/.test(rif)
     setRifError(isValid ? '' : 'Invalid rif format (J-123456789)')
     return isValid
   }
@@ -57,10 +58,13 @@ export const AddCompanyForm = () => {
     if (!validatePhone(phone)) return
     if (!validateAddress(address)) return
 
+    const completeRif = rifType + rif
+
     try {
       if (!userInContext) return
-      await postCompany(userInContext.id, name, rif, phone, address)
+      await postCompany(userInContext.id, name, completeRif, phone, address)
       notifySuccess('Company registered succesfull', { autoClose: 2500 })
+      setError('')
       router.push(`/`)
     } catch (e) {
       console.log('Error register Company', e)
@@ -75,7 +79,20 @@ export const AddCompanyForm = () => {
           <InputForm placeholder='Company Name' value={name} onChange={setName} onBlur={validateName} />
           {nameError && <p className='text-red-500 mt-2'>{nameError}</p>}
 
-          <InputForm placeholder='RIF' value={rif} onChange={setRif} onBlur={validateRif} />
+          <div className='flex flex-row w-full space-x-1'>
+            <select
+              className='text-sm px-2 rounded-xl bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'
+              value={rifType}
+              onChange={(e) => {
+                setRifType(e.target.value)
+              }}
+            >
+              <option value={'J-'}>J</option>
+              <option value={'V-'}>V</option>
+              <option value={'E-'}>E</option>
+            </select>
+            <InputForm placeholder='RIF' value={rif} onChange={setRif} onBlur={validateRif} />
+          </div>
           {rifError && <p className='text-red-500 mt-2'>{rifError}</p>}
 
           <InputForm placeholder='Phone Number' value={phone} onChange={setPhone} onBlur={validatePhone} />

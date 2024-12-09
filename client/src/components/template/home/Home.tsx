@@ -3,9 +3,13 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { CompaniesTable } from '@/components/organism/home/company/CompaniesTable'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthProvider'
+import { useToastify } from '@/context/ToastifyProvider'
 
 export const Home = () => {
   const router = useRouter()
+  const { userInContext } = useAuth()
+  const { notifyWarning } = useToastify()
 
   return (
     <>
@@ -13,13 +17,23 @@ export const Home = () => {
         <div className='max-w-7xl flex flex-col space-y-2 justify-center items-center w-full'>
           <CompaniesTable />
           <div>
-            <DefaultButton
-              onClick={() => {
-                router.push(`/company/add`)
-              }}
-            >
-              Add company
-            </DefaultButton>
+            {!userInContext ? (
+              <DefaultButton
+                onClick={() => {
+                  notifyWarning('must logged for add companies')
+                }}
+              >
+                Add company
+              </DefaultButton>
+            ) : (
+              <DefaultButton
+                onClick={() => {
+                  router.push(`/company/add`)
+                }}
+              >
+                Add company
+              </DefaultButton>
+            )}
           </div>
         </div>
       </div>
