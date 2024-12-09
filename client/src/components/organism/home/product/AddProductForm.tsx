@@ -39,8 +39,8 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
   const { notifySuccess, notifyError } = useToastify()
 
   const validateName = (name: string) => {
-    const isValid = /^[A-Z]([a-zA-Z0-9]|[- @\.#&!])*$/.test(name)
-    setNameError(isValid ? '' : 'Invalid name format')
+    const isValid = /^.{1,40}$/.test(name)
+    setNameError(isValid ? '' : 'Invalid name format only 40 caracters')
     return isValid
   }
 

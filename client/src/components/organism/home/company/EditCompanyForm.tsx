@@ -37,8 +37,8 @@ export const EditCompanyForm = ({ companyData, getData }: EditCompanyFormProps) 
   }, [companyData])
 
   const validateName = (name: string) => {
-    const isValid = /^[A-Z]([a-zA-Z0-9]|[- @\.#&!])*$/.test(name)
-    setNameError(isValid ? '' : 'Invalid name format (Company name example)')
+    const isValid = /^.{1,40}$/.test(name)
+    setNameError(isValid ? '' : 'Invalid name format only 40 caracters')
     return isValid
   }
 
