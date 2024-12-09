@@ -36,6 +36,9 @@ export type ProductData = {
   name: string
   description: string
   price: number
+  weight: number
+  weight_unit: string
+  quantity: number
   create_at: string
   update_at: string
 }

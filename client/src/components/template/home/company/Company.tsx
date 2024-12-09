@@ -3,16 +3,19 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { BackIcon } from '@/components/atoms/icons/Back'
 import { EditIcon } from '@/components/atoms/icons/Edit'
+import { PlusIcon } from '@/components/atoms/icons/Plus'
 import { TrashIcon } from '@/components/atoms/icons/TrashIcon'
+import { ProductsTable } from '@/components/organism/home/product/ProductsTable'
 import { CompanyData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 
 interface CompanyProps {
   companyData: CompanyData
+  companyIdInParams: number
   getData: () => void
 }
 
-export const Company = ({ companyData }: CompanyProps) => {
+export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
   const router = useRouter()
 
   return (
@@ -56,6 +59,14 @@ export const Company = ({ companyData }: CompanyProps) => {
         <div className='flex flex-row space-x-2'>
           <DefaultButton
             onClick={() => {
+              router.push(`/company/${companyData.id}/addproduct`)
+            }}
+          >
+            <PlusIcon size='sm' className='me-1' />
+            Add product
+          </DefaultButton>
+          <DefaultButton
+            onClick={() => {
               router.push(`/company/${companyData.id}/edit`)
             }}
           >
@@ -63,12 +74,13 @@ export const Company = ({ companyData }: CompanyProps) => {
           </DefaultButton>
           <DefaultButton
             onClick={() => {
-              router.push(`/company/${companyData.id}/edit`)
+              router.push(`/company/${companyData.id}/delete`)
             }}
           >
             <TrashIcon size='sm' className='me-1' /> Delete Company
           </DefaultButton>
         </div>
+        <ProductsTable companyIdInParams={companyIdInParams} />
       </div>
     </div>
   )

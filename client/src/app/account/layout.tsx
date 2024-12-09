@@ -3,7 +3,7 @@ import '@/app/globals.css'
 import { AccountLayout } from '@/components/template/account/AccountLayout'
 
 export const metadata: Metadata = {
-  title: 'Perro Login',
+  title: 'Login Price Wise',
   description: 'Created by RaulRangelxD',
 }
 

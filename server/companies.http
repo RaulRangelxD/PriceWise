@@ -2,7 +2,7 @@
 GET http://localhost:4000/companies
 
 ### Get company by id
-GET http://localhost:4000/companies/id/1
+GET http://localhost:4000/companies/id/2
 
 ### Get all companies by userid
 GET http://localhost:4000/companies/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12

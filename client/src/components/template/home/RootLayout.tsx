@@ -64,11 +64,11 @@ export const RootLayout = ({ children }: RootLayoutProps) => {
         <ThemeProvider>
           <AuthContext.Provider value={{ auth, userInContext, authTrue, authFalse }}>
             {loading ? (
-              <div className='flex flex-col min-h-screen bg-gradient-to-b from-blue-500 to-orange-500 dark:bg-gradient-to-b dark:from-sky-700 dark:to-violet-600'>
+              <div className='flex flex-col min-h-screen bg-gradient-to-b from-blue-500 to-orange-500 dark:bg-gradient-to-b dark:from-sky-800 dark:to-purple-800'>
                 <Loading msg='Loading' />
               </div>
             ) : (
-              <div className='flex flex-col min-h-screen bg-gradient-to-b from-blue-500 to-orange-500 dark:bg-gradient-to-b dark:from-sky-700 dark:to-violet-600'>
+              <div className='flex flex-col min-h-screen bg-gradient-to-b from-blue-500 to-orange-500 dark:bg-gradient-to-b dark:from-sky-800 dark:to-purple-800 bg-fixed'>
                 <Navbar />
                 <main className='flex-1 flex'>{children}</main>
                 <ToastContainer />

@@ -62,7 +62,7 @@ export const createTables = async () => {
         await db.execute(`
       CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY,
-      company_id TEXT NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+      company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       name TEXT NOT NULL,
       description TEXT,

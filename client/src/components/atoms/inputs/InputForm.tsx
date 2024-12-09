@@ -3,12 +3,13 @@ import { SetStateAction } from 'react'
 interface InputFormProps {
   placeholder: string
   type?: string
-  value?: string
+  value?: string | number
+  className?: string
   onChange?: (value: SetStateAction<string>) => void
   onBlur?: (any: string) => void
 }
 
-export const InputForm = ({ placeholder, type = 'text', value, onChange, onBlur }: InputFormProps) => (
+export const InputForm = ({ placeholder, type = 'text', value, className = '', onChange, onBlur }: InputFormProps) => (
   <input
     placeholder={placeholder}
     type={type}
@@ -17,6 +18,6 @@ export const InputForm = ({ placeholder, type = 'text', value, onChange, onBlur 
     onBlur={(e) => {
       onBlur?.(e.target.value)
     }}
-    className='input-form'
+    className={`input-form ${className}`}
   />
 )

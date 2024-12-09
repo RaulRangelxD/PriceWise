@@ -1,4 +1,4 @@
-import { getAllProductsModel, getAllProductsByUserIdModel, getAllProductsByUserIdAndPaginationModel, getProductByIdModel, postProductModel, patchProductModel, deleteProductModel, } from '../models/products.js';
+import { getAllProductsModel, getAllProductsByUserIdModel, getAllProductsByUserIdAndPaginationModel, getAllProductsByCompanyIdAndPaginationModel, getProductByIdModel, postProductModel, patchProductModel, deleteProductModel, } from '../models/products.js';
 import { defaultResponse } from '../utils/defaultRes.js';
 export const getAllProducts = async (req, res) => {
     try {
@@ -39,6 +39,24 @@ export const getAllProductsByUserIdAndPagination = async (req, res) => {
         defaultResponse({ res, status: 500, message: 'Error retrieving Products' });
     }
 };
+export const getAllProductsByCompanyIdAndPagination = async (req, res) => {
+    const { companyid } = req.params;
+    const limit = parseInt(req.query.limit, 10);
+    const offset = parseInt(req.query.offset, 10);
+    if (!companyid || typeof limit !== 'number' || typeof offset !== 'number') {
+        defaultResponse({ res, status: 400, message: 'Missing query fields or type error' });
+        return;
+    }
+    const pagination = limit * offset;
+    try {
+        const result = await getAllProductsByCompanyIdAndPaginationModel(companyid, limit, pagination);
+        defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows });
+    }
+    catch (e) {
+        console.log('Error retrieving Products from database', e);
+        defaultResponse({ res, status: 500, message: 'Error retrieving Products' });
+    }
+};
 export const getProductById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -51,13 +69,13 @@ export const getProductById = async (req, res) => {
     }
 };
 export const postProduct = async (req, res) => {
-    const { companyId, userId, name, description, price } = req.body;
-    if (!userId || !name || !description || !price) {
+    const { companyId, userId, name, description, price, weight, weightUnit, quantity } = req.body;
+    if (!userId || !name || !description || !price || !weight || !weightUnit || !quantity) {
         defaultResponse({ res, status: 400, message: 'Missing required fields' });
         return;
     }
     try {
-        await postProductModel(companyId, userId, name, description, price);
+        await postProductModel(companyId, userId, name, description, price, weight, weightUnit, quantity);
         defaultResponse({ res, status: 201, message: 'Product create successfully' });
     }
     catch (e) {
@@ -67,13 +85,13 @@ export const postProduct = async (req, res) => {
 };
 export const patchProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, description, price } = req.body;
-    if (!name || !description || !price) {
+    const { name, description, price, weight, weight_unit, quantity } = req.body;
+    if (!name || !description || !price || !weight || !weight_unit || !quantity) {
         defaultResponse({ res, status: 400, message: 'Missing required fields' });
         return;
     }
     try {
-        await patchProductModel(name, description, price, id);
+        await patchProductModel(name, description, price, weight, weight_unit, quantity, id);
         defaultResponse({ res, status: 200, message: 'Product updated successfully' });
     }
     catch (e) {

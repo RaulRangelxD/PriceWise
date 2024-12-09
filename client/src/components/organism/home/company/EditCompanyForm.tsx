@@ -85,6 +85,7 @@ export const EditCompanyForm = ({ companyData, getData }: EditCompanyFormProps) 
   return (
     <div className='flex-1 flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center px-2'>
       <div className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-defaul-dark dark:border-default-light py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-2xl  backdrop-blur-sm rounded transition duration-500'>
+        <h1 className='text-2xl font-bold'>Edit</h1>
         <form onSubmit={(e) => handleSubmit(e)} className='w-full flex flex-col space-y-4 px-4 py-8 items-center'>
           <InputForm placeholder='Company Name' value={name} onChange={setName} onBlur={validateName} />
           {nameError && <p className='text-red-500 mt-2'>{nameError}</p>}

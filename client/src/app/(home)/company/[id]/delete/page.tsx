@@ -1,13 +1,13 @@
 'use client'
 
-import { Company } from '@/components/template/home/company/Company'
+import { DeleteCompanyForm } from '@/components/organism/home/company/DeleteCompanyForm'
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { CompanyData } from '@/lib/types'
 import { getCompanyById } from '@/api/companies'
 import Loading from '@/app/Loading'
 
-export default function CompanyId() {
+export default function EditCompany() {
   const params = useParams<{ id: string }>()
 
   const [companyData, setCompanyData] = useState<CompanyData | null>(null)
@@ -25,5 +25,5 @@ export default function CompanyId() {
     getData()
   }, [getData])
 
-  return !companyData ? <Loading msg='Loading data' /> : <Company companyData={companyData} companyIdInParams={Number(params.id)} getData={getData} />
+  return !companyData ? <Loading msg='Loading data' /> : <DeleteCompanyForm companyId={companyData.id} getData={getData} />
 }

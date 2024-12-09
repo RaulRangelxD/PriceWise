@@ -11,21 +11,25 @@ export const getAllProductsByUserIdAndPaginationModel = async (user_id, limit, o
     const result = await db.execute({ sql: `SELECT * FROM products WHERE user_id = :user_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { user_id, limit, offset } });
     return result;
 };
+export const getAllProductsByCompanyIdAndPaginationModel = async (company_id, limit, offset) => {
+    const result = await db.execute({ sql: `SELECT * FROM products WHERE company_id = :company_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { company_id, limit, offset } });
+    return result;
+};
 export const getProductByIdModel = async (id) => {
     const result = await db.execute({ sql: `SELECT * FROM products WHERE id = :id`, args: { id } });
     return result;
 };
-export const postProductModel = async (company_id, user_id, name, description, price) => {
+export const postProductModel = async (company_id, user_id, name, description, price, weight, weight_unit, quantity) => {
     const result = await db.execute({
-        sql: `INSERT INTO products (company_id, user_id, name, description, price) VALUES (:company_id, :user_id, :name, :description, :price)`,
-        args: { company_id, user_id, name, description, price },
+        sql: `INSERT INTO products (company_id, user_id, name, description, price, weight, weight_unit, quantity) VALUES (:company_id, :user_id, :name, :description, :price, :weight, :weight_unit, :quantity)`,
+        args: { company_id, user_id, name, description, price, weight, weight_unit, quantity },
     });
     return result;
 };
-export const patchProductModel = async (name, description, price, id) => {
+export const patchProductModel = async (name, description, price, weight, weight_unit, quantity, id) => {
     const result = await db.execute({
-        sql: `UPDATE products SET name = :name, description = :description, price = :price, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
-        args: { name, description, price, id },
+        sql: `UPDATE products SET name = :name, description = :description, price = :price, weight = :weight, weight_unit = :weight_unit, quantity = :quantity, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
+        args: { name, description, price, weight, weight_unit, quantity, id },
     });
     return result;
 };

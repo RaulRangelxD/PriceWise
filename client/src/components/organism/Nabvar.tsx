@@ -59,7 +59,7 @@ export const Navbar = () => {
   }, [getUserInfo, authStatus])
 
   return (
-    <nav className='z-10 sticky top-0 flex flex-col sm:flex-row space-x-2 px-3 py-2 w-full'>
+    <nav className='z-10 sticky top-0 flex flex-col sm:flex-row space-x-2 px-3 py-2 w-full bg-transparent backdrop-blur-sm'>
       <Dropdown>
         <DropdownTrigger className='flex justify-center outline-none'>
           <Button type='button'>
@@ -146,7 +146,7 @@ export const Navbar = () => {
       </Dropdown>
       <div className='flex w-full justify-center items-center'>
         <div className='flex flex-row max-w-2xl w-full justify-center items-center'>
-          <InputForm placeholder='Search' />
+          <InputForm placeholder='Search' className='focus:bg-default-light focus:bg-opacity-50 focus:dark:bg-default-dark focus:dark:bg-opacity-50 rounded-t' />
           <SearchIcon size='sm' />
         </div>
       </div>

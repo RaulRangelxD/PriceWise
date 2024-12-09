@@ -1,15 +1,19 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
-import { CompanyData } from '@/lib/types'
+import { ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthProvider'
-import { getAllCompaniesByUserIdAndPagination } from '@/api/companies'
+import { getAllProductsByCompanyIdAndPagination, getAllProductsByUserIdAndPagination } from '@/api/products'
 import { useCallback, useEffect, useState } from 'react'
 import Loading from '@/app/Loading'
 
-export const CompaniesTable = () => {
+interface ProductsTableProps {
+  companyIdInParams?: number
+}
+
+export const ProductsTable = ({ companyIdInParams }: ProductsTableProps) => {
   const { userInContext } = useAuth()
   const router = useRouter()
-  const [companyData, setCompanyData] = useState<CompanyData[] | null>(null)
+  const [productsData, setProductsData] = useState<ProductData[] | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(3)
   const [placeholder, setPlaceholder] = useState(true)
@@ -26,37 +30,46 @@ export const CompaniesTable = () => {
     setCurrentPage(1)
   }
 
-  const handleOnClick = (id: number) => (!placeholder ? router.push(`/company/${id}`) : console.log('Clicked on placeholder company'))
+  const handleOnClick = (id: number) => (!placeholder ? router.push(`/product/${id}`) : console.log('Clicked on placeholder product'))
 
   const tablePlaceholder = useCallback(() => {
-    setCompanyData([
+    setProductsData([
       {
         id: 1,
         user_id: 'x',
-        name: 'Company example 1',
-        rif: 'J-123456789',
-        phone: '1234-1234567',
-        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        company_id: 1,
+        name: 'Product example 1',
+        description: 'Product example 1 description',
+        price: 1.7,
+        weight: 1,
+        weight_unit: 'kg',
+        quantity: 1,
         create_at: '1999-31-12 00:00:00',
         update_at: '1999-31-12 00:00:00',
       },
       {
         id: 2,
         user_id: 'x',
-        name: 'Company example 2',
-        rif: 'J-123456789',
-        phone: '1234-1234567',
-        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        company_id: 1,
+        name: 'Product example 2',
+        description: 'Product example 2 description',
+        price: 1.7,
+        weight: 1,
+        weight_unit: 'kg',
+        quantity: 1,
         create_at: '1999-31-12 00:00:00',
         update_at: '1999-31-12 00:00:00',
       },
       {
         id: 3,
         user_id: 'x',
-        name: 'Company example 3',
-        rif: 'J-123456789',
-        phone: '1234-1234567',
-        address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+        company_id: 1,
+        name: 'Product example 3',
+        description: 'Product example 3 description',
+        price: 1.7,
+        weight: 1,
+        weight_unit: 'kg',
+        quantity: 1,
         create_at: '1999-31-12 00:00:00',
         update_at: '1999-31-12 00:00:00',
       },
@@ -71,15 +84,25 @@ export const CompaniesTable = () => {
         setLoading(false)
         return
       }
-      const companiesDataResult = await getAllCompaniesByUserIdAndPagination(userInContext.id, rowsPerPage, currentPage - 1)
-      if (companiesDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
-      setCompanyData(companiesDataResult)
-      setPlaceholder(false)
-      setLoading(false)
+      if (!companyIdInParams) {
+        const productsDataResult = await getAllProductsByUserIdAndPagination(userInContext.id, rowsPerPage, currentPage - 1)
+        if (productsDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
+        setProductsData(productsDataResult)
+        setPlaceholder(false)
+        setLoading(false)
+        return
+      }
+      if (companyIdInParams) {
+        const productsDataResult = await getAllProductsByCompanyIdAndPagination(companyIdInParams, rowsPerPage, currentPage - 1)
+        if (productsDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
+        setProductsData(productsDataResult)
+        setPlaceholder(false)
+        setLoading(false)
+      }
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [userInContext, rowsPerPage, currentPage, tablePlaceholder])
+  }, [userInContext, companyIdInParams, rowsPerPage, currentPage, tablePlaceholder])
 
   useEffect(() => {
     getData()
@@ -87,7 +110,7 @@ export const CompaniesTable = () => {
 
   return !loading ? (
     <div className='mt-8 flex flex-col w-full justify-center items-center space-y-2'>
-      <h2 className='text-3xl font-bold'>Companies</h2>
+      <h2 className='text-3xl font-bold'>Products</h2>
       <div className='flex flex-row w-full justify-end '>
         <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 rounded-xl ps-1'>
           <span>Rows per page: </span>
@@ -106,36 +129,53 @@ export const CompaniesTable = () => {
                 <h3>Company Name</h3>
               </th>
               <th className='px-2 py-2 text-left'>
-                <h3>Rif</h3>
+                <h3>Description</h3>
               </th>
               <th className='px-2 py-2 text-left'>
-                <h3>Phone</h3>
+                <h3>Price</h3>
               </th>
               <th className='px-2 py-2 text-left'>
-                <h3>Address</h3>
+                <h3>Category</h3>
+              </th>
+              <th className='px-2 py-2 text-left'>
+                <h3>Weight</h3>
+              </th>
+              <th className='px-2 py-2 text-left'>
+                <h3>Quantity</h3>
               </th>
             </tr>
           </thead>
           <tbody>
-            {companyData?.map((company, index) => (
+            {productsData?.map((product, index) => (
               <tr
-                key={company.id}
-                onClick={() => handleOnClick(company.id)}
+                key={product.id}
+                onClick={() => handleOnClick(product.id)}
                 className={`${
                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
+                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== productsData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
               >
                 <td className='px-2 py-2 text-nowrap'>
-                  <p>{company.name}</p>
+                  <p>{product.name}</p>
                 </td>
                 <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.rif}</p>
+                  <p className='text-ellipsis overflow-hidden'>{product.description}</p>
                 </td>
                 <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.phone}</p>
+                  <p className='text-ellipsis overflow-hidden'>{product.price}$</p>
                 </td>
                 <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.address}</p>
+                  <p className='text-ellipsis overflow-hidden'>Category</p>
+                </td>
+                <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                  <p className='text-ellipsis overflow-hidden'>
+                    {product.weight}
+                    <span> </span>
+                    {product.weight_unit}
+                  </p>
+                </td>
+
+                <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                  <p className='text-ellipsis overflow-hidden'>{product.quantity}</p>
                 </td>
               </tr>
             ))}
