@@ -1,0 +1,29 @@
+### Get all categories
+GET http://localhost:4000/categories
+
+### Get category by id
+GET http://localhost:4000/categories/id/1
+
+### Get all categories by userid
+GET http://localhost:4000/categories/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
+
+### Create category
+POST http://localhost:4000/categories
+Content-Type: application/json
+
+{
+    "userId": "4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12",
+    "name": "Category 1"
+}
+
+### Edit category
+PATCH http://localhost:4000/categories/id/1
+Content-Type: application/json
+
+{
+    "name": "Category 1 edited"
+}
+
+### Delete category
+DELETE  http://localhost:4000/categories/id/2
+Content-Type: application/json

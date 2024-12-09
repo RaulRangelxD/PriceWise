@@ -3,6 +3,7 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { authCheck, logout } from '@/api/auth'
 import { LogoutIcon } from '@/components/atoms/icons/Logout'
+import { useRouter } from 'next/navigation'
 
 interface LogoutFormProps {
   color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | ''
@@ -10,6 +11,8 @@ interface LogoutFormProps {
 }
 
 export const LogoutForm = ({ color = 'btn-primary', authFalse }: LogoutFormProps) => {
+  const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -17,6 +20,7 @@ export const LogoutForm = ({ color = 'btn-primary', authFalse }: LogoutFormProps
       await logout()
       await authCheck()
       authFalse()
+      router.push('/')
     } catch (e) {
       console.log('Error authenticating user', e)
     }

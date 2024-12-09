@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import '@/app/globals.css'
-import { RootLayout } from '@/components/template/RootLayout'
+import { RootLayout } from '@/components/template/home/RootLayout'
 
 export const metadata: Metadata = {
   title: 'Perro',

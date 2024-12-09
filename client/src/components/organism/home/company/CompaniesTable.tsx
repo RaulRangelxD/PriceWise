@@ -1,21 +1,51 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
-import { EditIcon } from '@/components/atoms/icons/Edit'
-import { EyeIcon } from '@/components/atoms/icons/EyeIcon'
 import { CompanyData } from '@/lib/types'
-import { DeleteCompanyForm } from './DeleteCompanyForm'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthProvider'
+import { getAllCompaniesByUserIdAndPagination } from '@/api/companies'
+import { useCallback, useEffect, useState } from 'react'
+import Loading from '@/app/Loading'
 
-interface CompaniesTableProps {
-  companyData: CompanyData[]
-  currentPage: number
-  rowsPerPage: number
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>
-  getData: () => void
-  setEditCompanyForm: React.Dispatch<React.SetStateAction<number>>
-  placeholder: boolean
-}
+export const CompaniesTable = () => {
+  const falseData = [
+    {
+      id: 1,
+      user_id: 'x',
+      name: 'Company example 1',
+      rif: 'J-123456789',
+      phone: '1234-1234567',
+      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+      create_at: '1999-31-12 00:00:00',
+      update_at: '1999-31-12 00:00:00',
+    },
+    {
+      id: 2,
+      user_id: 'x',
+      name: 'Company example 2',
+      rif: 'J-123456789',
+      phone: '1234-1234567',
+      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+      create_at: '1999-31-12 00:00:00',
+      update_at: '1999-31-12 00:00:00',
+    },
+    {
+      id: 3,
+      user_id: 'x',
+      name: 'Company example 3',
+      rif: 'J-123456789',
+      phone: '1234-1234567',
+      address: 'John Smith, 999 Anywhere St., Apt 555, Medford MA 02155',
+      create_at: '1999-31-12 00:00:00',
+      update_at: '1999-31-12 00:00:00',
+    },
+  ]
+  const { userInContext } = useAuth()
+  const router = useRouter()
+  const [companyData, setCompanyData] = useState<CompanyData[] | null>(falseData)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(3)
+  const [loading, setLoading] = useState(true)
 
-export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurrentPage, setRowsPerPage, getData, setEditCompanyForm, placeholder }: CompaniesTableProps) => {
   const handlePageChange = (direction: 'next' | 'prev') => {
     if (direction === 'next') setCurrentPage((prev) => prev + 1)
     if (direction === 'prev' && currentPage > 1) setCurrentPage((prev) => prev - 1)
@@ -26,8 +56,27 @@ export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurre
     setCurrentPage(1)
   }
 
-  return (
-    <div className='flex flex-col w-full justify-center items-center space-y-2'>
+  const getData = useCallback(async () => {
+    try {
+      if (!userInContext) {
+        setLoading(false)
+        return
+      }
+      const companiesDataResult = await getAllCompaniesByUserIdAndPagination(userInContext.id, rowsPerPage, currentPage - 1)
+      if (companiesDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
+      setCompanyData(companiesDataResult)
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching info:', error)
+    }
+  }, [userInContext, rowsPerPage, currentPage])
+
+  useEffect(() => {
+    getData()
+  }, [getData])
+
+  return !loading ? (
+    <div className='mt-8 flex flex-col w-full justify-center items-center space-y-2'>
       <h2 className='text-3xl font-bold'>Companies</h2>
       <div className='flex flex-row w-full justify-end '>
         <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 rounded-xl ps-1'>
@@ -39,7 +88,7 @@ export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurre
           </select>
         </div>
       </div>
-      <div className='overflow-x-auto w-full rounded-xl bg-default-light dark:bg-default-dark bg-opacity-10 dark:bg-opacity-10'>
+      <div className='overflow-x-auto w-full rounded-xl'>
         <table className='w-full table-auto'>
           <thead>
             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -55,18 +104,18 @@ export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurre
               <th className='px-4 py-2 text-left'>
                 <h3>Address</h3>
               </th>
-              <th className='px-4 py-2 text-left'>
-                <h3>Functions</h3>
-              </th>
             </tr>
           </thead>
           <tbody>
             {companyData?.map((company, index) => (
               <tr
                 key={company.id}
+                onClick={() => {
+                  router.push(`/company/${company.id}`)
+                }}
                 className={`${
                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                } hover:bg-opacity-75 dark:hover:bg-opacity-75 ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
+                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
               >
                 <td className='px-2 py-2 text-nowrap'>
                   <p>{company.name}</p>
@@ -79,27 +128,6 @@ export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurre
                 </td>
                 <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
                   <p className='text-ellipsis overflow-hidden'>{company.address}</p>
-                </td>
-                <td className='px-2 py-2 text-nowrap flex flex-row max-w-min'>
-                  {!placeholder ? (
-                    <>
-                      <DefaultButton size='sm' color='btn-third'>
-                        <EyeIcon size='sm' />
-                      </DefaultButton>
-                      <DefaultButton
-                        onClick={() => {
-                          setEditCompanyForm(company.id)
-                        }}
-                        size='sm'
-                        color='btn-third'
-                      >
-                        <EditIcon size='sm' />
-                      </DefaultButton>
-                      <DeleteCompanyForm color='btn-third' companyId={company.id} getData={getData} />
-                    </>
-                  ) : (
-                    ''
-                  )}
                 </td>
               </tr>
             ))}
@@ -120,5 +148,7 @@ export const CompaniesTable = ({ companyData, currentPage, rowsPerPage, setCurre
         </DefaultButton>
       </div>
     </div>
+  ) : (
+    <Loading msg='Loading Data' />
   )
 }

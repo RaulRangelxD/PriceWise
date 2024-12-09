@@ -1,11 +1,12 @@
 interface EditIconProps {
   size?: 'sm' | 'md' | 'lg'
   color?: string
+  className?: string
 }
 
-export const EditIcon = ({ size = 'md', color = '' }: EditIconProps) => (
+export const EditIcon = ({ size = 'md', color = '', className = '' }: EditIconProps) => (
   <svg
-    className={`${size === 'sm' ? 'h-6 w-6' : size === 'md' ? 'h-8 w-8' : 'h-10 w-10'} ${color}`}
+    className={`${size === 'sm' ? 'h-6 w-6' : size === 'md' ? 'h-8 w-8' : 'h-10 w-10'} ${color} ${className}`}
     viewBox='0 0 24 24'
     strokeWidth='2'
     stroke='currentColor'

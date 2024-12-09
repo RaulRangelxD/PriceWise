@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import { authRouter, otpsRouter, usersRouter, companiesRouter } from './routes/index.js'
+import { authRouter, otpsRouter, usersRouter, companiesRouter, productsRouter, categoriesRouter } from './routes/index.js'
 import { createTables, deleteTables } from './config/database.js'
 
 dotenv.config()
@@ -27,6 +27,8 @@ app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/otps', otpsRouter)
 app.use('/companies', companiesRouter)
+app.use('/products', productsRouter)
+app.use('/categories', categoriesRouter)
 
 // deleteTables()
 createTables()

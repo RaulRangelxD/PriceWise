@@ -6,6 +6,8 @@ import { LinkButton } from '@/components/atoms/buttons/LinkButton'
 import { authCheck, login } from '@/api/auth'
 import { useAuth } from '@/context/AuthProvider'
 import { useState } from 'react'
+import { getUser } from '@/api/users'
+import { useRouter } from 'next/navigation'
 
 interface LoginFormProps {
   toggleForm: () => void
@@ -16,7 +18,9 @@ export const LoginForm = ({ toggleForm }: LoginFormProps) => {
   const [password, setPassword] = useState('')
   const [errorEmail, setErrorEmail] = useState('')
   const [error, setError] = useState('')
+
   const { authTrue } = useAuth()
+  const router = useRouter()
 
   const validateEmail = (email: string) => {
     const isValid = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)
@@ -32,11 +36,13 @@ export const LoginForm = ({ toggleForm }: LoginFormProps) => {
     try {
       await login(email, password)
 
-      authCheck()
-      authTrue()
+      await authCheck()
+      const userData = await getUser()
+      authTrue(userData)
       setError('')
       setEmail('')
       setPassword('')
+      router.push(`/`)
     } catch (e) {
       console.log('Error authenticating user', e)
       setError('Error authenticating user')

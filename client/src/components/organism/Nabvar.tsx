@@ -59,7 +59,7 @@ export const Navbar = () => {
   }, [getUserInfo, authStatus])
 
   return (
-    <nav className='sticky top-0 flex flex-col sm:flex-row space-x-2 px-3 py-2 w-full bg-neutral-500 bg-opacity-10 backdrop-blur-[3px]'>
+    <nav className='z-10 sticky top-0 flex flex-col sm:flex-row space-x-2 px-3 py-2 w-full'>
       <Dropdown>
         <DropdownTrigger className='flex justify-center outline-none'>
           <Button type='button'>
@@ -69,7 +69,7 @@ export const Navbar = () => {
                 {user.last_name.charAt(0)}
               </div>
             ) : (
-              <div className='flex text-primary-light p-2 rounded-full text-xl font-semibold items-center justify-center'>
+              <div className='flex text-default-dark dark:text-default-light p-2 rounded-full text-xl font-semibold items-center justify-center'>
                 <MenuIcon size='sm' />
               </div>
             )}

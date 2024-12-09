@@ -28,3 +28,20 @@ export type CompanyData = {
   create_at: string
   update_at: string
 }
+
+export type ProductData = {
+  id: number
+  company_id: number
+  user_id: string
+  name: string
+  description: string
+  price: number
+  create_at: string
+  update_at: string
+}
+
+export type CategoryData = {
+  id: number
+  user_id: string
+  name: string
+}

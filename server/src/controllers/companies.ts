@@ -13,10 +13,10 @@ import { Request, Response } from 'express'
 export const getAllCompanies = async (req: Request, res: Response) => {
   try {
     const result = await getAllCompaniesModel()
-    defaultResponse({ res, status: 200, message: 'Users retrieved successfully', data: result.rows })
+    defaultResponse({ res, status: 200, message: 'Companies retrieved successfully', data: result.rows })
   } catch (e) {
-    console.log('Error retrieving users from database', e)
-    defaultResponse({ res, status: 500, message: 'Error retrieving users' })
+    console.log('Error retrieving Companies from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Companies' })
   }
 }
 
@@ -25,10 +25,10 @@ export const getAllCompaniesByUserId = async (req: Request, res: Response) => {
 
   try {
     const result = await getAllCompaniesByUserIdModel(userid)
-    defaultResponse({ res, status: 200, message: 'Users retrieved successfully', data: result.rows })
+    defaultResponse({ res, status: 200, message: 'Companies retrieved successfully', data: result.rows })
   } catch (e) {
-    console.log('Error retrieving users from database', e)
-    defaultResponse({ res, status: 500, message: 'Error retrieving users' })
+    console.log('Error retrieving Companies from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Companies' })
   }
 }
 

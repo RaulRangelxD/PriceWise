@@ -5,14 +5,10 @@ import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { InputForm } from '@/components/atoms/inputs/InputForm'
 import { useState } from 'react'
 import { useToastify } from '@/context/ToastifyProvider'
+import { useAuth } from '@/context/AuthProvider'
+import { useRouter } from 'next/navigation'
 
-interface AddCompanyFormProps {
-  userId: string
-  toggleForm: () => void
-  getData: () => void
-}
-
-export const AddCompanyForm = ({ userId, toggleForm, getData }: AddCompanyFormProps) => {
+export const AddCompanyForm = () => {
   const [name, setName] = useState<string>('')
   const [rif, setRif] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
@@ -25,6 +21,8 @@ export const AddCompanyForm = ({ userId, toggleForm, getData }: AddCompanyFormPr
 
   const [error, setError] = useState('')
 
+  const { userInContext } = useAuth()
+  const router = useRouter()
   const { notifySuccess, notifyError } = useToastify()
 
   const validateName = (name: string) => {
@@ -60,38 +58,47 @@ export const AddCompanyForm = ({ userId, toggleForm, getData }: AddCompanyFormPr
     if (!validateAddress(address)) return
 
     try {
-      await postCompany(userId, name, rif, phone, address)
+      if (!userInContext) return
+      await postCompany(userInContext.id, name, rif, phone, address)
       notifySuccess('Company registered succesfull', { autoClose: 2500 })
-      getData()
+      router.push(`/`)
     } catch (e) {
       console.log('Error register Company', e)
       setError('Error register Company')
       notifyError('Error register Company', { autoClose: 2500 })
     }
-    toggleForm()
   }
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className='w-full flex flex-col space-y-4 px-4 py-8 items-center'>
-      <InputForm placeholder='Company Name' value={name} onChange={setName} onBlur={validateName} />
-      {nameError && <p className='text-red-500 mt-2'>{nameError}</p>}
+    <div className='flex-1 flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center px-2'>
+      <div className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-defaul-dark dark:border-default-light py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-2xl  backdrop-blur-sm rounded transition duration-500'>
+        <form onSubmit={(e) => handleSubmit(e)} className='w-full flex flex-col space-y-4 px-4 py-8 items-center'>
+          <InputForm placeholder='Company Name' value={name} onChange={setName} onBlur={validateName} />
+          {nameError && <p className='text-red-500 mt-2'>{nameError}</p>}
 
-      <InputForm placeholder='RIF' value={rif} onChange={setRif} onBlur={validateRif} />
-      {rifError && <p className='text-red-500 mt-2'>{rifError}</p>}
+          <InputForm placeholder='RIF' value={rif} onChange={setRif} onBlur={validateRif} />
+          {rifError && <p className='text-red-500 mt-2'>{rifError}</p>}
 
-      <InputForm placeholder='Phone Number' value={phone} onChange={setPhone} onBlur={validatePhone} />
-      {phoneError && <p className='text-red-500 mt-2'>{phoneError}</p>}
+          <InputForm placeholder='Phone Number' value={phone} onChange={setPhone} onBlur={validatePhone} />
+          {phoneError && <p className='text-red-500 mt-2'>{phoneError}</p>}
 
-      <InputForm placeholder='Address' value={address} onChange={setAddress} onBlur={validateAddress} />
-      {addressError && <p className='text-red-500 mt-2'>{addressError}</p>}
+          <InputForm placeholder='Address' value={address} onChange={setAddress} onBlur={validateAddress} />
+          {addressError && <p className='text-red-500 mt-2'>{addressError}</p>}
 
-      {error && <p className='text-red-500'>{error}</p>}
+          {error && <p className='text-red-500'>{error}</p>}
 
-      <div className='flex flex-row space-x-2 justify-center'>
-        <DefaultButton type='submit'>Add Company</DefaultButton>
-        <DefaultButton color='btn-secondary' onClick={toggleForm}>
-          Back
-        </DefaultButton>
+          <div className='flex flex-row space-x-2 justify-center'>
+            <DefaultButton type='submit'>Add Company</DefaultButton>
+            <DefaultButton
+              color='btn-secondary'
+              onClick={() => {
+                router.push(`/`)
+              }}
+            >
+              Back
+            </DefaultButton>
+          </div>
+        </form>{' '}
       </div>
-    </form>
+    </div>
   )
 }

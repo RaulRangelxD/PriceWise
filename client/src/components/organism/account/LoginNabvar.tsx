@@ -11,7 +11,7 @@ export const LoginNavbar = () => {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <nav className='absolute top-0 flex flex-row px-3 py-2 w-full bg-transparent'>
+    <nav className='z-10 absolute top-0 flex flex-row px-3 py-2 w-full bg-transparent'>
       <div className='grow'></div>
       <IconButton onClick={toggleTheme} color='btn-third' Icon={theme === 'light' ? <SunIcon size='sm' /> : <MoonIcon size='sm' />} />
     </nav>

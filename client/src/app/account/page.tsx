@@ -1,4 +1,4 @@
-import { Account } from '@/components/template/Account'
+import { Account } from '@/components/template/account/Account'
 
 export default function AccountPage() {
   return <Account />
