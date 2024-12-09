@@ -2,7 +2,6 @@ import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { EditIcon } from '@/components/atoms/icons/Edit'
 import { EyeIcon } from '@/components/atoms/icons/EyeIcon'
 import { ProductData } from '@/lib/types'
-import { DeleteCompanyForm } from './company/DeleteCompanyForm'
 
 interface ProductsTableProps {
   productsData: ProductData[]
@@ -84,7 +83,6 @@ export const ProductsTable = ({ productsData, currentPage, rowsPerPage, setCurre
                       <DefaultButton onClick={() => {}} size='sm' color='btn-third'>
                         <EditIcon size='sm' />
                       </DefaultButton>
-                      <DeleteCompanyForm color='btn-third' companyId={product.id} getData={getData} />
                     </>
                   ) : (
                     ''
