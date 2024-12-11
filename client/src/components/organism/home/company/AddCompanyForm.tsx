@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useToastify } from '@/context/ToastifyProvider'
 import { useAuth } from '@/context/AuthProvider'
 import { useRouter } from 'next/navigation'
+import { BackIcon, PlusIcon } from '@/components/atoms/icons'
 
 export const AddCompanyForm = () => {
   const [name, setName] = useState<string>('')
@@ -104,13 +105,16 @@ export const AddCompanyForm = () => {
           {error && <p className='text-red-500'>{error}</p>}
 
           <div className='flex flex-row space-x-2 justify-center'>
-            <DefaultButton type='submit'>Add Company</DefaultButton>
+            <DefaultButton type='submit'>
+              <PlusIcon /> Add Company
+            </DefaultButton>
             <DefaultButton
               color='btn-secondary'
               onClick={() => {
-                router.push(`/`)
+                router.back()
               }}
             >
+              <BackIcon className='me-1' />
               Back
             </DefaultButton>
           </div>

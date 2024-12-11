@@ -2,15 +2,16 @@
 
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { authCheck, logout } from '@/api/auth'
-import { LogoutIcon } from '@/components/atoms/icons/Logout'
+import { LogoutIcon } from '@/components/atoms/icons/index'
 import { useRouter } from 'next/navigation'
 
 interface LogoutFormProps {
-  color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | ''
+  color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | 'btn-transparent' | ''
+  className?: string
   authFalse: () => void
 }
 
-export const LogoutForm = ({ color = 'btn-primary', authFalse }: LogoutFormProps) => {
+export const LogoutForm = ({ color = 'btn-primary', authFalse, className }: LogoutFormProps) => {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +29,7 @@ export const LogoutForm = ({ color = 'btn-primary', authFalse }: LogoutFormProps
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <DefaultButton color={color} className='w-full' type='submit'>
+        <DefaultButton color={color} className={`${className ? className : 'm-2'}`} type='submit'>
           <LogoutIcon /> Logout
         </DefaultButton>
       </form>

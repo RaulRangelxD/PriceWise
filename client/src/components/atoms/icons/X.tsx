@@ -4,16 +4,7 @@ interface XIconProps {
 }
 
 export const XIcon = ({ size = 'md', color = '' }: XIconProps) => (
-  <svg
-    className={`${size === 'sm' ? 'h-6 w-6' : size === 'md' ? 'h-8 w-8' : 'h-10 w-10'} ${color}`}
-    viewBox='0 0 24 24'
-    strokeWidth='2'
-    stroke='currentColor'
-    fill='none'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    {' '}
-    <path stroke='none' d='M0 0h24v24H0z' /> <line x1='18' y1='6' x2='6' y2='18' /> <line x1='6' y1='6' x2='18' y2='18' />
+  <svg className={`${size === 'sm' ? 'size-6' : size === 'md' ? 'size-8' : 'size-10'} ${color}`} fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor'>
+    <path strokeLinecap='round' strokeLinejoin='round' d='m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z' />
   </svg>
 )

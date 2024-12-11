@@ -21,6 +21,7 @@ import { EditUser } from '@/components/organism/account/EditUserForm'
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { PlusIcon } from '@/components/atoms/icons/Plus'
 import { KeyIcon } from '@/components/atoms/icons/Key'
+import { HomeIcon } from '@/components/atoms/icons'
 
 export const User = () => {
   const [user, setUser] = useState<UserInfo | null>(null)
@@ -132,21 +133,25 @@ export const User = () => {
                 {user.update_at && <p className='border-2 border-primary-light rounded-2xl px-1.5 font-semibold text-nowrap text-sm m-1'>Products: 54</p>}
               </div>
             </div>
-            <div className='flex flex-col space-y-2'>
+            <div className='flex flex-col flex-wrap'>
               {user.verified === 1 ? '' : <OtpsSend email={user.email} purpose='email_verification' toggleVerifyForm={toggleVerifyForm} />}
               <div>
-                <DefaultButton onClick={toggleChangePasswordForm} color='btn-primary' size='sm' className='flex flex-row items-center'>
+                <DefaultButton onClick={toggleChangePasswordForm} color='btn-primary' size='sm' className='m-2'>
                   <KeyIcon size='sm' className='pe-1' />
                   Change password
                 </DefaultButton>
               </div>
             </div>
-            <div className='flex flex-row space-x-2'>
+            <div className='flex flex-row flex-wrap'>
               <LogoutForm authFalse={authFalse} />
-              <DefaultButton onClick={toggleEditForm} color='btn-secondary'>
+              <DefaultButton onClick={toggleEditForm} className='m-2' color='btn-secondary'>
+                <EditIcon className='pe-1' />
                 Edit
               </DefaultButton>
-              <LinkButton href='/'>Home</LinkButton>
+              <LinkButton className='m-2' href='/'>
+                <HomeIcon className='pe-1' />
+                Home
+              </LinkButton>
             </div>
           </>
         ) : statusVerifyForm ? (

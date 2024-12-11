@@ -7,6 +7,10 @@ export const getAllCategoriesByUserIdModel = async (user_id) => {
     const result = await db.execute({ sql: `SELECT * FROM categories WHERE user_id = :user_id`, args: { user_id } });
     return result;
 };
+export const getAllCategoriesByUserIdAndPaginationModel = async (user_id, limit, offset) => {
+    const result = await db.execute({ sql: `SELECT * FROM categories WHERE user_id = :user_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { user_id, limit, offset } });
+    return result;
+};
 export const getCategoryByIdModel = async (id) => {
     const result = await db.execute({ sql: `SELECT * FROM categories WHERE id = :id`, args: { id } });
     return result;
@@ -20,7 +24,7 @@ export const postCategoryModel = async (user_id, name) => {
 };
 export const patchCategoryModel = async (name, id) => {
     const result = await db.execute({
-        sql: `UPDATE categories SET name = :name WHERE id = :id`,
+        sql: `UPDATE categories SET name = :name, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
         args: { name, id },
     });
     return result;

@@ -21,11 +21,11 @@ export const DeleteCompanyForm = ({ color = 'btn-primary', companyId }: DeleteCo
 
     try {
       await deleteCompany(companyId)
-      notifySuccess('Company edited succesfull', { autoClose: 2500 })
-      router.push(`/`)
+      notifySuccess('Company delete succesfull', { autoClose: 2500 })
+      router.back()
     } catch (e) {
       console.log('Error authenticating user', e)
-      notifyError('Error editing Company', { autoClose: 2500 })
+      notifyError('Error deleting Company', { autoClose: 2500 })
     }
   }
   return (
@@ -36,10 +36,21 @@ export const DeleteCompanyForm = ({ color = 'btn-primary', companyId }: DeleteCo
             <h1 className='text-2xl font-bold'>Delete</h1>
             <h2 className='text-xl'>Are you sure delete this company?</h2>
             <form onSubmit={(e) => handleSubmit(e)}>
-              <DefaultButton color={color} className='w-full' type='submit'>
-                <TrashIcon size='sm' className='me-1' />
-                Delete
-              </DefaultButton>
+              <div className='flex flex-row space-x-2 justify-center'>
+                <DefaultButton color={color} className='w-full' type='submit'>
+                  <TrashIcon size='sm' className='me-1' />
+                  Delete
+                </DefaultButton>
+                <DefaultButton
+                  type='button'
+                  color='btn-secondary'
+                  onClick={() => {
+                    router.back()
+                  }}
+                >
+                  Back
+                </DefaultButton>
+              </div>
             </form>
           </div>
         </div>

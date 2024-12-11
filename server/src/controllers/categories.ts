@@ -1,4 +1,12 @@
-import { getAllCategoriesModel, getAllCategoriesByUserIdModel, getCategoryByIdModel, postCategoryModel, patchCategoryModel, deleteCategoryModel } from '../models/categories.js'
+import {
+  getAllCategoriesModel,
+  getAllCategoriesByUserIdModel,
+  getAllCategoriesByUserIdAndPaginationModel,
+  getCategoryByIdModel,
+  postCategoryModel,
+  patchCategoryModel,
+  deleteCategoryModel,
+} from '../models/categories.js'
 import { defaultResponse } from '../utils/defaultRes.js'
 import { Request, Response } from 'express'
 
@@ -17,6 +25,28 @@ export const getAllCategoriesByUserId = async (req: Request, res: Response) => {
 
   try {
     const result = await getAllCategoriesByUserIdModel(userid)
+    defaultResponse({ res, status: 200, message: 'Categories retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Categories from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Categories' })
+  }
+}
+
+export const getAllCategoriesByUserIdAndPagination = async (req: Request, res: Response) => {
+  const { userid } = req.params
+
+  const limit = parseInt(req.query.limit as string, 10)
+  const offset = parseInt(req.query.offset as string, 10)
+
+  if (!userid || typeof limit !== 'number' || typeof offset !== 'number') {
+    defaultResponse({ res, status: 400, message: 'Missing query fields or type error' })
+    return
+  }
+
+  const pagination = limit * offset
+
+  try {
+    const result = await getAllCategoriesByUserIdAndPaginationModel(userid, limit, pagination)
     defaultResponse({ res, status: 200, message: 'Categories retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving Categories from database', e)

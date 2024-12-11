@@ -8,7 +8,7 @@ GET http://localhost:4000/companies/id/2
 GET http://localhost:4000/companies/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
 
 ### Get all companies by userid and pagination
-GET http://localhost:4000/companies/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=1
+GET http://localhost:4000/companies/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=0
 
 
 ### Create company

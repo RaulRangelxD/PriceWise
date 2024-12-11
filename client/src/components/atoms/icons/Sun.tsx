@@ -4,16 +4,11 @@ interface SunIconProps {
 }
 
 export const SunIcon = ({ size = 'md', color = '' }: SunIconProps) => (
-  <svg
-    className={`${size === 'sm' ? 'h-6 w-6' : size === 'md' ? 'h-8 w-8' : 'h-10 w-10'} ${color}`}
-    viewBox='0 0 24 24'
-    strokeWidth='2'
-    stroke='currentColor'
-    fill='none'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    {' '}
-    <path stroke='none' d='M0 0h24v24H0z' /> <circle cx='12' cy='12' r='4' /> <path d='M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7' />
+  <svg className={`${size === 'sm' ? 'size-6' : size === 'md' ? 'size-8' : 'size-10'} ${color}`} fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor'>
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z'
+    />
   </svg>
 )

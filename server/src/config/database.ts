@@ -36,7 +36,8 @@ export const createTables = async () => {
       otp TEXT NOT NULL,
       expires_at TIMESTAMP NOT NULL,
       purpose TEXT NOT NULL,
-      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `)
   } catch (e) {
@@ -85,7 +86,9 @@ export const createTables = async () => {
       CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      name TEXT NOT NULL UNIQUE
+      name TEXT NOT NULL UNIQUE,
+      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `)
   } catch (e) {
@@ -97,6 +100,8 @@ export const createTables = async () => {
       CREATE TABLE IF NOT EXISTS product_categories (
       product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
       category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (product_id, category_id)
       );
     `)
@@ -124,11 +129,11 @@ export const deleteTables = async () => {
   //   console.log('error deleting companies table', e)
   // }
 
-  try {
-    await db.execute('DROP TABLE products;')
-  } catch (e) {
-    console.log('error deleting products table', e)
-  }
+  // try {
+  //   await db.execute('DROP TABLE products;')
+  // } catch (e) {
+  //   console.log('error deleting products table', e)
+  // }
 
   try {
     await db.execute('DROP TABLE categories;')

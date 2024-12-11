@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 interface LinkButtonProps {
   href: string
-  type?: 'btn-primary' | 'btn-secondary' | 'btn-third'
+  type?: 'btn-primary' | 'btn-secondary' | 'btn-third' | 'btn-transparent'
   size?: 'sm' | 'md' | 'lg'
   className?: string
   children: React.ReactNode

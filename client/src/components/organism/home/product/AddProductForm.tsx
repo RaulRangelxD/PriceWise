@@ -10,6 +10,7 @@ import { postProduct } from '@/api/products'
 import { getAllCompaniesByUserId } from '@/api/companies'
 import Loading from '@/app/Loading'
 import { CompanyData } from '@/lib/types'
+import { BackIcon, PlusIcon } from '@/components/atoms/icons'
 
 interface AddProductFormProps {
   companyIdInParams?: number
@@ -117,7 +118,7 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
             ''
           ) : (
             <select
-              className='text-sm px-2 rounded-xl bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'
+              className='p-2 rounded-xl w-full bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'
               value={companyId.toString()}
               onChange={(e) => {
                 setCompanyId(Number(e.target.value))
@@ -166,13 +167,17 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
           {error && <p className='text-red-500'>{error}</p>}
 
           <div className='flex flex-row space-x-2 justify-center'>
-            <DefaultButton type='submit'>Add Product</DefaultButton>
+            <DefaultButton type='submit'>
+              <PlusIcon />
+              Add Product
+            </DefaultButton>
             <DefaultButton
               color='btn-secondary'
               onClick={() => {
                 router.back()
               }}
             >
+              <BackIcon size='sm' className='me-1' />
               Back
             </DefaultButton>
           </div>

@@ -4,16 +4,11 @@ interface MoonIconProps {
 }
 
 export const MoonIcon = ({ size = 'md', color = '' }: MoonIconProps) => (
-  <svg
-    className={`${size === 'sm' ? 'h-6 w-6' : size === 'md' ? 'h-8 w-8' : 'h-10 w-10'} ${color}`}
-    viewBox='0 0 24 24'
-    strokeWidth='2'
-    stroke='currentColor'
-    fill='none'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-  >
-    {' '}
-    <path stroke='none' d='M0 0h24v24H0z' /> <path d='M16.2 4a9.03 9.03 0 1 0 3.9 12a6.5 6.5 0 1 1 -3.9 -12' />
+  <svg className={`${size === 'sm' ? 'size-6' : size === 'md' ? 'size-8' : 'size-10'} ${color}`} fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor'>
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z'
+    />
   </svg>
 )

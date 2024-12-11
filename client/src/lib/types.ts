@@ -47,4 +47,6 @@ export type CategoryData = {
   id: number
   user_id: string
   name: string
+  create_at: string
+  update_at: string
 }

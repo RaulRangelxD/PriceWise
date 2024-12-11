@@ -5,13 +5,19 @@ import { useAuth } from '@/context/AuthProvider'
 import { getAllCompaniesByUserIdAndPagination } from '@/api/companies'
 import { useCallback, useEffect, useState } from 'react'
 import Loading from '@/app/Loading'
+import { LeftIcon, RightIcon } from '@/components/atoms/icons'
 
-export const CompaniesTable = () => {
+interface CompaniesTable {
+  rows: number[]
+  rowsDefault: number
+}
+
+export const CompaniesTable = ({ rows, rowsDefault }: CompaniesTable) => {
   const { userInContext } = useAuth()
   const router = useRouter()
   const [companyData, setCompanyData] = useState<CompanyData[] | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState(3)
+  const [rowsPerPage, setRowsPerPage] = useState(rowsDefault)
   const [placeholder, setPlaceholder] = useState(true)
 
   const [loading, setLoading] = useState(true)
@@ -87,14 +93,15 @@ export const CompaniesTable = () => {
 
   return !loading ? (
     <div className='mt-8 flex flex-col w-full justify-center items-center space-y-2'>
-      <h2 className='text-3xl font-bold'>Companies</h2>
       <div className='flex flex-row w-full justify-end '>
         <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 rounded-xl ps-1'>
           <span>Rows per page: </span>
           <select className='text-sm py-1 px-2 rounded-xl ms-1 bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' value={rowsPerPage} onChange={handleRowsChange}>
-            <option value={3}>3</option>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
+            {rows.map((row) => (
+              <option key={row} value={row}>
+                {row}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -149,10 +156,12 @@ export const CompaniesTable = () => {
         </div>
         <div className='grow'></div>
         <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('prev')}>
+          <LeftIcon size='sm' />
           Previous
         </DefaultButton>
         <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('next')}>
           Next
+          <RightIcon size='sm' />
         </DefaultButton>
       </div>
     </div>

@@ -1,7 +1,7 @@
 interface DefaultButtonProps {
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset' | undefined
-  color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | ''
+  color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | 'btn-transparent' | ''
   size?: 'sm' | 'md' | 'lg'
   className?: string
   children: React.ReactNode

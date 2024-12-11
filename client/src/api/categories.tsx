@@ -23,6 +23,16 @@ export const getAllCategoriesByUserId = async (userId: string): Promise<Category
   }
 }
 
+export const getAllCategoriesByUserIdAndPagination = async (userId: string, limit: number, offset: number): Promise<CategoryData[]> => {
+  try {
+    const result = await axios.get(`${BASE_URL}/userid/pag/${userId}`, { params: { limit, offset }, headers: { 'Cache-Control': 'no-store' }, withCredentials: true })
+    return result.data.data
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
 export const getCategoryById = async (id: number): Promise<CategoryData> => {
   try {
     const result = await axios.get(`${BASE_URL}/id/${id}`, { headers: { 'Cache-Control': 'no-store' }, withCredentials: true })

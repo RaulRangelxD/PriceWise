@@ -34,7 +34,7 @@ export const OtpsSend = ({ email, purpose, toggleVerifyForm }: OtpsSendProps) =>
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <DefaultButton color='btn-primary' type='submit' size='sm' className='flex flex-row items-center'>
+        <DefaultButton color='btn-primary' type='submit' size='sm' className='m-2'>
           <CheckIcon size='sm' className='pe-1' />
           Verify
         </DefaultButton>
