@@ -1,21 +1,21 @@
 'use client'
 
-import { EditCompanyForm } from '@/components/organism/home/company/EditCompanyForm'
+import { EditProductForm } from '@/components/organism/home/product/EditProductForm'
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { CompanyData } from '@/lib/types'
-import { getCompanyById } from '@/api/companies'
+import { ProductData } from '@/lib/types'
+import { getProductById } from '@/api/products'
 import Loading from '@/app/Loading'
 
-export default function EditCompany() {
+export default function EditProduct() {
   const params = useParams<{ id: string }>()
 
-  const [companyData, setCompanyData] = useState<CompanyData | null>(null)
+  const [productData, setProductData] = useState<ProductData | null>(null)
 
   const getData = useCallback(async () => {
     try {
-      const companiesDataResult = await getCompanyById(params.id)
-      setCompanyData(companiesDataResult)
+      const productsDataResult = await getProductById(Number(params.id))
+      setProductData(productsDataResult)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
@@ -25,5 +25,5 @@ export default function EditCompany() {
     getData()
   }, [getData])
 
-  return !companyData ? <Loading msg='Loading data' /> : <EditCompanyForm companyData={companyData} getData={getData} />
+  return !productData ? <Loading msg='Loading data' /> : <EditProductForm productData={productData} getData={getData} />
 }

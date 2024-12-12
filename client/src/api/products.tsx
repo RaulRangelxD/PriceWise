@@ -62,9 +62,9 @@ export const postProduct = async (companyId: number, userId: string, name: strin
   }
 }
 
-export const patchProduct = async (name: string, description: string, price: string, weight: number, weightUnit: string, quantity: number, id: number): Promise<void> => {
+export const patchProduct = async (name: string, description: string, weight: number, weightUnit: string, quantity: number, id: number): Promise<void> => {
   try {
-    await axios.patch(`${BASE_URL}/id/${id}`, { name, description, price, weight, weightUnit, quantity }, { headers: { 'Content-Type': 'application/json' } })
+    await axios.patch(`${BASE_URL}/id/${id}`, { name, description, weight, weightUnit, quantity }, { headers: { 'Content-Type': 'application/json' } })
   } catch (error) {
     console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
     throw error

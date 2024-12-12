@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'
 interface DeleteCategoryFormProps {
   color?: 'btn-primary' | 'btn-secondary' | 'btn-third' | ''
   categoryId: number
-  getData: () => void
 }
 
 export const DeleteCategoryForm = ({ color = 'btn-primary', categoryId }: DeleteCategoryFormProps) => {

@@ -1,8 +1,8 @@
 ### Get all products
 GET http://localhost:4000/products
 
-### Get company by id
-GET http://localhost:4000/products/id/1
+### Get product by id
+GET http://localhost:4000/products/id/2
 
 ### Get all products by userid
 GET http://localhost:4000/products/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
@@ -35,7 +35,6 @@ Content-Type: application/json
 {
     "name": "Product 1",
     "description": "Product 1 description modified",
-    "price": 1.6,
     "weight":1,
     "weight_unit":"kg",
     "quantity":1

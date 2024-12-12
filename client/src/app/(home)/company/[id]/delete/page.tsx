@@ -7,7 +7,7 @@ import { CompanyData } from '@/lib/types'
 import { getCompanyById } from '@/api/companies'
 import Loading from '@/app/Loading'
 
-export default function EditCompany() {
+export default function DeleteCompany() {
   const params = useParams<{ id: string }>()
 
   const [companyData, setCompanyData] = useState<CompanyData | null>(null)
@@ -25,5 +25,5 @@ export default function EditCompany() {
     getData()
   }, [getData])
 
-  return !companyData ? <Loading msg='Loading data' /> : <DeleteCompanyForm companyId={companyData.id} getData={getData} />
+  return !companyData ? <Loading msg='Loading data' /> : <DeleteCompanyForm companyId={companyData.id} />
 }

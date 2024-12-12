@@ -25,5 +25,5 @@ export default function EditCategory() {
     getData()
   }, [getData])
 
-  return !categoryData ? <Loading msg='Loading data' /> : <DeleteCategoryForm categoryId={categoryData.id} getData={getData} />
+  return !categoryData ? <Loading msg='Loading data' /> : <DeleteCategoryForm categoryId={categoryData.id} />
 }

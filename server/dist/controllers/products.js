@@ -85,13 +85,13 @@ export const postProduct = async (req, res) => {
 };
 export const patchProduct = async (req, res) => {
     const { id } = req.params;
-    const { name, description, price, weight, weight_unit, quantity } = req.body;
-    if (!name || !description || !price || !weight || !weight_unit || !quantity) {
+    const { name, description, weight, weightUnit, quantity } = req.body;
+    if (!name || !description || !weight || !weightUnit || !quantity) {
         defaultResponse({ res, status: 400, message: 'Missing required fields' });
         return;
     }
     try {
-        await patchProductModel(name, description, price, weight, weight_unit, quantity, id);
+        await patchProductModel(name, description, weight, weightUnit, quantity, id);
         defaultResponse({ res, status: 200, message: 'Product updated successfully' });
     }
     catch (e) {

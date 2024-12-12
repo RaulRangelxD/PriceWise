@@ -80,10 +80,10 @@ export const postProductModel = async (company_id, user_id, name, description, p
     });
     return result;
 };
-export const patchProductModel = async (name, description, price, weight, weight_unit, quantity, id) => {
+export const patchProductModel = async (name, description, weight, weight_unit, quantity, id) => {
     const result = await db.execute({
-        sql: `UPDATE products SET name = :name, description = :description, price = :price, weight = :weight, weight_unit = :weight_unit, quantity = :quantity, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
-        args: { name, description, price, weight, weight_unit, quantity, id },
+        sql: `UPDATE products SET name = :name, description = :description, weight = :weight, weight_unit = :weight_unit, quantity = :quantity, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
+        args: { name, description, weight, weight_unit, quantity, id },
     });
     return result;
 };

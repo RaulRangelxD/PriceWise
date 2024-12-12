@@ -107,15 +107,15 @@ export const postProduct = async (req: Request, res: Response) => {
 
 export const patchProduct = async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params
-  const { name, description, price, weight, weight_unit, quantity } = req.body
+  const { name, description, weight, weightUnit, quantity } = req.body
 
-  if (!name || !description || !price || !weight || !weight_unit || !quantity) {
+  if (!name || !description || !weight || !weightUnit || !quantity) {
     defaultResponse({ res, status: 400, message: 'Missing required fields' })
     return
   }
 
   try {
-    await patchProductModel(name, description, price, weight, weight_unit, quantity, id)
+    await patchProductModel(name, description, weight, weightUnit, quantity, id)
     defaultResponse({ res, status: 200, message: 'Product updated successfully' })
   } catch (e) {
     console.log('Error updating Product in database', e)
