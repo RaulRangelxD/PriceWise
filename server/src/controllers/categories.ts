@@ -1,6 +1,8 @@
 import {
   getAllCategoriesModel,
   getAllCategoriesByUserIdModel,
+  getAllCategoriesByUserIdAndNotInProductIdModel,
+  getAllCategoriesInProductIdModel,
   getAllCategoriesByUserIdAndPaginationModel,
   getCategoryByIdModel,
   postCategoryModel,
@@ -25,6 +27,31 @@ export const getAllCategoriesByUserId = async (req: Request, res: Response) => {
 
   try {
     const result = await getAllCategoriesByUserIdModel(userid)
+    defaultResponse({ res, status: 200, message: 'Categories retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Categories from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Categories' })
+  }
+}
+
+export const getAllCategoriesByUserIdAndNotInProductId = async (req: Request, res: Response) => {
+  const { userid } = req.params
+  const { productid } = req.query
+
+  try {
+    const result = await getAllCategoriesByUserIdAndNotInProductIdModel(userid, String(productid))
+    defaultResponse({ res, status: 200, message: 'Categories retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Categories from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Categories' })
+  }
+}
+
+export const getAllCategoriesInProductId = async (req: Request, res: Response) => {
+  const { productid } = req.params
+
+  try {
+    const result = await getAllCategoriesInProductIdModel(productid)
     defaultResponse({ res, status: 200, message: 'Categories retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving Categories from database', e)

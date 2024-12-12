@@ -1,6 +1,7 @@
 'use client'
 
 import { DefaultButton } from '@/components/atoms/buttons/Button'
+import { PlusIcon } from '@/components/atoms/icons'
 import { BackIcon } from '@/components/atoms/icons/Back'
 import { EditIcon } from '@/components/atoms/icons/Edit'
 import { TrashIcon } from '@/components/atoms/icons/TrashIcon'
@@ -21,11 +22,11 @@ export const Product = ({ productData }: ProductProps) => {
         <div>
           <DefaultButton
             onClick={() => {
-              router.push('/')
+              router.back()
             }}
           >
             <BackIcon size='sm' className='me-1' />
-            Back to Home
+            Back
           </DefaultButton>
         </div>
         <div className='flex flex-col border rounded-xl bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'>
@@ -38,6 +39,10 @@ export const Product = ({ productData }: ProductProps) => {
             <div className='m-8'>
               <span className='text-lg'>Price</span>
               <p className='font-semibold'>{productData.price}$</p>
+            </div>
+            <div className='m-8'>
+              <span className='text-lg'>Categories</span>
+              <p className='font-semibold'>{productData.categories}</p>
             </div>
             <div className='m-8'>
               <span className='text-lg'>Weight</span>
@@ -65,7 +70,7 @@ export const Product = ({ productData }: ProductProps) => {
           <DefaultButton
             className='m-2'
             onClick={() => {
-              router.push(`/company/${productData.id}/edit`)
+              router.push(`/product/${productData.id}/edit`)
             }}
           >
             <EditIcon size='sm' className='me-1' /> Edit Product
@@ -73,10 +78,26 @@ export const Product = ({ productData }: ProductProps) => {
           <DefaultButton
             className='m-2'
             onClick={() => {
-              router.push(`/company/${productData.id}/delete`)
+              router.push(`/product/${productData.id}/addcategory`)
+            }}
+          >
+            <PlusIcon size='sm' className='me-1' /> Add a Category
+          </DefaultButton>
+          <DefaultButton
+            className='m-2'
+            onClick={() => {
+              router.push(`/product/${productData.id}/delete`)
             }}
           >
             <TrashIcon size='sm' className='me-1' /> Delete Product
+          </DefaultButton>
+          <DefaultButton
+            className='m-2'
+            onClick={() => {
+              router.push(`/product/${productData.id}/deletecategory`)
+            }}
+          >
+            <TrashIcon size='sm' className='me-1' /> Delete a Category
           </DefaultButton>
         </div>
       </div>

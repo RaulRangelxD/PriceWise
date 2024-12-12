@@ -49,7 +49,7 @@ export const createTables = async () => {
       CREATE TABLE IF NOT EXISTS companies (
       id INTEGER PRIMARY KEY,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      name TEXT NOT NULL,
+      name TEXT UNIQUE NOT NULL,
       rif TEXT,
       phone TEXT,
       address TEXT,
@@ -67,7 +67,7 @@ export const createTables = async () => {
       id INTEGER PRIMARY KEY,
       company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      name TEXT NOT NULL,
+      name TEXT UNIQUE NOT NULL,
       description TEXT,
       price INT NOT NULL,
       weight INTEGER NOT NULL,
@@ -86,7 +86,7 @@ export const createTables = async () => {
       CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY,
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      name TEXT NOT NULL UNIQUE,
+      name TEXT UNIQUE NOT NULL,
       create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -98,11 +98,11 @@ export const createTables = async () => {
   try {
     await db.execute(`
       CREATE TABLE IF NOT EXISTS product_categories (
+      id INTEGER PRIMARY KEY,
       product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
       category_id INTEGER NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
       create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      PRIMARY KEY (product_id, category_id)
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `)
   } catch (e) {
@@ -135,11 +135,11 @@ export const deleteTables = async () => {
   //   console.log('error deleting products table', e)
   // }
 
-  try {
-    await db.execute('DROP TABLE categories;')
-  } catch (e) {
-    console.log('error deleting categories table', e)
-  }
+  // try {
+  //   await db.execute('DROP TABLE categories;')
+  // } catch (e) {
+  //   console.log('error deleting categories table', e)
+  // }
 
   try {
     await db.execute('DROP TABLE product_categories;')

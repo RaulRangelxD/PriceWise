@@ -22,7 +22,7 @@ export const DeleteCompanyForm = ({ color = 'btn-primary', companyId }: DeleteCo
     try {
       await deleteCompany(companyId)
       notifySuccess('Company delete succesfull', { autoClose: 2500 })
-      router.back()
+      router.push('/')
     } catch (e) {
       console.log('Error authenticating user', e)
       notifyError('Error deleting Company', { autoClose: 2500 })

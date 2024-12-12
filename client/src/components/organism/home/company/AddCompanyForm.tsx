@@ -110,6 +110,7 @@ export const AddCompanyForm = () => {
             </DefaultButton>
             <DefaultButton
               color='btn-secondary'
+              type='button'
               onClick={() => {
                 router.back()
               }}

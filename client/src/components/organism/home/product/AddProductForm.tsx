@@ -173,6 +173,7 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
             </DefaultButton>
             <DefaultButton
               color='btn-secondary'
+              type='button'
               onClick={() => {
                 router.back()
               }}

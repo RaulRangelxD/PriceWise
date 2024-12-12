@@ -7,6 +7,12 @@ GET http://localhost:4000/categories/id/1
 ### Get all categories by userid
 GET http://localhost:4000/categories/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
 
+### Get all categories by userid and notproductid
+GET http://localhost:4000/categories/userid/notproductid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?productid=1
+
+### Get all categories by productid
+GET http://localhost:4000/categories/userid/productid/1
+
 ### Get all categories by userid and pagination
 GET http://localhost:4000/categories/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=0
 

@@ -7,6 +7,38 @@ export const getAllCategoriesByUserIdModel = async (user_id) => {
     const result = await db.execute({ sql: `SELECT * FROM categories WHERE user_id = :user_id`, args: { user_id } });
     return result;
 };
+export const getAllCategoriesByUserIdAndNotInProductIdModel = async (user_id, product_id) => {
+    console.log(user_id, product_id);
+    const result = await db.execute({
+        sql: `
+      SELECT * 
+      FROM categories 
+      WHERE user_id = :user_id 
+      AND id NOT IN (
+        SELECT category_id 
+        FROM product_categories 
+        WHERE product_id = :product_id
+      )
+    `,
+        args: { user_id, product_id },
+    });
+    return result;
+};
+export const getAllCategoriesInProductIdModel = async (product_id) => {
+    const result = await db.execute({
+        sql: `
+      SELECT * 
+      FROM categories 
+      WHERE id IN (
+        SELECT category_id 
+        FROM product_categories 
+        WHERE product_id = :product_id
+      )
+    `,
+        args: { product_id },
+    });
+    return result;
+};
 export const getAllCategoriesByUserIdAndPaginationModel = async (user_id, limit, offset) => {
     const result = await db.execute({ sql: `SELECT * FROM categories WHERE user_id = :user_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { user_id, limit, offset } });
     return result;

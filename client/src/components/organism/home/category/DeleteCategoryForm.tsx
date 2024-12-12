@@ -22,7 +22,7 @@ export const DeleteCategoryForm = ({ color = 'btn-primary', categoryId }: Delete
     try {
       await deleteCategory(categoryId)
       notifySuccess('Category delete succesfull', { autoClose: 2500 })
-      router.back()
+      router.push('/')
     } catch (e) {
       console.log('Error authenticating user', e)
       notifyError('Error deleting Category', { autoClose: 2500 })

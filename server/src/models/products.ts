@@ -1,27 +1,81 @@
 import db from '../config/database.js'
 
 export const getAllProductsModel = async () => {
-  const result = await db.execute(`SELECT * FROM products`)
+  const result = await db.execute(`
+    SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    GROUP BY p.id
+  `)
   return result
 }
 
 export const getAllProductsByUserIdModel = async (user_id: string) => {
-  const result = await db.execute({ sql: `SELECT * FROM products WHERE user_id = :user_id`, args: { user_id } })
+  const result = await db.execute({
+    sql: `
+    SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    WHERE p.user_id = :user_id
+    GROUP BY p.id
+  `,
+    args: { user_id },
+  })
   return result
 }
 
 export const getAllProductsByUserIdAndPaginationModel = async (user_id: string, limit: number, offset: number) => {
-  const result = await db.execute({ sql: `SELECT * FROM products WHERE user_id = :user_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { user_id, limit, offset } })
+  const result = await db.execute({
+    sql: `
+    SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    WHERE p.user_id = :user_id
+    GROUP BY p.id
+    ORDER BY update_at
+    DESC LIMIT :limit
+    OFFSET :offset`,
+    args: { user_id, limit, offset },
+  })
   return result
 }
 
 export const getAllProductsByCompanyIdAndPaginationModel = async (company_id: string, limit: number, offset: number) => {
-  const result = await db.execute({ sql: `SELECT * FROM products WHERE company_id = :company_id ORDER BY update_at DESC LIMIT :limit OFFSET :offset`, args: { company_id, limit, offset } })
+  const result = await db.execute({
+    sql: `
+    SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    WHERE company_id = :company_id
+    GROUP BY p.id
+    ORDER BY update_at
+    DESC LIMIT :limit
+    OFFSET :offset`,
+    args: { company_id, limit, offset },
+  })
   return result
 }
 
 export const getProductByIdModel = async (id: string) => {
-  const result = await db.execute({ sql: `SELECT * FROM products WHERE id = :id`, args: { id } })
+  const result = await db.execute({
+    sql: `SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    WHERE p.id = :id -- Filter by product id
+    GROUP BY p.id
+    `,
+    args: { id },
+  })
   return result
 }
 

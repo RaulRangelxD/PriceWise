@@ -1,0 +1,32 @@
+### Get all productcategories
+GET http://localhost:4000/productcategories
+
+### Get category by id
+GET http://localhost:4000/productcategories/id/1
+
+### Get all productcategories by userid
+GET http://localhost:4000/productcategories/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
+
+### Get all productcategories by productid
+GET http://localhost:4000/productcategories/productid/1
+
+### Get all productcategories by categoryid
+GET http://localhost:4000/productcategories/categoryid/1
+
+### Create category
+POST http://localhost:4000/productcategories
+Content-Type: application/json
+
+{
+    "productId": "1",
+    "categoryId": "2"
+}
+
+### Delete category
+DELETE  http://localhost:4000/productcategories/id/2
+Content-Type: application/json
+
+### Delete category productidandcategoryid
+DELETE  http://localhost:4000/productidandcategoryid/EXAMPLE NO XD
+Content-Type: application/json
+

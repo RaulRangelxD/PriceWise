@@ -41,6 +41,7 @@ export type ProductData = {
   quantity: number
   create_at: string
   update_at: string
+  categories: string
 }
 
 export type CategoryData = {
@@ -49,4 +50,10 @@ export type CategoryData = {
   name: string
   create_at: string
   update_at: string
+}
+
+export type ProductCategoryData = {
+  id: number
+  product_id: string
+  category_id: string
 }

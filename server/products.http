@@ -8,7 +8,7 @@ GET http://localhost:4000/products/id/1
 GET http://localhost:4000/products/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
 
 ### Get all products by userid and pagination
-GET http://localhost:4000/products/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=1
+GET http://localhost:4000/products/userid/pag/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?limit=5&offset=0
 
 ### Get all products by companyid and pagination
 GET http://localhost:4000/products/companyid/pag/10?limit=5&offset=1

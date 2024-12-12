@@ -91,7 +91,7 @@ export const CompaniesTable = ({ rows, rowsDefault }: CompaniesTable) => {
     getData()
   }, [getData])
 
-  return !loading ? (
+  return (
     <div className='mt-8 flex flex-col w-full justify-center items-center space-y-2'>
       <div className='flex flex-row w-full justify-end '>
         <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 rounded-xl ps-1'>
@@ -106,48 +106,54 @@ export const CompaniesTable = ({ rows, rowsDefault }: CompaniesTable) => {
         </div>
       </div>
       <div className='overflow-x-auto w-full rounded-xl'>
-        <table className='w-full table-auto'>
-          <thead>
-            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
-              <th className='px-2 py-2 text-left'>
-                <h3>Company Name</h3>
-              </th>
-              <th className='px-2 py-2 text-left'>
-                <h3>Rif</h3>
-              </th>
-              <th className='px-2 py-2 text-left'>
-                <h3>Phone</h3>
-              </th>
-              <th className='px-2 py-2 text-left'>
-                <h3>Address</h3>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {companyData?.map((company, index) => (
-              <tr
-                key={company.id}
-                onClick={() => handleOnClick(company.id)}
-                className={`${
-                  index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
-              >
-                <td className='px-2 py-2 text-nowrap'>
-                  <p>{company.name}</p>
-                </td>
-                <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.rif}</p>
-                </td>
-                <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.phone}</p>
-                </td>
-                <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                  <p className='text-ellipsis overflow-hidden'>{company.address}</p>
-                </td>
+        {!loading ? (
+          <table className='w-full table-auto'>
+            <thead>
+              <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
+                <th className='px-2 py-2 text-left'>
+                  <h3>Company Name</h3>
+                </th>
+                <th className='px-2 py-2 text-left'>
+                  <h3>Rif</h3>
+                </th>
+                <th className='px-2 py-2 text-left'>
+                  <h3>Phone</h3>
+                </th>
+                <th className='px-2 py-2 text-left'>
+                  <h3>Address</h3>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {companyData?.map((company, index) => (
+                <tr
+                  key={company.id}
+                  onClick={() => handleOnClick(company.id)}
+                  className={`${
+                    index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
+                  } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== companyData.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''}`}
+                >
+                  <td className='px-2 py-2 text-nowrap'>
+                    <p>{company.name}</p>
+                  </td>
+                  <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                    <p className='text-ellipsis overflow-hidden'>{company.rif}</p>
+                  </td>
+                  <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                    <p className='text-ellipsis overflow-hidden'>{company.phone}</p>
+                  </td>
+                  <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                    <p className='text-ellipsis overflow-hidden'>{company.address}</p>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className='flex justify-center items-center w-full h-60'>
+            <Loading msg='Loading Data' />
+          </div>
+        )}
       </div>
       <div className='flex flex-row justify-center items-center space-x-2 w-full'>
         <div className='flex items-center text-sm py-1 px-2 rounded-xl ms-1 bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'>
@@ -165,7 +171,5 @@ export const CompaniesTable = ({ rows, rowsDefault }: CompaniesTable) => {
         </DefaultButton>
       </div>
     </div>
-  ) : (
-    <Loading msg='Loading Data' />
   )
 }
