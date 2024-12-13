@@ -1,0 +1,27 @@
+### Get all productprices
+GET http://localhost:4000/productprices
+
+### Get productprice by id
+GET http://localhost:4000/productprices/id/1
+
+### Get all productprices by userid
+GET http://localhost:4000/productprices/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
+
+### Get all productprices by productid
+GET http://localhost:4000/productprices/productid/1
+
+### Get all productprices by productid and pagination
+GET http://localhost:4000/productprices/productid/pag/1?limit=5&offset=0
+
+### Create productprice
+POST http://localhost:4000/productprices
+Content-Type: application/json
+
+{
+    "productId": "1",
+    "price": 1.4
+}
+
+### Delete productprice
+DELETE  http://localhost:4000/productprices/id/2
+Content-Type: application/json

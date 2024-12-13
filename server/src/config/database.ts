@@ -69,7 +69,7 @@ export const createTables = async () => {
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       name TEXT UNIQUE NOT NULL,
       description TEXT,
-      price INT NOT NULL,
+      price REAL NOT NULL,
       weight INTEGER NOT NULL,
       weight_unit TEXT NOT NULL,
       quantity INTEGER NOT NULL,
@@ -79,6 +79,18 @@ export const createTables = async () => {
     `)
   } catch (e) {
     console.log('Error creating products table:', e)
+  }
+
+  try {
+    await db.execute(`CREATE TABLE IF NOT EXISTS product_prices (
+  id INTEGER PRIMARY KEY,
+  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  price REAL NOT NULL,
+  create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);`)
+  } catch (e) {
+    console.log('Error creating product_prices table:', e)
   }
 
   try {
@@ -123,23 +135,29 @@ export const deleteTables = async () => {
   //   console.log('error deleting otps table', e)
   // }
 
-  // try {
-  //   await db.execute('DROP TABLE companies;')
-  // } catch (e) {
-  //   console.log('error deleting companies table', e)
-  // }
+  try {
+    await db.execute('DROP TABLE companies;')
+  } catch (e) {
+    console.log('error deleting companies table', e)
+  }
 
-  // try {
-  //   await db.execute('DROP TABLE products;')
-  // } catch (e) {
-  //   console.log('error deleting products table', e)
-  // }
+  try {
+    await db.execute('DROP TABLE products;')
+  } catch (e) {
+    console.log('error deleting products table', e)
+  }
 
-  // try {
-  //   await db.execute('DROP TABLE categories;')
-  // } catch (e) {
-  //   console.log('error deleting categories table', e)
-  // }
+  try {
+    await db.execute('DROP TABLE product_prices;')
+  } catch (e) {
+    console.log('error deleting product_prices table', e)
+  }
+
+  try {
+    await db.execute('DROP TABLE categories;')
+  } catch (e) {
+    console.log('error deleting categories table', e)
+  }
 
   try {
     await db.execute('DROP TABLE product_categories;')

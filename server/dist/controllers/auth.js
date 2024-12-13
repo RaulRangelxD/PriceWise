@@ -4,7 +4,7 @@ import { loginUserModel } from '../models/auth.js';
 import { defaultResponse } from '../utils/defaultRes.js';
 import { getUserByEmailModel } from '../models/users.js';
 const JWT_SECRET = 'your-secret-key';
-const JWT_EXPIRATION = '1h';
+const JWT_EXPIRATION = '4h';
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -24,7 +24,7 @@ export const loginUser = async (req, res) => {
         res.cookie('auth', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 60 * 60 * 1000,
+            maxAge: 4 * 60 * 60 * 1000,
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         });
         return defaultResponse({
@@ -80,7 +80,7 @@ export const logoutUser = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-            expires: new Date(0), // Expired immediately
+            expires: new Date(0),
         });
         res.clearCookie('auth');
         return defaultResponse({ res, status: 200, message: 'Logout successful', data: null });

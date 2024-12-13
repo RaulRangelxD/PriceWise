@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useToastify } from '@/context/ToastifyProvider'
 import { ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
+import { postProductPrice } from '@/api/productPrices'
 
 interface EditProductFormProps {
   productData: ProductData
@@ -16,14 +17,18 @@ interface EditProductFormProps {
 export const EditProductForm = ({ productData, getData }: EditProductFormProps) => {
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [price, setPrice] = useState<string>('')
   const [weight, setWeight] = useState<string>('')
   const [weightUnit, setWeightUnit] = useState<string>('Kg')
   const [quantity, setQuantity] = useState<string>('')
 
   const [nameError, setNameError] = useState<string>('')
   const [descriptionError, setDescriptionError] = useState<string>('')
+  const [priceError, setPriceError] = useState<string>('')
   const [weightError, setWeightError] = useState<string>('')
   const [quantityError, setQuantityError] = useState<string>('')
+
+  const [lastPrice, setLastPrice] = useState<string>('')
 
   const [error, setError] = useState('')
 
@@ -33,6 +38,8 @@ export const EditProductForm = ({ productData, getData }: EditProductFormProps) 
   const getEditData = useCallback(async () => {
     setName(productData.name)
     setDescription(productData.description)
+    setPrice(String(productData.price))
+    setLastPrice(String(productData.price))
     setWeight(String(productData.weight))
     setWeightUnit(productData.weight_unit)
     setQuantity(String(productData.quantity))
@@ -47,6 +54,12 @@ export const EditProductForm = ({ productData, getData }: EditProductFormProps) 
   const validateDescription = (description: string) => {
     const isValid = /^.{1,300}$/.test(description)
     setDescriptionError(isValid ? '' : 'Invalid description format only 300 caracters')
+    return isValid
+  }
+
+  const validatePrice = (price: string) => {
+    const isValid = /^\d+(?:\.\d{1,2})?$/.test(price)
+    setPriceError(isValid ? '' : 'Invalid price format only numbers and two decimal')
     return isValid
   }
 
@@ -66,9 +79,15 @@ export const EditProductForm = ({ productData, getData }: EditProductFormProps) 
     e.preventDefault()
 
     if (!validateName(name)) return
+    if (!validateDescription(description)) return
+    if (!validatePrice(price)) return
+    if (!validateWeight(weight)) return
+    if (!validateQuantity(quantity)) return
 
     try {
-      await patchProduct(name, description, Number(weight), weightUnit, Number(quantity), productData.id)
+      const patchedProduct = await patchProduct(name, description, price, Number(weight), weightUnit, Number(quantity), productData.id)
+      if (price !== lastPrice) await postProductPrice(String(patchedProduct.id), price)
+
       notifySuccess('Product edited succesfull', { autoClose: 2500 })
       getData()
       router.back()
@@ -91,6 +110,9 @@ export const EditProductForm = ({ productData, getData }: EditProductFormProps) 
 
           <InputForm placeholder='Description' value={description} onChange={setDescription} onBlur={validateDescription} />
           {descriptionError && <p className='text-red-500 mt-2'>{descriptionError}</p>}
+
+          <InputForm placeholder='Price' value={price} type='number' onChange={(value) => setPrice(value)} onBlur={validatePrice} />
+          {priceError && <p className='text-red-500 mt-2'>{priceError}</p>}
 
           <div className='flex flex-row w-full space-x-1'>
             <InputForm placeholder='Weight' value={weight} type='number' onChange={(value) => setWeight(value)} onBlur={validateWeight} />

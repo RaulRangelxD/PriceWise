@@ -11,6 +11,7 @@ import { getAllCompaniesByUserId } from '@/api/companies'
 import Loading from '@/app/Loading'
 import { CompanyData } from '@/lib/types'
 import { BackIcon, PlusIcon } from '@/components/atoms/icons'
+import { postProductPrice } from '@/api/productPrices'
 
 interface AddProductFormProps {
   companyIdInParams?: number
@@ -52,8 +53,8 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
   }
 
   const validatePrice = (price: string) => {
-    const isValid = /^[0-9]*$/.test(price)
-    setPriceError(isValid ? '' : 'Invalid price format only numbers')
+    const isValid = /^\d+(?:\.\d{1,2})?$/.test(price)
+    setPriceError(isValid ? '' : 'Invalid price format only numbers and two decimal')
     return isValid
   }
 
@@ -79,7 +80,8 @@ export const AddProductForm = ({ companyIdInParams }: AddProductFormProps) => {
     if (!validateQuantity(quantity)) return
     try {
       if (!userInContext) return
-      await postProduct(Number(companyId), userInContext.id, name, description, Number(price), Number(weight), weightUnit, Number(quantity))
+      const postedProduct = await postProduct(Number(companyId), userInContext.id, name, description, Number(price), Number(weight), weightUnit, Number(quantity))
+      await postProductPrice(String(postedProduct.id), price)
       notifySuccess('Product registered succesfull', { autoClose: 2500 })
       setError('')
       router.back()

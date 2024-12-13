@@ -16,7 +16,6 @@ export const getProductCategoryByIdModel = async (id: string) => {
 }
 
 export const getProductCategoryByProductIdModel = async (product_id: string) => {
-  console.log(product_id)
   const result = await db.execute({ sql: `SELECT * FROM product_categories WHERE product_id = :product_id`, args: { product_id } })
   return result
 }

@@ -57,3 +57,9 @@ export type ProductCategoryData = {
   product_id: string
   category_id: string
 }
+
+export type ProductPriceData = {
+  id: number
+  product_id: string
+  price: string
+}

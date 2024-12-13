@@ -5,15 +5,17 @@ import { PlusIcon } from '@/components/atoms/icons'
 import { BackIcon } from '@/components/atoms/icons/Back'
 import { EditIcon } from '@/components/atoms/icons/Edit'
 import { TrashIcon } from '@/components/atoms/icons/TrashIcon'
+import { ProductsPriceTable } from '@/components/organism/home/productPrices/ProductPricesTable'
 import { ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 
 interface ProductProps {
+  productIdInParams: string
   productData: ProductData
   getData: () => void
 }
 
-export const Product = ({ productData }: ProductProps) => {
+export const Product = ({ productIdInParams, productData }: ProductProps) => {
   const router = useRouter()
 
   return (
@@ -100,6 +102,7 @@ export const Product = ({ productData }: ProductProps) => {
             <TrashIcon size='sm' className='me-1' /> Delete a Category
           </DefaultButton>
         </div>
+        <ProductsPriceTable productIdInParams={productIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
       </div>
     </div>
   )

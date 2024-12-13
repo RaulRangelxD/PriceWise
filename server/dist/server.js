@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { authRouter, otpsRouter, usersRouter, companiesRouter, productsRouter, categoriesRouter, productCategoriesRouter } from './routes/index.js';
 import { createTables } from './config/database.js';
+import { productPricesRouter } from './routes/productPrices.js';
 dotenv.config();
 const app = express();
 app.use(morgan('dev'));
@@ -24,6 +25,7 @@ app.use('/companies', companiesRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/productcategories', productCategoriesRouter);
+app.use('/productprices', productPricesRouter);
 // deleteTables()
 createTables();
 const port = process.env.PORT || 4000;

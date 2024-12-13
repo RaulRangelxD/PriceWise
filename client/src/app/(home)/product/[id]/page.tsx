@@ -25,5 +25,5 @@ export default function ProductId() {
     getData()
   }, [getData])
 
-  return !productData ? <Loading msg='Loading data' /> : <Product productData={productData} getData={getData} />
+  return !productData ? <Loading msg='Loading data' /> : <Product productIdInParams={params.id} productData={productData} getData={getData} />
 }

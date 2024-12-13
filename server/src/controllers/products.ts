@@ -97,8 +97,8 @@ export const postProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    await postProductModel(companyId, userId, name, description, price, weight, weightUnit, quantity)
-    defaultResponse({ res, status: 201, message: 'Product create successfully' })
+    const product = await postProductModel(companyId, userId, name, description, price, weight, weightUnit, quantity)
+    defaultResponse({ res, status: 201, message: 'Product created successfully', data: product })
   } catch (e) {
     console.log('Error creating Product in database', e)
     defaultResponse({ res, status: 500, message: 'Error creating Product' })
@@ -107,16 +107,16 @@ export const postProduct = async (req: Request, res: Response) => {
 
 export const patchProduct = async (req: Request<{ id: string }>, res: Response) => {
   const { id } = req.params
-  const { name, description, weight, weightUnit, quantity } = req.body
+  const { name, description, price, weight, weightUnit, quantity } = req.body
 
-  if (!name || !description || !weight || !weightUnit || !quantity) {
+  if (!name || !description || !price || !weight || !weightUnit || !quantity) {
     defaultResponse({ res, status: 400, message: 'Missing required fields' })
     return
   }
 
   try {
-    await patchProductModel(name, description, weight, weightUnit, quantity, id)
-    defaultResponse({ res, status: 200, message: 'Product updated successfully' })
+    const product = await patchProductModel(name, description, price, weight, weightUnit, quantity, id)
+    defaultResponse({ res, status: 200, message: 'Product updated successfully', data: product })
   } catch (e) {
     console.log('Error updating Product in database', e)
     defaultResponse({ res, status: 500, message: 'Error updating Product' })

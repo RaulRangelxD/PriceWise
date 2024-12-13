@@ -73,19 +73,39 @@ export const getProductByIdModel = async (id) => {
     });
     return result;
 };
-export const postProductModel = async (company_id, user_id, name, description, price, weight, weight_unit, quantity) => {
-    const result = await db.execute({
-        sql: `INSERT INTO products (company_id, user_id, name, description, price, weight, weight_unit, quantity) VALUES (:company_id, :user_id, :name, :description, :price, :weight, :weight_unit, :quantity)`,
-        args: { company_id, user_id, name, description, price, weight, weight_unit, quantity },
+export const postProductModel = async (companyId, userId, name, description, price, weight, weightUnit, quantity) => {
+    const insertResult = await db.execute({
+        sql: `
+      INSERT INTO products (company_id, user_id, name, description, price, weight, weight_unit, quantity, create_at, update_at)
+      VALUES (:companyId, :userId, :name, :description, :price, :weight, :weightUnit, :quantity, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    `,
+        args: { companyId, userId, name, description, price, weight, weightUnit, quantity },
     });
-    return result;
+    const productId = insertResult.lastInsertRowid;
+    const productResult = await db.execute({
+        sql: `
+      SELECT * 
+      FROM products
+      WHERE id = :id;
+    `,
+        args: { id: String(productId) },
+    });
+    return productResult.rows[0];
 };
-export const patchProductModel = async (name, description, weight, weight_unit, quantity, id) => {
+export const patchProductModel = async (name, description, price, weight, weight_unit, quantity, id) => {
     const result = await db.execute({
-        sql: `UPDATE products SET name = :name, description = :description, weight = :weight, weight_unit = :weight_unit, quantity = :quantity, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
-        args: { name, description, weight, weight_unit, quantity, id },
+        sql: `UPDATE products SET name = :name, description = :description, price = :price , weight = :weight, weight_unit = :weight_unit, quantity = :quantity, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
+        args: { name, description, price, weight, weight_unit, quantity, id },
     });
-    return result;
+    const productResult = await db.execute({
+        sql: `
+      SELECT * 
+      FROM products
+      WHERE id = :id;
+    `,
+        args: { id },
+    });
+    return productResult.rows[0];
 };
 export const deleteProductModel = async (id) => {
     const result = await db.execute({
