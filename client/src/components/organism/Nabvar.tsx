@@ -133,8 +133,8 @@ export const Navbar = () => {
                 </LinkButton>
               </DropdownItem>
               <DropdownItem className='flex flex-row p-0' key='Category'>
-                <LinkButton type='btn-transparent' size='md' href='/category/add'>
-                  {<TagIcon />}(Add) Category
+                <LinkButton type='btn-transparent' size='md' href='/category'>
+                  {<TagIcon />}Category
                 </LinkButton>
               </DropdownItem>
             </>

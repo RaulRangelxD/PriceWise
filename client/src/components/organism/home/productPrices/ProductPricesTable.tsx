@@ -57,7 +57,7 @@ export const ProductsPriceTable = ({ productIdInParams, rows, rowsDefault }: Pro
   }, [getData])
 
   return (
-    <div className='flex flex-row flex-wrap justify-center items-end'>
+    <div className='flex flex-row flex-wrap justify-center items-center'>
       <div className='mt-8 flex flex-col max-w-xs justify-center items-center space-y-2'>
         <div className='flex flex-row w-full justify-end '>
           <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 rounded-xl ps-1'>
@@ -108,14 +108,14 @@ export const ProductsPriceTable = ({ productIdInParams, rows, rowsDefault }: Pro
                         {priceDifference === null ? (
                           <p className='text-gray-500 italic'>N/A</p>
                         ) : (
-                          <p className={`${priceDifference > 0 ? 'text-red-500' : 'text-green-500'}`}>{priceDifference.toFixed(2)}$</p>
+                          <p className={`${priceDifference > 0 ? 'text-red-800 dark:text-red-500' : 'text-green-800 dark:text-green-500'}`}>{priceDifference.toFixed(2)}$</p>
                         )}
                       </td>
                       <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
                         {percentageDifference === null ? (
                           <p className='text-gray-500 italic'>N/A</p>
                         ) : (
-                          <p className={`${percentageDifference > 0 ? 'text-red-500' : 'text-green-500'}`}>{percentageDifference.toFixed(2)}%</p>
+                          <p className={`${percentageDifference > 0 ? 'text-red-800 dark:text-red-500' : 'text-green-800 dark:text-green-500'}`}>{percentageDifference.toFixed(2)}%</p>
                         )}
                       </td>
                     </tr>
