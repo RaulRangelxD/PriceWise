@@ -8,6 +8,7 @@ import { searchInTable } from '@/api/search'
 import { CategoryData, CompanyData, ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import * as Dialog from 'toldo'
+import Loading from '@/app/Loading'
 
 interface SearchProps {
   companies?: boolean
@@ -19,6 +20,7 @@ type SearchResult = (ProductData | CategoryData | CompanyData) & { table: string
 
 export const Search = ({ companies, products, categories }: SearchProps) => {
   const [search, setSearch] = useState<string>('')
+  const [searchLoading, setSearchLoading] = useState<boolean>(false)
   const [searchError, setSearchError] = useState<string>('')
   const [error, setError] = useState('')
   const [results, setResults] = useState<SearchResult[]>([])
@@ -52,6 +54,7 @@ export const Search = ({ companies, products, categories }: SearchProps) => {
   const fetchResults = async (query: string) => {
     try {
       if (!userInContext || !query) return
+      setSearchLoading(true)
       const newResults: SearchResult[] = []
 
       if (companies) {
@@ -66,6 +69,7 @@ export const Search = ({ companies, products, categories }: SearchProps) => {
         const categoriesSearch = await searchInTable(userInContext.id, 'categories', query)
         newResults.push(...categoriesSearch.map((item) => ({ ...item, table: 'categories' })))
       }
+      setSearchLoading(false)
 
       setResults(newResults)
       setError('')
@@ -112,7 +116,9 @@ export const Search = ({ companies, products, categories }: SearchProps) => {
             <Dialog.Title className='px-6 pt-5 font-semibold text-foreground text-large'>Search</Dialog.Title>
             {searchError && <p className='text-red-500 mt-2'>{searchError}</p>}
             {error && <p className='text-red-500'>{error}</p>}
-            {results.length > 0 ? (
+            {searchLoading ? (
+              <Loading msg='Searching' />
+            ) : results.length > 0 ? (
               <ul className='overflow-x-auto w-full m-2 rounded-xl'>
                 {results.map((item, index) => (
                   <li
