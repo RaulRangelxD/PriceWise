@@ -3,7 +3,7 @@
 import { useAuth } from '@/context/AuthProvider'
 import { useTheme } from '@/context/ThemeProvider'
 
-import { HomeIcon, UserIcon, SunIcon, MoonIcon, CheckIcon, InfoIcon, MenuIcon, SearchIcon, StoreIcon, InboxStackIcon, TagIcon } from '@/components/atoms/icons/index'
+import { HomeIcon, UserIcon, SunIcon, MoonIcon, CheckIcon, InfoIcon, MenuIcon, StoreIcon, InboxStackIcon, TagIcon } from '@/components/atoms/icons/index'
 
 import { Button } from '@nextui-org/button'
 
@@ -15,9 +15,9 @@ import { LogoutForm } from '@/components/organism/account/LogoutForm'
 
 import { LinkButton } from '@/components/atoms/buttons/LinkButton'
 import { DefaultButton } from '@/components/atoms/buttons/Button'
-import { InputForm } from '@/components/atoms/inputs/InputForm'
 
 import { useRouter } from 'next/navigation'
+import { Search } from '@/components/organism/Search'
 
 export const Navbar = () => {
   const { auth, authFalse } = useAuth()
@@ -161,8 +161,7 @@ export const Navbar = () => {
       </Dropdown>
       <div className='flex w-full justify-center items-center'>
         <div className='flex flex-row max-w-2xl w-full justify-center items-center'>
-          <InputForm placeholder='Search' className='focus:bg-default-light focus:bg-opacity-50 focus:dark:bg-default-dark focus:dark:bg-opacity-50 rounded-t' />
-          <SearchIcon size='sm' />
+          <Search companies={true} products={true} categories={true} />
         </div>
       </div>
     </nav>

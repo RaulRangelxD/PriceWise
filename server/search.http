@@ -1,0 +1,2 @@
+### Get all categories by userid and notproductid
+GET http://localhost:4000/search/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?table=categories&keyword=Hari
