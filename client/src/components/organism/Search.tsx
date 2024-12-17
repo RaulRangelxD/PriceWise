@@ -55,6 +55,7 @@ export const Search = ({ companies, products, categories }: SearchProps) => {
     try {
       if (!userInContext || !query) return
       setSearchLoading(true)
+      setIsModalOpen(true)
       const newResults: SearchResult[] = []
 
       if (companies) {
@@ -73,7 +74,6 @@ export const Search = ({ companies, products, categories }: SearchProps) => {
 
       setResults(newResults)
       setError('')
-      if (newResults.length > 0) setIsModalOpen(true)
     } catch (e) {
       console.error('Error searching', e)
       setError('Error searching. Please try again.')
