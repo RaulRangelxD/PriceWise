@@ -4,6 +4,7 @@ import {
   getAllProductsByUserId,
   getAllProductsByUserIdAndPagination,
   getAllProductsByCompanyIdAndPagination,
+  getAllProductsByCategoryIdAndPagination,
   getProductById,
   postProduct,
   patchProduct,
@@ -16,6 +17,7 @@ productsRouter.get('/', getAllProducts)
 productsRouter.get('/userid/:userid', getAllProductsByUserId)
 productsRouter.get('/userid/pag/:userid', getAllProductsByUserIdAndPagination)
 productsRouter.get('/companyid/pag/:companyid', getAllProductsByCompanyIdAndPagination)
+productsRouter.get('/categoryid/pag/:categoryid', getAllProductsByCategoryIdAndPagination)
 productsRouter.get('/id/:id', getProductById)
 
 productsRouter.post('/', postProduct)

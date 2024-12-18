@@ -56,10 +56,27 @@ export const getAllProductsByCompanyIdAndPaginationModel = async (company_id: st
     LEFT JOIN categories AS c ON c.id = pc.category_id
     WHERE company_id = :company_id
     GROUP BY p.id
-    ORDER BY update_at
-    DESC LIMIT :limit
+    ORDER BY update_at DESC
+    LIMIT :limit
     OFFSET :offset`,
     args: { company_id, limit, offset },
+  })
+  return result
+}
+
+export const getAllProductsByCategoryIdAndPaginationModel = async (category_id: string, limit: number, offset: number) => {
+  const result = await db.execute({
+    sql: `
+      SELECT p.*, 
+      COALESCE(GROUP_CONCAT(c.name), '') AS categories
+      FROM products AS p
+      LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+      LEFT JOIN categories AS c ON c.id = pc.category_id
+      WHERE pc.category_id = :category_id
+      GROUP BY p.id
+      ORDER BY p.update_at DESC
+      LIMIT :limit OFFSET :offset`,
+    args: { category_id, limit, offset },
   })
   return result
 }

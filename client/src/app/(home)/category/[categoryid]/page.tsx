@@ -8,22 +8,22 @@ import { CategoryData } from '@/lib/types'
 import { getCategoryById } from '@/api/categories'
 
 export default function CategoryId() {
-  const params = useParams<{ id: string }>()
+  const params = useParams<{ categoryid: string }>()
 
   const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
 
   const getData = useCallback(async () => {
     try {
-      const companiesDataResult = await getCategoryById(Number(params.id))
+      const companiesDataResult = await getCategoryById(Number(params.categoryid))
       setCategoryData(companiesDataResult)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [params.id])
+  }, [params.categoryid])
 
   useEffect(() => {
     getData()
   }, [getData])
 
-  return !categoryData ? <Loading msg='Loading data' /> : <Category categoryData={categoryData} getData={getData} />
+  return !categoryData ? <Loading msg='Loading data' /> : <Category categoryData={categoryData} categoryIdInParams={params.categoryid} getData={getData} />
 }

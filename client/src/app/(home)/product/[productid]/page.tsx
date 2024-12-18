@@ -8,22 +8,22 @@ import { ProductData } from '@/lib/types'
 import { getProductById } from '@/api/products'
 
 export default function ProductId() {
-  const params = useParams<{ id: string }>()
+  const params = useParams<{ productid: string }>()
 
   const [productData, setProductData] = useState<ProductData | null>(null)
 
   const getData = useCallback(async () => {
     try {
-      const companiesDataResult = await getProductById(Number(params.id))
+      const companiesDataResult = await getProductById(Number(params.productid))
       setProductData(companiesDataResult)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [params.id])
+  }, [params.productid])
 
   useEffect(() => {
     getData()
   }, [getData])
 
-  return !productData ? <Loading msg='Loading data' /> : <Product productIdInParams={params.id} productData={productData} getData={getData} />
+  return !productData ? <Loading msg='Loading data' /> : <Product productIdInParams={params.productid} productData={productData} getData={getData} />
 }

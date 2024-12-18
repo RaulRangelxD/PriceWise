@@ -8,18 +8,18 @@ import { getCategoryById } from '@/api/categories'
 import Loading from '@/app/Loading'
 
 export default function EditCategory() {
-  const params = useParams<{ id: string }>()
+  const params = useParams<{ categoryid: string }>()
 
   const [categoryData, setCategoryData] = useState<CategoryData | null>(null)
 
   const getData = useCallback(async () => {
     try {
-      const categoryDataResult = await getCategoryById(Number(params.id))
+      const categoryDataResult = await getCategoryById(Number(params.categoryid))
       setCategoryData(categoryDataResult)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [params.id])
+  }, [params.categoryid])
 
   useEffect(() => {
     getData()

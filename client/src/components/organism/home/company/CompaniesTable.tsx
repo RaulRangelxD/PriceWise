@@ -161,11 +161,11 @@ export const CompaniesTable = ({ rows, rowsDefault }: CompaniesTable) => {
           <span className='ms-1'>{currentPage}</span>
         </div>
         <div className='grow'></div>
-        <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('prev')}>
+        <DefaultButton size='md' color='btn-secondary' onClick={() => handlePageChange('prev')}>
           <LeftIcon size='sm' />
           Previous
         </DefaultButton>
-        <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('next')}>
+        <DefaultButton size='md' color='btn-secondary' onClick={() => handlePageChange('next')}>
           Next
           <RightIcon size='sm' />
         </DefaultButton>

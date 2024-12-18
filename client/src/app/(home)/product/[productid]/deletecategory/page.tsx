@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import { DeleteProductCategoryForm } from '@/components/organism/home/category/DeleteProductCategoryForm'
 
 export default function AddProductCompany() {
-  const params = useParams<{ id: string }>()
+  const params = useParams<{ productid: string }>()
 
-  return <DeleteProductCategoryForm productIdInParams={params.id} />
+  return <DeleteProductCategoryForm productIdInParams={params.productid} />
 }

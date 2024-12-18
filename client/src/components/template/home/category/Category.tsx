@@ -2,15 +2,17 @@
 
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { BackIcon, EditIcon, TrashIcon } from '@/components/atoms/icons'
+import { ProductsTable } from '@/components/organism/home/product/ProductsTable'
 import { CategoryData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 
 interface CategoryProps {
   categoryData: CategoryData
+  categoryIdInParams: string
   getData: () => void
 }
 
-export const Category = ({ categoryData }: CategoryProps) => {
+export const Category = ({ categoryData, categoryIdInParams }: CategoryProps) => {
   const router = useRouter()
 
   return (
@@ -57,6 +59,7 @@ export const Category = ({ categoryData }: CategoryProps) => {
             <TrashIcon size='sm' className='me-1' /> Delete Category
           </DefaultButton>
         </div>
+        <ProductsTable categoryIdInParams={categoryIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
       </div>
     </div>
   )

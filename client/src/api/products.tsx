@@ -43,6 +43,16 @@ export const getAllProductsByCompanyIdAndPagination = async (companyId: number, 
   }
 }
 
+export const getAllProductsByCategoryIdAndPagination = async (categoryId: string, limit: number, offset: number): Promise<ProductData[]> => {
+  try {
+    const result = await axios.get(`${BASE_URL}/categoryid/pag/${categoryId}`, { params: { limit, offset }, headers: { 'Cache-Control': 'no-store' }, withCredentials: true })
+    return result.data.data
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
 export const getProductById = async (id: number): Promise<ProductData> => {
   try {
     const result = await axios.get(`${BASE_URL}/id/${id}`, { headers: { 'Cache-Control': 'no-store' }, withCredentials: true })

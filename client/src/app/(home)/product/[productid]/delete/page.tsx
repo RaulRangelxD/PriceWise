@@ -8,18 +8,18 @@ import { getProductById } from '@/api/products'
 import Loading from '@/app/Loading'
 
 export default function DeleteProduct() {
-  const params = useParams<{ id: string }>()
+  const params = useParams<{ productid: string }>()
 
   const [productData, setProductData] = useState<ProductData | null>(null)
 
   const getData = useCallback(async () => {
     try {
-      const productsDataResult = await getProductById(Number(params.id))
+      const productsDataResult = await getProductById(Number(params.productid))
       setProductData(productsDataResult)
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [params.id])
+  }, [params.productid])
 
   useEffect(() => {
     getData()

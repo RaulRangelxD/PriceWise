@@ -2,18 +2,19 @@ import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthProvider'
-import { getAllProductsByCompanyIdAndPagination, getAllProductsByUserIdAndPagination } from '@/api/products'
+import { getAllProductsByCategoryIdAndPagination, getAllProductsByCompanyIdAndPagination, getAllProductsByUserIdAndPagination } from '@/api/products'
 import { useCallback, useEffect, useState } from 'react'
 import Loading from '@/app/Loading'
 import { LeftIcon, RightIcon } from '@/components/atoms/icons'
 
 interface ProductsTableProps {
   companyIdInParams?: number
+  categoryIdInParams?: string
   rows: number[]
   rowsDefault: number
 }
 
-export const ProductsTable = ({ companyIdInParams, rows, rowsDefault }: ProductsTableProps) => {
+export const ProductsTable = ({ companyIdInParams, categoryIdInParams, rows, rowsDefault }: ProductsTableProps) => {
   const { userInContext } = useAuth()
   const router = useRouter()
   const [productsData, setProductsData] = useState<ProductData[] | null>(null)
@@ -105,10 +106,17 @@ export const ProductsTable = ({ companyIdInParams, rows, rowsDefault }: Products
         setPlaceholder(false)
         setLoading(false)
       }
+      if (categoryIdInParams) {
+        const productsDataResult = await getAllProductsByCategoryIdAndPagination(categoryIdInParams, rowsPerPage, currentPage - 1)
+        if (productsDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
+        setProductsData(productsDataResult)
+        setPlaceholder(false)
+        setLoading(false)
+      }
     } catch (error) {
       console.error('Error fetching info:', error)
     }
-  }, [userInContext, companyIdInParams, rowsPerPage, currentPage, tablePlaceholder])
+  }, [userInContext, companyIdInParams, categoryIdInParams, tablePlaceholder, rowsPerPage, currentPage])
 
   useEffect(() => {
     getData()
@@ -201,11 +209,11 @@ export const ProductsTable = ({ companyIdInParams, rows, rowsDefault }: Products
           <span className='ms-1'>{currentPage}</span>
         </div>
         <div className='grow'></div>
-        <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('prev')}>
+        <DefaultButton size='md' color='btn-secondary' onClick={() => handlePageChange('prev')}>
           <LeftIcon size='sm' />
           Previous
         </DefaultButton>
-        <DefaultButton size='md' color='btn-primary' onClick={() => handlePageChange('next')}>
+        <DefaultButton size='md' color='btn-secondary' onClick={() => handlePageChange('next')}>
           Next
           <RightIcon size='sm' />
         </DefaultButton>

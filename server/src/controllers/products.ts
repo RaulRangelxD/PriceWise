@@ -3,6 +3,7 @@ import {
   getAllProductsByUserIdModel,
   getAllProductsByUserIdAndPaginationModel,
   getAllProductsByCompanyIdAndPaginationModel,
+  getAllProductsByCategoryIdAndPaginationModel,
   getProductByIdModel,
   postProductModel,
   patchProductModel,
@@ -70,6 +71,28 @@ export const getAllProductsByCompanyIdAndPagination = async (req: Request, res: 
 
   try {
     const result = await getAllProductsByCompanyIdAndPaginationModel(companyid, limit, pagination)
+    defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Products from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Products' })
+  }
+}
+
+export const getAllProductsByCategoryIdAndPagination = async (req: Request, res: Response) => {
+  const { categoryid } = req.params
+
+  const limit = parseInt(req.query.limit as string, 10)
+  const offset = parseInt(req.query.offset as string, 10)
+
+  if (!categoryid || typeof limit !== 'number' || typeof offset !== 'number') {
+    defaultResponse({ res, status: 400, message: 'Missing query fields or type error' })
+    return
+  }
+
+  const pagination = limit * offset
+
+  try {
+    const result = await getAllProductsByCategoryIdAndPaginationModel(categoryid, limit, pagination)
     defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving Products from database', e)
