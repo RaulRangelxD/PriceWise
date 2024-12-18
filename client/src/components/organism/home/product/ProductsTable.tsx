@@ -151,6 +151,9 @@ export const ProductsTable = ({ companyIdInParams, categoryIdInParams, rows, row
                   <h3>Price</h3>
                 </th>
                 <th className='px-2 py-2 text-left'>
+                  <h3>U/P</h3>
+                </th>
+                <th className='px-2 py-2 text-left'>
                   <h3>Categories</h3>
                 </th>
                 <th className='px-2 py-2 text-left'>
@@ -178,6 +181,9 @@ export const ProductsTable = ({ companyIdInParams, categoryIdInParams, rows, row
                   </td>
                   <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
                     <p className='text-ellipsis overflow-hidden'>{product.price}$</p>
+                  </td>
+                  <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
+                    <p className='text-ellipsis overflow-hidden'>{product.price / product.quantity}$</p>
                   </td>
                   <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
                     <p className='text-ellipsis overflow-hidden'>{product.categories}</p>
