@@ -122,7 +122,7 @@ export const Search = () => {
 
   return (
     <div className='flex flex-col w-full'>
-      <form onSubmit={handleSubmit} className='w-full flex flex-row items-center'>
+      <form onSubmit={handleSubmit} className='w-full flex flex-row items-end'>
         <div className='flex flex-col w-full'>
           <InputForm
             placeholder='Search'
