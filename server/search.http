@@ -1,2 +1,8 @@
-### Get all categories by userid and notproductid
-GET http://localhost:4000/search/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?table=categories&keyword=Hari
+### Get search results in companies
+GET http://localhost:4000/search/companies/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?keyword=a
+
+### Get search results in products
+GET http://localhost:4000/search/products/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?keyword=a
+
+### Get search results in categories
+GET http://localhost:4000/search/categories/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12?keyword=a

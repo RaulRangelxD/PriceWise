@@ -10,6 +10,7 @@ import { postProductCategory } from '@/api/productCategories'
 import Loading from '@/app/Loading'
 import { getAllCategoriesByUserIdAndNotProductId } from '@/api/categories'
 import { CategoryData } from '@/lib/types'
+import { SelectInput } from '@/components/atoms/inputs/SelectInput'
 
 interface AddProductCategoryFormProps {
   productIdInParams: string
@@ -65,23 +66,16 @@ export const AddProductCategoryForm = ({ productIdInParams }: AddProductCategory
     <div className='flex-1 flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center px-2'>
       <div className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-defaul-dark dark:border-default-light py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-2xl  backdrop-blur-sm rounded transition duration-500'>
         <form onSubmit={(e) => handleSubmit(e)} className='w-full flex flex-col space-y-4 px-4 py-8 items-center'>
-          <select
-            className='p-2 rounded-xl w-full bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'
+          <SelectInput
             value={category.toString()}
-            onChange={(e) => {
-              setCategory(e.target.value)
-            }}
-          >
-            <option className='hidden' value={''}>
-              Select a company
-            </option>
-
-            {categoriesData.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+            onChange={(value) => setCategory(value)}
+            className='w-full rounded-t-xl focus:bg-default-light focus:dark:bg-default-dark focus:bg-opacity-50 focus:dark:bg-opacity-50'
+            options={categoriesData.map((category) => ({
+              value: category.id,
+              name: category.name,
+            }))}
+            placeholder='Select a company'
+          />
 
           {error && <p className='text-red-500'>{error}</p>}
 

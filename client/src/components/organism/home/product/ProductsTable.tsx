@@ -183,7 +183,7 @@ export const ProductsTable = ({ companyIdInParams, categoryIdInParams, rows, row
                     <p className='text-ellipsis overflow-hidden'>{product.price}$</p>
                   </td>
                   <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
-                    <p className='text-ellipsis overflow-hidden'>{product.price / product.quantity}$</p>
+                    <p className='text-ellipsis overflow-hidden'>{(product.price / product.quantity).toFixed(2)}$</p>
                   </td>
                   <td className='px-2 py-2 text-nowrap max-w-20 md:max-w-36 lg:max-w-60'>
                     <p className='text-ellipsis overflow-hidden'>{product.categories}</p>

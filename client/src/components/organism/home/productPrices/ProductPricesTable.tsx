@@ -1,6 +1,5 @@
 import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { ProductPriceData } from '@/lib/types'
-// import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthProvider'
 import { getAllProductPricesByProductIdAndPagination } from '@/api/productPrices'
 import { useCallback, useEffect, useState } from 'react'
@@ -16,7 +15,6 @@ interface ProductsPriceTableProps {
 
 export const ProductsPriceTable = ({ productIdInParams, rows, rowsDefault }: ProductsPriceTableProps) => {
   const { userInContext } = useAuth()
-  // const router = useRouter()
   const [productsData, setProductsData] = useState<ProductPriceData[] | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(rowsDefault)
@@ -89,7 +87,7 @@ export const ProductsPriceTable = ({ productIdInParams, rows, rowsDefault }: Pro
               </thead>
               <tbody>
                 {productsData?.map((product, index) => {
-                  const prevProduct = productsData[index + 1] // Compare with the previous product
+                  const prevProduct = productsData[index + 1]
                   const priceDifference = prevProduct ? Number(product.price) - Number(prevProduct.price) : 0
                   const percentageDifference = prevProduct ? ((Number(product.price) - Number(prevProduct.price)) / Number(prevProduct.price)) * 100 : 0
 

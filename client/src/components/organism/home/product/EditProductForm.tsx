@@ -8,6 +8,7 @@ import { useToastify } from '@/context/ToastifyProvider'
 import { ProductData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import { postProductPrice } from '@/api/productPrices'
+import { SelectInput } from '@/components/atoms/inputs/SelectInput'
 
 interface EditProductFormProps {
   productData: ProductData
@@ -116,18 +117,17 @@ export const EditProductForm = ({ productData, getData }: EditProductFormProps) 
 
           <div className='flex flex-row w-full space-x-1'>
             <InputForm placeholder='Weight' value={weight} type='number' onChange={(value) => setWeight(value)} onBlur={validateWeight} />
-            <select
-              className='text-sm px-2 rounded-xl bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50'
+            <SelectInput
               value={weightUnit}
-              onChange={(e) => {
-                setWeightUnit(e.target.value)
-              }}
-            >
-              <option value={'Kg'}>Kg</option>
-              <option value={'Mg'}>Mg</option>
-              <option value={'Lt'}>Lt</option>
-              <option value={'ml'}>ml</option>
-            </select>
+              onChange={(value) => setWeightUnit(value)}
+              className='w-auto rounded-tr-xl focus:bg-default-light focus:dark:bg-default-dark focus:bg-opacity-50 focus:dark:bg-opacity-50'
+              options={[
+                { value: 'Kg', name: 'Kg' },
+                { value: 'Mg', name: 'Mg' },
+                { value: 'Lt', name: 'Lt' },
+                { value: 'ml', name: 'ml' },
+              ]}
+            />
           </div>
           {weightError && <p className='text-red-500 mt-2'>{weightError}</p>}
 

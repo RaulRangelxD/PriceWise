@@ -1,13 +1,9 @@
 import db from '../config/database.js';
-const ALLOWED_TABLES = ['companies', 'products', 'categories'];
-export const searchInTableModel = async (table, keyword, user_id) => {
+export const searchInCompaniesModel = async (keyword, user_id) => {
     try {
-        if (!ALLOWED_TABLES.includes(table)) {
-            throw new Error(`Invalid table name: ${table}`);
-        }
         const query = `
       SELECT * 
-      FROM ${table} 
+      FROM companies 
       WHERE name LIKE ? AND user_id = ? 
       ORDER BY create_at DESC;
     `;
@@ -15,7 +11,39 @@ export const searchInTableModel = async (table, keyword, user_id) => {
         return results;
     }
     catch (e) {
-        console.error(`Error searching in ${table}:`, e);
+        console.error(`Error searching in companies:`, e);
+        throw e;
+    }
+};
+export const searchInProductsModel = async (keyword, user_id) => {
+    try {
+        const query = `
+      SELECT *, (price / quantity) AS unit_price 
+      FROM products 
+      WHERE name LIKE ? AND user_id = ? 
+      ORDER BY unit_price ASC;
+    `;
+        const results = await db.execute({ sql: query, args: [`%${keyword}%`, user_id] });
+        return results;
+    }
+    catch (e) {
+        console.error(`Error searching in products:`, e);
+        throw e;
+    }
+};
+export const searchInCategoriesModel = async (keyword, user_id) => {
+    try {
+        const query = `
+      SELECT * 
+      FROM categories 
+      WHERE name LIKE ? AND user_id = ? 
+      ORDER BY create_at DESC;
+    `;
+        const results = await db.execute({ sql: query, args: [`%${keyword}%`, user_id] });
+        return results;
+    }
+    catch (e) {
+        console.error(`Error searching in categories:`, e);
         throw e;
     }
 };
