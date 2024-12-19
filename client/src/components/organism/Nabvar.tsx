@@ -161,7 +161,7 @@ export const Navbar = () => {
       </Dropdown>
       <div className='flex w-full justify-center items-center'>
         <div className='flex flex-row max-w-2xl w-full justify-center items-center'>
-          <Search companies={true} products={true} categories={true} />
+          <Search />
         </div>
       </div>
     </nav>
