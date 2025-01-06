@@ -154,21 +154,27 @@ export const Search = () => {
             onOpenAutoFocus={(e) => e.preventDefault()}
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className='-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 flex flex-col items-center justify-center border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-4 p-1 min-w-40'
+            className='-translate-x-1/2 -translate-y-0 fixed top-0 left-1/2 flex flex-col items-center justify-start border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-[15vh] sm:mt-[10vh] p-0 sm:p-1 min-w-40 z-30 overflow-y-auto max-h-[84vh] sm:max-h-[89vh]'
           >
-            <Dialog.Title className='px-6 pt-5 font-bold text-foreground text-large'>Search</Dialog.Title>
+            <Dialog.Title className='w-full px-0.5 sm:px-6 pt-5 flex flex-row justify-between items-center font-bold text-foreground text-large'>
+              <DefaultButton color='btn-transparent' onClick={() => setIsModalOpen(false)} className='justify-self-start'>
+                <XIcon />
+              </DefaultButton>
+              <span>Search</span>
+              <span className='w-16'> </span>
+            </Dialog.Title>
             {searchError && <p className='text-red-500 mt-2'>{searchError}</p>}
             {error && <p className='text-red-500'>{error}</p>}
 
             {searchLoading ? (
               <Loading msg='Searching' />
             ) : resultsProducts.length > 0 || resultsCompanies.length > 0 || resultsCategories.length > 0 ? (
-              <div className='p-4'>
+              <div className='px-0.5 sm:p-4'>
                 {searchTarget === 'all' || searchTarget === 'products' ? (
                   resultsProducts.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Products</h3>
-                      <div className='mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -178,8 +184,11 @@ export const Search = () => {
                               <th className='px-2 py-2 text-left'>
                                 <h3>Price</h3>
                               </th>
-                              <th className='px-2 py-2 text-left'>
-                                <h3>Quantity</h3>
+                              <th className='px-2 py-2 text-left text-nowrap max-w-14 sm:max-w-none'>
+                                <h3 className='text-ellipsis overflow-hidden'>Quantity</h3>
+                              </th>
+                              <th className='px-2 py-2 text-left text-nowrap max-w-14 sm:max-w-none'>
+                                <h3 className='text-ellipsis overflow-hidden'>Weight</h3>
                               </th>
                               <th className='px-2 py-2 text-left'>
                                 <h3>U/P</h3>
@@ -201,10 +210,17 @@ export const Search = () => {
                                   <p className='px-2 py-2'>{product.name}</p>
                                 </td>
                                 <td>
-                                  <p className='px-2 py-2'>{product.price}</p>
+                                  <p className='px-2 py-2'>{product.price}$</p>
                                 </td>
                                 <td>
                                   <p className='px-2 py-2'>{product.quantity}</p>
+                                </td>
+                                <td>
+                                  <p className='px-2 py-2'>
+                                    {product.weight}
+                                    <span> </span>
+                                    {product.weight_unit}
+                                  </p>
                                 </td>
                                 <td>
                                   <p className='px-2 py-2'>{(product.price / product.quantity).toFixed(2)}$</p>
@@ -221,7 +237,7 @@ export const Search = () => {
                   resultsCompanies.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Companies</h3>
-                      <div className='mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -257,7 +273,7 @@ export const Search = () => {
                   resultsCategories.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Categories</h3>
-                      <div className='mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -292,9 +308,6 @@ export const Search = () => {
             ) : (
               <p>No results</p>
             )}
-            <DefaultButton color='btn-transparent' onClick={() => setIsModalOpen(false)}>
-              <XIcon />
-            </DefaultButton>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
