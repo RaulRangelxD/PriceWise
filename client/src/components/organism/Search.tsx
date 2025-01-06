@@ -154,9 +154,9 @@ export const Search = () => {
             onOpenAutoFocus={(e) => e.preventDefault()}
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className='-translate-x-1/2 -translate-y-0 fixed top-0 left-1/2 flex flex-col items-center justify-start border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-[15vh] sm:mt-[10vh] p-0 sm:p-1 min-w-40 z-30 overflow-y-auto max-h-[75vh] sm:max-h-[89vh]'
+            className='-translate-x-1/2 -translate-y-0 fixed top-0 left-1/2 flex flex-col items-center justify-start border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-[15vh] sm:mt-[10vh] py-0 sm:pb-1 min-w-40 z-30 overflow-y-auto max-h-[75vh] sm:max-h-[89vh]'
           >
-            <Dialog.Title className='w-full px-0.5 sm:px-6 pt-5 flex flex-row justify-between items-center font-bold text-foreground text-large'>
+            <Dialog.Title className='sticky top-0 w-full px-0.5 sm:px-6 pt-0.5 sm:py-2 flex flex-row justify-between items-center font-bold text-foreground text-large z-50 backdrop-blur-sm bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 rounded-b-md'>
               <DefaultButton color='btn-transparent' onClick={() => setIsModalOpen(false)} className='justify-self-start'>
                 <XIcon />
               </DefaultButton>
@@ -169,12 +169,12 @@ export const Search = () => {
             {searchLoading ? (
               <Loading msg='Searching' />
             ) : resultsProducts.length > 0 || resultsCompanies.length > 0 || resultsCategories.length > 0 ? (
-              <div className='px-0.5 sm:p-4'>
+              <div className='px-0 sm:p-4'>
                 {searchTarget === 'all' || searchTarget === 'products' ? (
                   resultsProducts.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Products</h3>
-                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -237,7 +237,7 @@ export const Search = () => {
                   resultsCompanies.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Companies</h3>
-                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
@@ -273,7 +273,7 @@ export const Search = () => {
                   resultsCategories.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Categories</h3>
-                      <div className='mx-0.5 sm:mx-2 my-0.5 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
                         <table className='w-full table-auto'>
                           <thead>
                             <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
