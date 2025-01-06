@@ -154,7 +154,7 @@ export const Search = () => {
             onOpenAutoFocus={(e) => e.preventDefault()}
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
-            className='-translate-x-1/2 -translate-y-0 fixed top-0 left-1/2 flex flex-col items-center justify-start border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-[15vh] sm:mt-[10vh] p-0 sm:p-1 min-w-40 z-30 overflow-y-auto max-h-[84vh] sm:max-h-[89vh]'
+            className='-translate-x-1/2 -translate-y-0 fixed top-0 left-1/2 flex flex-col items-center justify-start border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-[15vh] sm:mt-[10vh] p-0 sm:p-1 min-w-40 z-30 overflow-y-auto max-h-[75vh] sm:max-h-[89vh]'
           >
             <Dialog.Title className='w-full px-0.5 sm:px-6 pt-5 flex flex-row justify-between items-center font-bold text-foreground text-large'>
               <DefaultButton color='btn-transparent' onClick={() => setIsModalOpen(false)} className='justify-self-start'>
