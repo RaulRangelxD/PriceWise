@@ -14,6 +14,8 @@ import { categoriesRouter } from './routes/categories.js'
 import { productCategoriesRouter } from './routes/productCategories.js'
 import { productPricesRouter } from './routes/productPrices.js'
 import { searchRouter } from './routes/search.js'
+import { facturesRouter } from './routes/factures.js'
+import { factureProductsRouter } from './routes/factureProducts.js'
 
 dotenv.config()
 
@@ -41,6 +43,8 @@ app.use('/categories', categoriesRouter)
 app.use('/productcategories', productCategoriesRouter)
 app.use('/productprices', productPricesRouter)
 app.use('/search', searchRouter)
+app.use('/factures', facturesRouter)
+app.use('/factureProducts', factureProductsRouter)
 
 // deleteTables()
 createTables()

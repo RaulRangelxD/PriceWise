@@ -81,12 +81,12 @@ export const createTables = async () => {
     }
     try {
         await db.execute(`CREATE TABLE IF NOT EXISTS product_prices (
-  id INTEGER PRIMARY KEY,
-  product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-  price REAL NOT NULL,
-  create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);`);
+    id INTEGER PRIMARY KEY,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    price REAL NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`);
     }
     catch (e) {
         console.log('Error creating product_prices table:', e);
@@ -118,6 +118,42 @@ export const createTables = async () => {
     }
     catch (e) {
         console.log('Error creating product_categories table:', e);
+    }
+    try {
+        await db.execute(`
+      CREATE TABLE IF NOT EXISTS factures (
+      id INTEGER PRIMARY KEY,
+      user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+      total_amount REAL NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending', -- e.g., pending, paid, canceled
+      issue_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      due_date TIMESTAMP,
+      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+        console.log('Factures table created successfully.');
+    }
+    catch (e) {
+        console.log('Error creating factures table:', e);
+    }
+    try {
+        await db.execute(`
+      CREATE TABLE IF NOT EXISTS facture_products (
+      id INTEGER PRIMARY KEY,
+      facture_id INTEGER NOT NULL REFERENCES factures(id) ON DELETE CASCADE,
+      product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+      quantity INTEGER NOT NULL DEFAULT 1,
+      total_price REAL NOT NULL,
+      create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+        console.log('Facture_products table created successfully.');
+    }
+    catch (e) {
+        console.log('Error creating facture_products table:', e);
     }
 };
 export const deleteTables = async () => {

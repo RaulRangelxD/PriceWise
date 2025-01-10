@@ -1,0 +1,36 @@
+### Get all factures
+GET http://localhost:4000/factures
+
+### Get facture by id
+GET http://localhost:4000/factures/id/2
+
+### Get factures by user id
+GET http://localhost:4000/factures/userid/4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12
+
+### Get all factures by company id
+GET http://localhost:4000/factures/companyid/1
+
+### Get all factures by company id and pagination
+GET http://localhost:4000/factures/companyid/pag/1?limit=5&offset=0
+
+### Create facture
+POST http://localhost:4000/factures
+Content-Type: application/json
+
+{
+    "userId": "4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12",
+    "totalAmount": 150.75
+}
+
+### Update facture total amount
+PATCH http://localhost:4000/factures/id/2/totalAmount
+Content-Type: application/json
+
+{
+    "totalAmount": 500.0
+}
+
+
+### Delete facture
+DELETE http://localhost:4000/factures/id/2
+Content-Type: application/json
