@@ -5,6 +5,7 @@ import { BackIcon } from '@/components/atoms/icons/Back'
 import { EditIcon } from '@/components/atoms/icons/Edit'
 import { PlusIcon } from '@/components/atoms/icons/Plus'
 import { TrashIcon } from '@/components/atoms/icons/TrashIcon'
+import { FacturesTable } from '@/components/organism/home/facture/FacturesTable'
 import { ProductsTable } from '@/components/organism/home/product/ProductsTable'
 import { CompanyData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
@@ -69,12 +70,23 @@ export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
           <DefaultButton
             className='m-2'
             onClick={() => {
+              router.push(`/company/${companyData.id}/addfacture`)
+            }}
+          >
+            <PlusIcon size='sm' className='me-1' />
+            Add facture
+          </DefaultButton>
+          <DefaultButton
+            color='btn-secondary'
+            className='m-2'
+            onClick={() => {
               router.push(`/company/${companyData.id}/edit`)
             }}
           >
             <EditIcon size='sm' className='me-1' /> Edit Company
           </DefaultButton>
           <DefaultButton
+            color='btn-third'
             className='m-2'
             onClick={() => {
               router.push(`/company/${companyData.id}/delete`)
@@ -84,6 +96,7 @@ export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
           </DefaultButton>
         </div>
         <ProductsTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
+        <FacturesTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
       </div>
     </div>
   )

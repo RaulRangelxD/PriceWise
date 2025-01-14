@@ -4,7 +4,7 @@ export const facturesRouter = Router();
 facturesRouter.get('/', getAllFactures);
 facturesRouter.get('/userid/:user_id', getFacturesByUserId);
 facturesRouter.get('/companyid/:company_id', getAllFacturesByCompanyId);
-facturesRouter.get('/companyid/pag/:company_id', getAllFacturesByCompanyIdAndPagination);
+facturesRouter.get('/companyid/pag/:companyid', getAllFacturesByCompanyIdAndPagination);
 facturesRouter.get('/id/:id', getFactureById);
 facturesRouter.post('/', postFacture);
 facturesRouter.patch('/id/:id/totalAmount', patchFactureTotalAmount);

@@ -54,12 +54,21 @@ export const getAllFacturesByCompanyId = async (req: Request<{ companyId: string
   }
 }
 
-export const getAllFacturesByCompanyIdAndPagination = async (req: Request<{ companyId: string }>, res: Response) => {
-  const { companyId } = req.params
-  const { limit = 10, offset = 0 } = req.query
+export const getAllFacturesByCompanyIdAndPagination = async (req: Request<{ companyid: string }>, res: Response) => {
+  const { companyid } = req.params
+
+  const limit = parseInt(req.query.limit as string, 10)
+  const offset = parseInt(req.query.offset as string, 10)
+
+  console.log(companyid, offset, limit)
+
+  if (!companyid || typeof limit !== 'number' || typeof offset !== 'number') {
+    defaultResponse({ res, status: 400, message: 'Missing query fields or type error' })
+    return
+  }
 
   try {
-    const result = await getAllFacturesByCompanyIdAndPaginationModel(companyId, Number(limit), Number(offset))
+    const result = await getAllFacturesByCompanyIdAndPaginationModel(companyid, Number(limit), Number(offset))
     defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving factures by company ID with pagination from database', e)
@@ -68,17 +77,18 @@ export const getAllFacturesByCompanyIdAndPagination = async (req: Request<{ comp
 }
 
 export const postFacture = async (req: Request, res: Response) => {
-  const { userId, totalAmount, companyId, dueDate } = req.body
+  const { userId, companyId, totalAmount, date } = req.body
+  console.log(userId, companyId, totalAmount, date)
 
-  if (!userId || totalAmount === undefined || !companyId) {
+  if (!userId || totalAmount === undefined || !companyId || !date) {
     defaultResponse({ res, status: 400, message: 'Missing required fields' })
     return
   }
 
   try {
-    await postFactureModel(userId, companyId, totalAmount, dueDate)
+    const facture = await postFactureModel(userId, companyId, totalAmount, date)
 
-    defaultResponse({ res, status: 201, message: 'Facture created successfully' })
+    defaultResponse({ res, status: 201, message: 'Facture created successfully', data: facture })
   } catch (e) {
     console.log('Error creating facture in database', e)
     defaultResponse({ res, status: 500, message: 'Error creating facture' })

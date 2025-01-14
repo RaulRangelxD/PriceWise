@@ -63,3 +63,13 @@ export type ProductPriceData = {
   product_id: string
   price: string
 }
+
+export type FactureData = {
+  id: number
+  user_id: string
+  company_id: string
+  total_amount: string
+  date: string
+  create_at: string
+  update_at: string
+}

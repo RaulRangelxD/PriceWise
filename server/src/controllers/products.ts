@@ -2,6 +2,7 @@ import {
   getAllProductsModel,
   getAllProductsByUserIdModel,
   getAllProductsByUserIdAndPaginationModel,
+  getAllProductsByCompanyIdModel,
   getAllProductsByCompanyIdAndPaginationModel,
   getAllProductsByCategoryIdAndPaginationModel,
   getProductByIdModel,
@@ -49,6 +50,18 @@ export const getAllProductsByUserIdAndPagination = async (req: Request, res: Res
 
   try {
     const result = await getAllProductsByUserIdAndPaginationModel(userid, limit, pagination)
+    defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Products from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Products' })
+  }
+}
+
+export const getAllProductsByCompanyId = async (req: Request, res: Response) => {
+  const { companyid } = req.params
+
+  try {
+    const result = await getAllProductsByCompanyIdModel(companyid)
     defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving Products from database', e)

@@ -44,10 +44,16 @@ export const getAllFacturesByCompanyId = async (req, res) => {
     }
 };
 export const getAllFacturesByCompanyIdAndPagination = async (req, res) => {
-    const { companyId } = req.params;
-    const { limit = 10, offset = 0 } = req.query;
+    const { companyid } = req.params;
+    const limit = parseInt(req.query.limit, 10);
+    const offset = parseInt(req.query.offset, 10);
+    console.log(companyid, offset, limit);
+    if (!companyid || typeof limit !== 'number' || typeof offset !== 'number') {
+        defaultResponse({ res, status: 400, message: 'Missing query fields or type error' });
+        return;
+    }
     try {
-        const result = await getAllFacturesByCompanyIdAndPaginationModel(companyId, Number(limit), Number(offset));
+        const result = await getAllFacturesByCompanyIdAndPaginationModel(companyid, Number(limit), Number(offset));
         defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows });
     }
     catch (e) {
@@ -56,14 +62,15 @@ export const getAllFacturesByCompanyIdAndPagination = async (req, res) => {
     }
 };
 export const postFacture = async (req, res) => {
-    const { userId, totalAmount, companyId, dueDate } = req.body;
-    if (!userId || totalAmount === undefined || !companyId) {
+    const { userId, companyId, totalAmount, date } = req.body;
+    console.log(userId, companyId, totalAmount, date);
+    if (!userId || totalAmount === undefined || !companyId || !date) {
         defaultResponse({ res, status: 400, message: 'Missing required fields' });
         return;
     }
     try {
-        await postFactureModel(userId, companyId, totalAmount, dueDate);
-        defaultResponse({ res, status: 201, message: 'Facture created successfully' });
+        const facture = await postFactureModel(userId, companyId, totalAmount, date);
+        defaultResponse({ res, status: 201, message: 'Facture created successfully', data: facture });
     }
     catch (e) {
         console.log('Error creating facture in database', e);

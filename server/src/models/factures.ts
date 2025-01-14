@@ -47,7 +47,7 @@ export const getAllFacturesByCompanyIdAndPaginationModel = async (company_id: st
     LEFT JOIN products AS p ON p.id = fp.product_id
     WHERE p.company_id = :company_id
     GROUP BY f.id
-    ORDER BY f.issue_date DESC
+    ORDER BY f.date DESC
     LIMIT :limit
     OFFSET :offset`,
     args: { company_id, limit, offset },
@@ -55,25 +55,36 @@ export const getAllFacturesByCompanyIdAndPaginationModel = async (company_id: st
   return result
 }
 
-export const postFactureModel = async (user_id: string, company_id: number, total_amount: number, due_date: string | null = null) => {
-  const result = await db.execute({
+export const postFactureModel = async (user_id: string, company_id: number, total_amount: number, date: string) => {
+  console.log('asdsadsa: ', user_id, company_id, total_amount, date)
+  const insertResult = await db.execute({
     sql: `
-      INSERT INTO factures (user_id, company_id, total_amount, due_date)
-      VALUES (:user_id, :company_id, :total_amount, :due_date)`,
+      INSERT INTO factures (user_id, company_id, total_amount, date)
+      VALUES (:user_id, :company_id, :total_amount, :date)`,
     args: {
       user_id,
       company_id,
       total_amount,
-      due_date,
+      date,
     },
   })
-  return result
+  const factureId = insertResult.lastInsertRowid
+  const factureResult = await db.execute({
+    sql: `
+      SELECT * 
+      FROM factures
+      WHERE id = :id;
+    `,
+    args: { id: String(factureId) },
+  })
+
+  return factureResult.rows[0]
 }
 
-export const patchFactureTotalAmountModel = async (id: string, totalAmount: number) => {
+export const patchFactureTotalAmountModel = async (id: string, total_amount: number) => {
   const result = await db.execute({
-    sql: `UPDATE factures SET total_amount = :totalAmount, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
-    args: { id, totalAmount },
+    sql: `UPDATE factures SET total_amount = :total_amount, update_at = CURRENT_TIMESTAMP WHERE id = :id`,
+    args: { id, total_amount },
   })
   return result
 }

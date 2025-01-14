@@ -128,9 +128,7 @@ export const createTables = async () => {
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       company_id INTEGER NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
       total_amount REAL NOT NULL,
-      status TEXT NOT NULL DEFAULT 'pending', -- e.g., pending, paid, canceled
-      issue_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      due_date TIMESTAMP,
+      date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -171,34 +169,46 @@ export const deleteTables = async () => {
   //   console.log('error deleting otps table', e)
   // }
 
+  // try {
+  //   await db.execute('DROP TABLE companies;')
+  // } catch (e) {
+  //   console.log('error deleting companies table', e)
+  // }
+
+  // try {
+  //   await db.execute('DROP TABLE products;')
+  // } catch (e) {
+  //   console.log('error deleting products table', e)
+  // }
+
+  // try {
+  //   await db.execute('DROP TABLE product_prices;')
+  // } catch (e) {
+  //   console.log('error deleting product_prices table', e)
+  // }
+
+  // try {
+  //   await db.execute('DROP TABLE categories;')
+  // } catch (e) {
+  //   console.log('error deleting categories table', e)
+  // }
+
+  // try {
+  //   await db.execute('DROP TABLE product_categories;')
+  // } catch (e) {
+  //   console.log('error deleting product_categories table', e)
+  // }
+
   try {
-    await db.execute('DROP TABLE companies;')
+    await db.execute('DROP TABLE factures;')
   } catch (e) {
-    console.log('error deleting companies table', e)
+    console.log('error deleting factures table', e)
   }
 
   try {
-    await db.execute('DROP TABLE products;')
+    await db.execute('DROP TABLE facture_products;')
   } catch (e) {
-    console.log('error deleting products table', e)
-  }
-
-  try {
-    await db.execute('DROP TABLE product_prices;')
-  } catch (e) {
-    console.log('error deleting product_prices table', e)
-  }
-
-  try {
-    await db.execute('DROP TABLE categories;')
-  } catch (e) {
-    console.log('error deleting categories table', e)
-  }
-
-  try {
-    await db.execute('DROP TABLE product_categories;')
-  } catch (e) {
-    console.log('error deleting product_categories table', e)
+    console.log('error deleting facture_products table', e)
   }
   console.log('Deleted tables')
 }

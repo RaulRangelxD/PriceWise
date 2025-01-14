@@ -1,4 +1,4 @@
-import { getAllProductsModel, getAllProductsByUserIdModel, getAllProductsByUserIdAndPaginationModel, getAllProductsByCompanyIdAndPaginationModel, getAllProductsByCategoryIdAndPaginationModel, getProductByIdModel, postProductModel, patchProductModel, deleteProductModel, } from '../models/products.js';
+import { getAllProductsModel, getAllProductsByUserIdModel, getAllProductsByUserIdAndPaginationModel, getAllProductsByCompanyIdModel, getAllProductsByCompanyIdAndPaginationModel, getAllProductsByCategoryIdAndPaginationModel, getProductByIdModel, postProductModel, patchProductModel, deleteProductModel, } from '../models/products.js';
 import { defaultResponse } from '../utils/defaultRes.js';
 export const getAllProducts = async (req, res) => {
     try {
@@ -32,6 +32,17 @@ export const getAllProductsByUserIdAndPagination = async (req, res) => {
     const pagination = limit * offset;
     try {
         const result = await getAllProductsByUserIdAndPaginationModel(userid, limit, pagination);
+        defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows });
+    }
+    catch (e) {
+        console.log('Error retrieving Products from database', e);
+        defaultResponse({ res, status: 500, message: 'Error retrieving Products' });
+    }
+};
+export const getAllProductsByCompanyId = async (req, res) => {
+    const { companyid } = req.params;
+    try {
+        const result = await getAllProductsByCompanyIdModel(companyid);
         defaultResponse({ res, status: 200, message: 'Products retrieved successfully', data: result.rows });
     }
     catch (e) {

@@ -42,6 +42,21 @@ export const getAllProductsByUserIdAndPaginationModel = async (user_id, limit, o
     });
     return result;
 };
+export const getAllProductsByCompanyIdModel = async (company_id) => {
+    const result = await db.execute({
+        sql: `
+    SELECT p.*, 
+    COALESCE(GROUP_CONCAT(c.name), '') AS categories
+    FROM products AS p
+    LEFT JOIN product_categories AS pc ON pc.product_id = p.id
+    LEFT JOIN categories AS c ON c.id = pc.category_id
+    WHERE p.company_id = :company_id
+    GROUP BY p.id
+  `,
+        args: { company_id },
+    });
+    return result;
+};
 export const getAllProductsByCompanyIdAndPaginationModel = async (company_id, limit, offset) => {
     const result = await db.execute({
         sql: `

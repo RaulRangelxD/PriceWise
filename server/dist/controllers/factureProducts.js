@@ -60,8 +60,8 @@ export const getFactureProductsByProductId = async (req, res) => {
     }
 };
 export const postFactureProduct = async (req, res) => {
-    const { facture_id, product_id, quantity, total_price } = req.body;
-    if (!facture_id || !product_id || quantity === undefined || total_price === undefined) {
+    const { factureId, productId, quantity, totalPrice } = req.body;
+    if (!factureId || !productId || quantity === undefined || totalPrice === undefined) {
         defaultResponse({
             res,
             status: 400,
@@ -70,7 +70,7 @@ export const postFactureProduct = async (req, res) => {
         return;
     }
     try {
-        await postFactureProductModel(facture_id, product_id, quantity, total_price);
+        await postFactureProductModel(factureId, productId, quantity, totalPrice);
         defaultResponse({
             res,
             status: 201,

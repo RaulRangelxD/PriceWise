@@ -19,7 +19,9 @@ Content-Type: application/json
 
 {
     "userId": "4c8a63c1-7f5f-40ac-a16b-53cb0f5bcf12",
-    "totalAmount": 150.75
+    "companyId": "1",
+    "totalAmount": 150.75,
+    "date": "2000-10-12"
 }
 
 ### Update facture total amount
