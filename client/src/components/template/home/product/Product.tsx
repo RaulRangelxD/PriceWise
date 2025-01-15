@@ -31,7 +31,7 @@ export const Product = ({ productIdInParams, productData }: ProductProps) => {
             Back
           </DefaultButton>
         </div>
-        <div className='flex flex-col border rounded-xl bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'>
+        <div className='largebox-border-shadow'>
           <h1 className='text-2xl font-bold m-8'>{productData.name}</h1>
           <div className='flex flex-row flex-wrap'>
             <div className='m-8'>
@@ -102,6 +102,7 @@ export const Product = ({ productIdInParams, productData }: ProductProps) => {
             <TrashIcon size='sm' className='me-1' /> Delete a Category
           </DefaultButton>
         </div>
+        <h2 className='w-full flex justify-center text-2xl font-bold'>Prices</h2>
         <ProductsPriceTable productIdInParams={productIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
       </div>
     </div>

@@ -30,7 +30,7 @@ export const DeleteCategoryForm = ({ color = 'btn-primary', categoryId }: Delete
   return (
     <>
       <div className='flex-1 flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center px-2'>
-        <div className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-defaul-dark dark:border-default-light py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-2xl  backdrop-blur-sm rounded transition duration-500'>
+        <div className='box-border-shadow'>
           <div className='flex flex-col justify-center items-center space-y-2'>
             <h1 className='text-2xl font-bold'>Delete</h1>
             <h2 className='text-xl'>Are you sure delete this category?</h2>

@@ -13,6 +13,11 @@ export const getFactureProductsByFactureIdModel = async (facture_id: string) => 
   return result
 }
 
+export const getAllFactureProductsByFactureIdAndPaginationModel = async (facture_id: string, limit: number, offset: number) => {
+  const result = await db.execute({ sql: `SELECT * FROM facture_products WHERE facture_id = :facture_id ORDER BY create_at DESC LIMIT :limit OFFSET :offset`, args: { facture_id, limit, offset } })
+  return result
+}
+
 export const getFactureProductsByProductIdModel = async (product_id: string) => {
   const result = await db.execute({
     sql: `SELECT * FROM facture_products WHERE product_id = :product_id`,

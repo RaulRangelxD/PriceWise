@@ -73,3 +73,13 @@ export type FactureData = {
   create_at: string
   update_at: string
 }
+
+export type FactureProductData = {
+  id: number
+  facture_id: string
+  product_id: string
+  quantity: number
+  total_price: string
+  create_at: string
+  update_at: string
+}

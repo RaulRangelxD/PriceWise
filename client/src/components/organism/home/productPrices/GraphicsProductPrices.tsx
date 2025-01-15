@@ -37,13 +37,13 @@ export const GraphicsProductPrices = ({ productsData }: { productsData: ProductP
   }
 
   return (
-    <ResponsiveContainer className='m-2 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 rounded-xl p-2' width='100%' height={300}>
+    <ResponsiveContainer className='m-2 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 rounded-xl p-2 border border-primary' width='100%' height={300}>
       <LineChart data={chartData}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='Difference' label={{ value: 'Products', position: 'insideBottom', offset: -5 }} />
         <YAxis label={{ value: 'Price', angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomToolTip />} />
-        <Line type='linear' dataKey='Price' stroke='#22C55E' />
+        <Line type='linear' dataKey='Price' stroke='#1398F6' />
       </LineChart>
     </ResponsiveContainer>
   )

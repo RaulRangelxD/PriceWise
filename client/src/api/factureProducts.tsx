@@ -1,3 +1,4 @@
+import { FactureProductData } from '@/lib/types'
 import axios from 'axios'
 
 const FACTURE_PRODUCTS_BASE_URL = `${process.env.NEXT_PUBLIC_API}/factureproducts`
@@ -21,6 +22,16 @@ export const getFactureProductsByFactureId = async (factureId: number) => {
       headers: { 'Cache-Control': 'no-store' },
       withCredentials: true,
     })
+    return result.data.data
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
+export const getAllFactureProductsByFactureIdAndPagination = async (factureId: string, limit: number, offset: number): Promise<FactureProductData[]> => {
+  try {
+    const result = await axios.get(`${FACTURE_PRODUCTS_BASE_URL}/factureid/pag/${factureId}`, { params: { limit, offset }, headers: { 'Cache-Control': 'no-store' }, withCredentials: true })
     return result.data.data
   } catch (error) {
     console.error(error instanceof Error ? error.message : 'An unexpected error occurred')

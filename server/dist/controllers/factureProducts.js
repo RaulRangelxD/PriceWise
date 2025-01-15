@@ -1,4 +1,4 @@
-import { getAllFactureProductsModel, getFactureProductsByFactureIdModel, getFactureProductsByProductIdModel, postFactureProductModel, deleteFactureProductModel } from '../models/factureProducts.js';
+import { getAllFactureProductsModel, getFactureProductsByFactureIdModel, getAllFactureProductsByFactureIdAndPaginationModel, getFactureProductsByProductIdModel, postFactureProductModel, deleteFactureProductModel, } from '../models/factureProducts.js';
 import { defaultResponse } from '../utils/defaultRes.js';
 export const getAllFactureProducts = async (req, res) => {
     try {
@@ -37,6 +37,24 @@ export const getFactureProductsByFactureId = async (req, res) => {
             status: 500,
             message: 'Error retrieving facture products',
         });
+    }
+};
+export const getAllFactureProductsByFactureIdAndPagination = async (req, res) => {
+    const { factureid } = req.params;
+    const limit = parseInt(req.query.limit, 10);
+    const offset = parseInt(req.query.offset, 10);
+    if (!factureid || typeof limit !== 'number' || typeof offset !== 'number') {
+        defaultResponse({ res, status: 400, message: 'Missing query fields or type error' });
+        return;
+    }
+    const pagination = limit * offset;
+    try {
+        const result = await getAllFactureProductsByFactureIdAndPaginationModel(factureid, limit, pagination);
+        defaultResponse({ res, status: 200, message: 'ProductPrices retrieved successfully', data: result.rows });
+    }
+    catch (e) {
+        console.log('Error retrieving ProductPrices from database', e);
+        defaultResponse({ res, status: 500, message: 'Error retrieving ProductPrices' });
     }
 };
 export const getFactureProductsByProductId = async (req, res) => {

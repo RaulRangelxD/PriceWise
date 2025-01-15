@@ -32,7 +32,7 @@ export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
             Back
           </DefaultButton>
         </div>
-        <div className='flex flex-col border rounded-xl bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'>
+        <div className='largebox-border-shadow'>
           <h1 className='text-2xl font-bold m-8'>{companyData.name}</h1>
           <div className='flex flex-row flex-wrap'>
             <div className='m-8'>
@@ -95,7 +95,9 @@ export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
             <TrashIcon size='sm' className='me-1' /> Delete Company
           </DefaultButton>
         </div>
+        <h2 className='w-full flex justify-center text-2xl font-bold'>Products</h2>
         <ProductsTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
+        <h2 className='w-full flex justify-center text-2xl font-bold'>Factures</h2>
         <FacturesTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
       </div>
     </div>

@@ -22,4 +22,13 @@ body {
   .input-form {
     @apply w-full text-default-dark dark:text-default-light placeholder:text-default-dark dark:placeholder:text-default-light bg-transparent p-2 border-b-2 focus:outline-none focus:ring-0 border-default-dark dark:border-default-light transition duration-500;
   }
+  .box-border-shadow {
+    @apply max-w-md w-full flex flex-col items-center justify-center border border-primary py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-[0_0_10px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_10px_rgba(250,250,250,0.1)] backdrop-blur-sm rounded transition duration-500;
+  }
+  .largebox-border-shadow {
+    @apply flex flex-col border border-primary bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-[0_0_10px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_10px_rgba(250,250,250,0.1)] backdrop-blur-sm rounded transition duration-500;
+  }
+  .table-border-shadow {
+    @apply overflow-x-auto w-full rounded-xl border border-primary shadow-[0_0_10px_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_10px_rgba(250,250,250,0.1)];
+  }
 }

@@ -69,11 +69,7 @@ export const Navbar = () => {
             )}
           </Button>
         </DropdownTrigger>
-        <DropdownMenu
-          className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-default-dark dark:border-default-light bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 backdrop-blur-sm rounded-md transition duration-500 mt-4 p-1'
-          variant='solid'
-          aria-label='Static Actions'
-        >
+        <DropdownMenu className='box-border-shadow' variant='solid' aria-label='Static Actions'>
           {user && auth ? (
             <>
               <DropdownItem

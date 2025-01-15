@@ -139,7 +139,7 @@ export const AddFactureForm = ({ companyIdInParams, productsData }: AddFactureFo
 
   return !loading ? (
     <div className='flex-1 flex flex-col items-center justify-center bg-cover bg-no-repeat bg-center px-2'>
-      <div className='max-w-md w-full flex flex-col items-center justify-center border border-opacity-30 border-defaul-dark dark:border-default-light py-4 px-8 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 shadow-2xl  backdrop-blur-sm rounded transition duration-500'>
+      <div className='box-border-shadow'>
         <div className='flex flex-row space-x-2 justify-start w-full'>
           <DefaultButton
             color='btn-secondary'
@@ -168,6 +168,7 @@ export const AddFactureForm = ({ companyIdInParams, productsData }: AddFactureFo
           </form>
         ) : (
           <>
+            <p>{date}</p>
             <form id='form-facture-product' onSubmit={(e) => handleSubmitProduct(e)} className='w-full flex flex-col space-y-4 px-4 pt-8 pb-2 items-center'>
               {productsData ? (
                 <SelectInput

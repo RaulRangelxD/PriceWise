@@ -174,10 +174,10 @@ export const Search = () => {
                   resultsProducts.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Products</h3>
-                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 table-border-shadow'>
                         <table className='w-full table-auto'>
                           <thead>
-                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
+                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-primary'>
                               <th className='px-2 py-2 text-left'>
                                 <h3>Name</h3>
                               </th>
@@ -202,9 +202,7 @@ export const Search = () => {
                                 onClick={() => handleOnClickProduct(product.id)}
                                 className={`${
                                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${
-                                  index !== resultsProducts.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''
-                                }`}
+                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== resultsProducts.length - 1 ? 'border-b border-primary' : ''}`}
                               >
                                 <td>
                                   <p className='px-2 py-2'>{product.name}</p>
@@ -237,10 +235,10 @@ export const Search = () => {
                   resultsCompanies.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Companies</h3>
-                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 table-border-shadow'>
                         <table className='w-full table-auto'>
                           <thead>
-                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
+                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-primary'>
                               <th className='px-2 py-2 text-left'>
                                 <h3>Name</h3>
                               </th>
@@ -253,9 +251,7 @@ export const Search = () => {
                                 onClick={() => handleOnClickCompany(company.id)}
                                 className={`${
                                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${
-                                  index !== resultsCompanies.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''
-                                }`}
+                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== resultsCompanies.length - 1 ? 'border-b border-primary' : ''}`}
                               >
                                 <td>
                                   <p className='px-2 py-2'>{company.name}</p>
@@ -273,10 +269,10 @@ export const Search = () => {
                   resultsCategories.length > 0 ? (
                     <div className='flex flex-col w-full justify-center items-center'>
                       <h3>Categories</h3>
-                      <div className='mx-0 sm:mx-2 my-0 overflow-x-auto w-full rounded-xl'>
+                      <div className='mx-0 sm:mx-2 my-0 table-border-shadow'>
                         <table className='w-full table-auto'>
                           <thead>
-                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-default-light dark:border-default-dark'>
+                            <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-primary'>
                               <th className='px-2 py-2 text-left'>
                                 <h3>Name</h3>
                               </th>
@@ -289,9 +285,7 @@ export const Search = () => {
                                 onClick={() => handleOnClickCategory(category.id)}
                                 className={`${
                                   index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
-                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${
-                                  index !== resultsCategories.length - 1 ? 'border-b border-default-light dark:border-default-dark' : ''
-                                }`}
+                                } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== resultsCategories.length - 1 ? 'border-b border-primary' : ''}`}
                               >
                                 <td>
                                   <p className='px-2 py-2'>{category.name}</p>
