@@ -6,6 +6,7 @@ import { EditIcon } from '@/components/atoms/icons/Edit'
 import { PlusIcon } from '@/components/atoms/icons/Plus'
 import { TrashIcon } from '@/components/atoms/icons/TrashIcon'
 import { FacturesTable } from '@/components/organism/home/facture/FacturesTable'
+import { GraphicsFactures } from '@/components/organism/home/facture/GraphicsFactures'
 import { ProductsTable } from '@/components/organism/home/product/ProductsTable'
 import { CompanyData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
@@ -99,6 +100,7 @@ export const Company = ({ companyData, companyIdInParams }: CompanyProps) => {
         <ProductsTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
         <h2 className='w-full flex justify-center text-2xl font-bold'>Factures</h2>
         <FacturesTable companyIdInParams={companyIdInParams} rows={[5, 10, 20]} rowsDefault={5} />
+        <GraphicsFactures lastYear={true} companyIdInParams={companyIdInParams} />
       </div>
     </div>
   )

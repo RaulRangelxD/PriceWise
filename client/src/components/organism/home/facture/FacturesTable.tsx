@@ -2,7 +2,7 @@ import { DefaultButton } from '@/components/atoms/buttons/Button'
 import { FactureData } from '@/lib/types'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthProvider'
-import { getAllFacturesByCompanyIdAndPagination } from '@/api/factures'
+import { getAllFacturesByCompanyIdAndPagination, getAllFacturesByUserIdAndPagination } from '@/api/factures'
 import { useCallback, useEffect, useState } from 'react'
 import Loading from '@/app/Loading'
 import { LeftIcon, RightIcon } from '@/components/atoms/icons'
@@ -41,6 +41,11 @@ export const FacturesTable = ({ companyIdInParams, rows, rowsDefault }: Factures
         return
       }
       if (!companyIdInParams) {
+        const facturesDataResult = await getAllFacturesByUserIdAndPagination(userInContext.id, rowsPerPage, currentPage - 1)
+        if (facturesDataResult.length < 1 && currentPage > 1) return setCurrentPage(currentPage - 1)
+        setFacturesData(facturesDataResult)
+        setPlaceholder(false)
+        setLoading(false)
         return
       }
       if (companyIdInParams) {
@@ -78,6 +83,14 @@ export const FacturesTable = ({ companyIdInParams, rows, rowsDefault }: Factures
           <table className='w-full table-auto'>
             <thead>
               <tr className='bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 border-b border-primary'>
+                {!companyIdInParams ? (
+                  <th className='px-2 py-2 text-left'>
+                    <h3>Company</h3>
+                  </th>
+                ) : (
+                  ''
+                )}
+
                 <th className='px-2 py-2 text-left'>
                   <h3>Total amount</h3>
                 </th>
@@ -95,6 +108,13 @@ export const FacturesTable = ({ companyIdInParams, rows, rowsDefault }: Factures
                     index % 2 === 0 ? 'bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50' : 'bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25'
                   } relative w-full hover:bg-opacity-75 dark:hover:bg-opacity-75 group ${index !== facturesData.length - 1 ? 'border-b border-primary' : ''}`}
                 >
+                  {!companyIdInParams ? (
+                    <td className='px-2 py-2 text-nowrap'>
+                      <p>{facture.company_name}</p>
+                    </td>
+                  ) : (
+                    ''
+                  )}
                   <td className='px-2 py-2 text-nowrap'>
                     <p>{facture.total_amount}</p>
                   </td>

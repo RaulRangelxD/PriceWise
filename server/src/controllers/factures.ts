@@ -2,8 +2,11 @@ import {
   getAllFacturesModel,
   getFactureByIdModel,
   getFacturesByUserIdModel,
+  getAllFacturesByUserIdAndPaginationModel,
   getAllFacturesByCompanyIdModel,
   getAllFacturesByCompanyIdAndPaginationModel,
+  getFacturesByDateRangeModel,
+  getFacturesByDateRangeAndCompanyIdModel,
   postFactureModel,
   patchFactureTotalAmountModel,
   deleteFactureModel,
@@ -43,6 +46,28 @@ export const getFacturesByUserId = async (req: Request<{ userId: string }>, res:
   }
 }
 
+export const getAllFacturesByUserIdAndPagination = async (req: Request, res: Response) => {
+  const { userid } = req.params
+
+  const limit = parseInt(req.query.limit as string, 10)
+  const offset = parseInt(req.query.offset as string, 10)
+
+  if (!userid || typeof limit !== 'number' || typeof offset !== 'number') {
+    defaultResponse({ res, status: 400, message: 'Missing query fields or type error' })
+    return
+  }
+
+  const pagination = limit * offset
+
+  try {
+    const result = await getAllFacturesByUserIdAndPaginationModel(userid, limit, pagination)
+    defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows })
+  } catch (e) {
+    console.log('Error retrieving Factures from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving Factures' })
+  }
+}
+
 export const getAllFacturesByCompanyId = async (req: Request<{ companyId: string }>, res: Response) => {
   const { companyId } = req.params
   try {
@@ -72,6 +97,40 @@ export const getAllFacturesByCompanyIdAndPagination = async (req: Request<{ comp
     defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows })
   } catch (e) {
     console.log('Error retrieving factures by company ID with pagination from database', e)
+    defaultResponse({ res, status: 500, message: 'Error retrieving factures' })
+  }
+}
+
+export const getFacturesByDateRange = async (req: Request, res: Response) => {
+  const { userId, startDate, endDate } = req.query
+
+  if (!userId || !startDate || !endDate) {
+    defaultResponse({ res, status: 400, message: 'Missing required query parameters' })
+    return
+  }
+
+  try {
+    const result = await getFacturesByDateRangeModel(String(userId), String(startDate), String(endDate))
+    defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows })
+  } catch (error) {
+    console.error('Error retrieving factures by date range:', error)
+    defaultResponse({ res, status: 500, message: 'Error retrieving factures' })
+  }
+}
+
+export const getFacturesByDateRangeAndCompanyId = async (req: Request, res: Response) => {
+  const { companyId, startDate, endDate } = req.query
+
+  if (!companyId || !startDate || !endDate) {
+    defaultResponse({ res, status: 400, message: 'Missing required query parameters' })
+    return
+  }
+
+  try {
+    const result = await getFacturesByDateRangeAndCompanyIdModel(String(companyId), String(startDate), String(endDate))
+    defaultResponse({ res, status: 200, message: 'Factures retrieved successfully', data: result.rows })
+  } catch (error) {
+    console.error('Error retrieving factures by date range:', error)
     defaultResponse({ res, status: 500, message: 'Error retrieving factures' })
   }
 }

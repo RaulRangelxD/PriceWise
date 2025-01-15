@@ -3,8 +3,11 @@ import {
   getAllFactures,
   getFactureById,
   getFacturesByUserId,
+  getAllFacturesByUserIdAndPagination,
   getAllFacturesByCompanyId,
   getAllFacturesByCompanyIdAndPagination,
+  getFacturesByDateRange,
+  getFacturesByDateRangeAndCompanyId,
   postFacture,
   patchFactureTotalAmount,
   deleteFacture,
@@ -14,9 +17,12 @@ export const facturesRouter = Router()
 
 facturesRouter.get('/', getAllFactures)
 facturesRouter.get('/userid/:user_id', getFacturesByUserId)
+facturesRouter.get('/userid/pag/:userid', getAllFacturesByUserIdAndPagination)
 facturesRouter.get('/companyid/:company_id', getAllFacturesByCompanyId)
 facturesRouter.get('/companyid/pag/:companyid', getAllFacturesByCompanyIdAndPagination)
 facturesRouter.get('/id/:id', getFactureById)
+facturesRouter.get('/dateRange', getFacturesByDateRange)
+facturesRouter.get('/dateRangeAndCompanyId', getFacturesByDateRangeAndCompanyId)
 
 facturesRouter.post('/', postFacture)
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, LabelList } from 'recharts'
 import { ProductPriceData } from '@/lib/types'
 
 export const GraphicsProductPrices = ({ productsData }: { productsData: ProductPriceData[] }) => {
@@ -27,7 +27,7 @@ export const GraphicsProductPrices = ({ productsData }: { productsData: ProductP
 
       return (
         <div className='bg-default-light dark:bg-default-dark bg-opacity-50 dark:bg-opacity-50 p-2 rounded-xl shadow-md'>
-          <p className='font-bold'>Price: {Price}</p>
+          <p className='font-bold'>Price: ${Price}</p>
           <p>Difference: {Difference}</p>
           <p>Percentage: {Percentage}%</p>
         </div>
@@ -37,13 +37,19 @@ export const GraphicsProductPrices = ({ productsData }: { productsData: ProductP
   }
 
   return (
-    <ResponsiveContainer className='m-2 bg-default-light dark:bg-default-dark bg-opacity-25 dark:bg-opacity-25 rounded-xl p-2 border border-primary' width='100%' height={300}>
+    <ResponsiveContainer className='m-2 largebox-border-shadow' width='100%' height={300}>
       <LineChart data={chartData}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis dataKey='Difference' label={{ value: 'Products', position: 'insideBottom', offset: -5 }} />
         <YAxis label={{ value: 'Price', angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomToolTip />} />
-        <Line type='linear' dataKey='Price' stroke='#1398F6' />
+        <Line type='linear' dataKey='Price' stroke='#1398F6'>
+          <LabelList
+            dataKey='Price'
+            position='top'
+            formatter={(value: number) => `$${value.toFixed(2)}`} // Explicitly typing `value` as `number`
+          />
+        </Line>
       </LineChart>
     </ResponsiveContainer>
   )

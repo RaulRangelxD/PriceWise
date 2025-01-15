@@ -7,9 +7,10 @@ interface DateInputProps {
   className?: string
   onChange?: (value: SetStateAction<string>) => void
   onBlur?: (any: string) => void
+  required?: boolean
 }
 
-export const DateInput = ({ placeholder, type = 'date', value, className = '', onChange, onBlur }: DateInputProps) => (
+export const DateInput = ({ placeholder, type = 'date', value, className = '', onChange, onBlur, required = false }: DateInputProps) => (
   <input
     placeholder={placeholder}
     type={type}
@@ -19,5 +20,6 @@ export const DateInput = ({ placeholder, type = 'date', value, className = '', o
       onBlur?.(e.target.value)
     }}
     className={`input-form ${className}`}
+    required={required}
   />
 )

@@ -8,6 +8,8 @@ import { useToastify } from '@/context/ToastifyProvider'
 import { ProductsTable } from '@/components/organism/home/product/ProductsTable'
 import { PlusIcon, EyeIcon } from '@/components/atoms/icons'
 import { CategoriesTable } from '@/components/organism/home/category/CategoriesTable'
+import { FacturesTable } from '@/components/organism/home/facture/FacturesTable'
+import { GraphicsFactures } from '@/components/organism/home/facture/GraphicsFactures'
 
 export const Home = () => {
   const router = useRouter()
@@ -18,6 +20,9 @@ export const Home = () => {
     <>
       <div className='w-full px-2 py-8 flex-1 flex flex-col justify-center items-center'>
         <div className='max-w-4xl w-full space-y-3'>
+          <h2 className='text-3xl font-bold mt-8'>Expenses</h2>
+
+          <GraphicsFactures lastYear={true} />
           <h2 className='text-3xl font-bold mt-8'>Last companies</h2>
           <CompaniesTable rows={[5, 10, 20]} rowsDefault={5} />
           <div className='flex flex-row flex-wrap pb-12'>
@@ -129,6 +134,8 @@ export const Home = () => {
               </>
             )}
           </div>
+          <h2 className='text-3xl font-bold mt-8'>Last factures</h2>
+          <FacturesTable rows={[5, 10, 20]} rowsDefault={5} />
         </div>
       </div>
     </>

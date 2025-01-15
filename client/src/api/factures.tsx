@@ -28,6 +28,20 @@ export const getFacturesByUserId = async (userId: string) => {
   }
 }
 
+export const getAllFacturesByUserIdAndPagination = async (userId: string, limit: number, offset: number) => {
+  try {
+    const result = await axios.get(`${FACTURES_BASE_URL}/userid/pag/${String(userId)}`, {
+      params: { limit, offset },
+      headers: { 'Cache-Control': 'no-store' },
+      withCredentials: true,
+    })
+    return result.data.data
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
 export const getAllFacturesByCompanyId = async (companyId: number) => {
   try {
     const result = await axios.get(`${FACTURES_BASE_URL}/companyid/${companyId}`, {
@@ -93,6 +107,34 @@ export const deleteFacture = async (id: number) => {
     await axios.delete(`${FACTURES_BASE_URL}/id/${id}`, {
       headers: { 'Content-Type': 'application/json' },
     })
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
+export const getFacturesByDateRange = async (userId: string, startDate: string, endDate: string) => {
+  try {
+    const result = await axios.get(`${FACTURES_BASE_URL}/dateRange`, {
+      params: { userId, startDate, endDate },
+      headers: { 'Cache-Control': 'no-store' },
+      withCredentials: true,
+    })
+    return result.data.data
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
+    throw error
+  }
+}
+
+export const getFacturesByDateRangeAndCompanyId = async (companyId: string, startDate: string, endDate: string) => {
+  try {
+    const result = await axios.get(`${FACTURES_BASE_URL}/dateRangeAndCompanyId`, {
+      params: { companyId, startDate, endDate },
+      headers: { 'Cache-Control': 'no-store' },
+      withCredentials: true,
+    })
+    return result.data.data
   } catch (error) {
     console.error(error instanceof Error ? error.message : 'An unexpected error occurred')
     throw error
